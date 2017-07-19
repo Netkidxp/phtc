@@ -38,7 +38,7 @@ namespace PHTC
                 {
                     bu_filter.Text = "打开筛选面板";
                     filterPanel.Height = 0;
-                    bu_filter.Location = new Point(bu_filter.Location.X, bu_filter.Location.Y - 170);
+                    bu_filter.Location = new Point(bu_filter.Location.X, filterPanel.Location.Y);
                     dgv_list.Location = new Point(dgv_list.Location.X, dgv_list.Location.Y - 170);
                     this.Height -= 170;
                 }
@@ -46,7 +46,7 @@ namespace PHTC
                 {
                     bu_filter.Text = "收起筛选面板";
                     filterPanel.Height = 170;
-                    bu_filter.Location = new Point(bu_filter.Location.X, bu_filter.Location.Y + 170);
+                    bu_filter.Location = new Point(bu_filter.Location.X, filterPanel.Location.Y+ filterPanel.Height);
                     dgv_list.Location = new Point(dgv_list.Location.X, dgv_list.Location.Y + 170);
                     this.Height += 170;
                 }

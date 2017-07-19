@@ -1,0 +1,4 @@
+E:\works\VS\Therm\PHTC\PHTC\bin\Debug\PHTC.GlobalTool.dll
+E:\works\VS\Therm\PHTC\PHTC\bin\Debug\PHTC.GlobalTool.pdb
+E:\works\VS\Therm\PHTC\GlobalTool\obj\Debug\PHTC.GlobalTool.dll
+E:\works\VS\Therm\PHTC\GlobalTool\obj\Debug\PHTC.GlobalTool.pdb
