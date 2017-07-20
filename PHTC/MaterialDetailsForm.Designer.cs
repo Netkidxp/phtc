@@ -268,10 +268,10 @@
             this.rb_hc_function.Location = new System.Drawing.Point(111, 19);
             this.rb_hc_function.Margin = new System.Windows.Forms.Padding(4);
             this.rb_hc_function.Name = "rb_hc_function";
-            this.rb_hc_function.Size = new System.Drawing.Size(281, 19);
+            this.rb_hc_function.Size = new System.Drawing.Size(604, 19);
             this.rb_hc_function.TabIndex = 2;
             this.rb_hc_function.TabStop = true;
-            this.rb_hc_function.Text = "函数 (HC=∑(Kn*Temperature[K]^n)";
+            this.rb_hc_function.Text = "函数 (HC=∑(Kn*Temperature[K]^n，请注意：函数表示导热系数时，温度的单位为K)";
             this.rb_hc_function.UseVisualStyleBackColor = true;
             // 
             // rb_hc_disperse
@@ -336,10 +336,10 @@
             this.rb_sh_function.Location = new System.Drawing.Point(111, 19);
             this.rb_sh_function.Margin = new System.Windows.Forms.Padding(4);
             this.rb_sh_function.Name = "rb_sh_function";
-            this.rb_sh_function.Size = new System.Drawing.Size(281, 19);
+            this.rb_sh_function.Size = new System.Drawing.Size(589, 19);
             this.rb_sh_function.TabIndex = 2;
             this.rb_sh_function.TabStop = true;
-            this.rb_sh_function.Text = "函数 (SH=∑(Kn*Temperature[K]^n)";
+            this.rb_sh_function.Text = "函数 (SH=∑(Kn*Temperature[K]^n，请注意：函数表示比热容时，温度的单位为K)";
             this.rb_sh_function.UseVisualStyleBackColor = true;
             // 
             // rb_sh_disperse

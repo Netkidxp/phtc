@@ -24,9 +24,9 @@ namespace PHTC
             DeleteToolStripMenuItem.Enabled = false;
             DetailsToolStripMenuItem.Enabled = false;
             LoadToolStripMenuItem.Enabled = false;
-            FavorateToolStripMenuItem.Enabled = false;
             contextMenuStrip1.Enabled = false;
-            FilterPanelShow = false; 
+            FilterPanelShow = false;
+            cb_filterPlanel.Checked = false;
             
         }
         public bool FilterPanelShow
@@ -36,19 +36,15 @@ namespace PHTC
                 filterPanelShow = value;
                 if(!filterPanelShow)
                 {
-                    bu_filter.Text = "打开筛选面板";
                     filterPanel.Height = 0;
-                    bu_filter.Location = new Point(bu_filter.Location.X, filterPanel.Location.Y);
-                    dgv_list.Location = new Point(dgv_list.Location.X, dgv_list.Location.Y - 170);
-                    this.Height -= 170;
+                    dgv_list.Location = filterPanel.Location;
+                    this.Height -= 190;
                 }
                 else
                 {
-                    bu_filter.Text = "收起筛选面板";
                     filterPanel.Height = 170;
-                    bu_filter.Location = new Point(bu_filter.Location.X, filterPanel.Location.Y+ filterPanel.Height);
-                    dgv_list.Location = new Point(dgv_list.Location.X, dgv_list.Location.Y + 170);
-                    this.Height += 170;
+                    dgv_list.Location = new Point(filterPanel.Location.X,filterPanel.Location.Y+filterPanel.Height+20);
+                    this.Height += 190;
                 }
             }
         }
@@ -93,11 +89,22 @@ namespace PHTC
                 tb_code.AutoCompleteCustomSource = ListToCollection(GetColumnValues<string>(dt_input, "牌号"));
                 tb_usefor.AutoCompleteCustomSource= ListToCollection(GetColumnValues<string>(dt_input, "使用领域"));
                 tb_owner.AutoCompleteCustomSource= ListToCollection(GetColumnValues<string>(dt_input, "所有者"));
+                tb_code.Text = "";
+                tb_name.Text = "";
+                tb_usefor.Text = "";
+                tb_owner.Text = "";
             }
+            else
+            {
+                GlobalTool.LogError("MaterialManageForm.RefreshData", "检索材料数据出现错误，请检查您的网络连接，或者向管理员寻求帮助！", true);
+                return;
+            }
+            
         }
         private void OnDGVDoubleClick(object sender, EventArgs e)
         {
             ShowMaterial();
+            RefreshData();
         }
 
         
@@ -121,7 +128,7 @@ namespace PHTC
                 bool res=DbMaterialAdapter.Insert(newmat);
                 if(!res)
                 {
-                    MessageBox.Show("保存材料出现错误，请检查您的网络连接，或者向管理员寻求帮助！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    GlobalTool.LogError("MaterialManageForm.NewMaterial", "保存材料出现错误，请检查您的网络连接，或者向管理员寻求帮助！", true);
                     return;
                 }
             }
@@ -135,7 +142,7 @@ namespace PHTC
             Material mat = DbMaterialAdapter.LoadWithId(id);
             if (mat == null)
             {
-                MessageBox.Show("读取材料出现错误，请检查您的网络连接，或者向管理员寻求帮助！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                GlobalTool.LogError("MaterialManageForm.DeleteMaterial", "读取材料出现错误，请检查您的网络连接，或者向管理员寻求帮助！", true);
                 return;
             }
             if (mat.OwnerId == User.CurrentUser.Id)
@@ -143,14 +150,14 @@ namespace PHTC
                 bool res = DbMaterialAdapter.Delete(id);
                 if (!res)
                 {
-                    MessageBox.Show("删除材料出现错误，请检查您的网络连接，或者向管理员寻求帮助！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    GlobalTool.LogError("MaterialManageForm.DeleteMaterial", "删除材料出现错误，请检查您的网络连接，或者向管理员寻求帮助！", true);
                     return;
                 }
                 
             }
             else
             {
-                MessageBox.Show("该材料不是由您创建，您无法删除，您可以显示材料详情，并保存为您的材料！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("该材料不为您所有，您无法删除！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
         }
@@ -163,7 +170,7 @@ namespace PHTC
             Material mat = DbMaterialAdapter.LoadWithId(id);
             if (mat == null)
             {
-                MessageBox.Show("读取材料出现错误，请检查您的网络连接，或者向管理员寻求帮助！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                GlobalTool.LogError("MaterialManageForm.ShowMaterial", "读取材料出现错误，请检查您的网络连接，或者向管理员寻求帮助！", true);
                 return;
             }
             if(mat.OwnerId == User.CurrentUser.Id|| mat.Share)
@@ -180,7 +187,7 @@ namespace PHTC
                         bool res = DbMaterialAdapter.Update(newmat);
                         if (!res)
                         {
-                            MessageBox.Show("保存新材料出现错误，请检查您的网络连接，或者向管理员寻求帮助！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            GlobalTool.LogError("MaterialManageForm.ShowMaterial", "保存材料出现错误，请检查您的网络连接，或者向管理员寻求帮助！", true);
                             return;
                         }
                     }
@@ -194,7 +201,7 @@ namespace PHTC
                         bool res = DbMaterialAdapter.Insert(newmat);
                         if (!res)
                         {
-                            MessageBox.Show("保存新材料出现错误，请检查您的网络连接，或者向管理员寻求帮助！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            GlobalTool.LogError("MaterialManageForm.ShowMaterial", "保存材料副本出现错误，请检查您的网络连接，或者向管理员寻求帮助！", true);
                             return;
                         }
                     }
@@ -213,7 +220,6 @@ namespace PHTC
             DeleteToolStripMenuItem.Enabled = (dgv_list.CurrentRow != null);
             DetailsToolStripMenuItem.Enabled = (dgv_list.CurrentRow != null);
             LoadToolStripMenuItem.Enabled = (dgv_list.CurrentRow != null);
-            FavorateToolStripMenuItem.Enabled = (dgv_list.CurrentRow != null);
             contextMenuStrip1.Enabled = (dgv_list.CurrentRow != null);
         }
         private void DeleteToolStripMenuItem_Click(object sender, EventArgs e)
@@ -240,11 +246,6 @@ namespace PHTC
         private void FavorateToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
-        }
-
-        private void bu_filter_Click(object sender, EventArgs e)
-        {
-            FilterPanelShow = !FilterPanelShow;
         }
         private void RefreshView()
         {
@@ -321,6 +322,11 @@ namespace PHTC
         private void OnCbShareCheckedChanged(object sender, EventArgs e)
         {
             RefreshView();
+        }
+
+        private void OnCBFilterPlanelCheckedChanged(object sender, EventArgs e)
+        {
+            FilterPanelShow = cb_filterPlanel.Checked;
         }
     }
 }
