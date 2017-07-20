@@ -5,3 +5,10 @@ E:\works\VS\Therm\PHTC\Solver\obj\Debug\PHTC.Solver.CalculateForm.resources
 E:\works\VS\Therm\PHTC\Solver\obj\Debug\Solver.csproj.GenerateResource.Cache
 E:\works\VS\Therm\PHTC\Solver\obj\Debug\PHTC.Solver.dll
 E:\works\VS\Therm\PHTC\Solver\obj\Debug\PHTC.Solver.pdb
+E:\Git_PHTC\PHTC\bin\Debug\PHTC.Solver.dll
+E:\Git_PHTC\PHTC\bin\Debug\PHTC.Solver.pdb
+E:\Git_PHTC\Solver\obj\Debug\Solver.csprojResolveAssemblyReference.cache
+E:\Git_PHTC\Solver\obj\Debug\PHTC.Solver.CalculateForm.resources
+E:\Git_PHTC\Solver\obj\Debug\Solver.csproj.GenerateResource.Cache
+E:\Git_PHTC\Solver\obj\Debug\PHTC.Solver.dll
+E:\Git_PHTC\Solver\obj\Debug\PHTC.Solver.pdb

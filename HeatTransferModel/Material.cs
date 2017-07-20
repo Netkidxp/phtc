@@ -87,7 +87,7 @@ namespace PHTC.Model
             //double i = 0.0;
             foreach (RefValue rv in values)
             {
-                result += rv.v * Math.Pow(temperature, rv.r);
+                result += rv.r * Math.Pow(temperature, rv.v);
                 //i += 1.0;
             }
             return result;

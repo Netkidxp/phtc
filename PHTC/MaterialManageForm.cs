@@ -17,9 +17,11 @@ namespace PHTC
 
         bool filterPanelShow;
         DataTable dt_input;
+        int FILTER_PLANEL_HEIGHT = 0;
         public MaterialManageForm()
         {
             InitializeComponent();
+            FILTER_PLANEL_HEIGHT = filterPanel.Height;
             dt_input = null;
             DeleteToolStripMenuItem.Enabled = false;
             DetailsToolStripMenuItem.Enabled = false;
@@ -38,13 +40,13 @@ namespace PHTC
                 {
                     filterPanel.Height = 0;
                     dgv_list.Location = filterPanel.Location;
-                    this.Height -= 190;
+                    this.Height -= FILTER_PLANEL_HEIGHT+10;
                 }
                 else
                 {
-                    filterPanel.Height = 170;
-                    dgv_list.Location = new Point(filterPanel.Location.X,filterPanel.Location.Y+filterPanel.Height+20);
-                    this.Height += 190;
+                    filterPanel.Height = FILTER_PLANEL_HEIGHT;
+                    dgv_list.Location = new Point(filterPanel.Location.X,filterPanel.Location.Y+ FILTER_PLANEL_HEIGHT + 10);
+                    this.Height += FILTER_PLANEL_HEIGHT+10;
                 }
             }
         }
