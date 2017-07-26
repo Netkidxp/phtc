@@ -38,13 +38,13 @@ namespace PHTC.Model
     public class Class1Solver
     {
         
-        protected Calculate calculate;
+        protected TemperatureCalculate calculate;
         protected int currentStep;
         protected double currentResidual;
 
         public int CurrentStep { get => currentStep; }
         public double CurrentResidual { get => currentResidual; }
-        public Calculate CurrentCalculate
+        public TemperatureCalculate CurrentCalculate
         {
             get => calculate;
         }
@@ -56,7 +56,7 @@ namespace PHTC.Model
         public event SolveStartEventHandler SolveStartEvent;
 
         private Class1Solver() { }
-        public Class1Solver(Calculate _model)
+        public Class1Solver(TemperatureCalculate _model)
         {
             calculate = _model;
         }
@@ -161,7 +161,7 @@ namespace PHTC.Model
     }
     public class Class3Solver:Class1Solver
     {
-        public Class3Solver(Calculate _model) : base(_model)
+        public Class3Solver(TemperatureCalculate _model) : base(_model)
         {
         }
         public override void InitalizeTemperature()
@@ -197,7 +197,7 @@ namespace PHTC.Model
                 if (IsConvergenced(parameter))
                     break;
                 currentStep++;
-                boundary.Area = Calculate.OutsideArea(CurrentCalculate.LayerList);
+                boundary.Area = TemperatureCalculate.OutsideArea(CurrentCalculate.LayerList);
                 totalHeatResistance = boundary.CombinedHeatResistance;
                 foreach (Layer layer in calculate.LayerList)
                 {
@@ -214,7 +214,7 @@ namespace PHTC.Model
     }
     public class Class2Solver:Class1Solver
     {
-        public Class2Solver(Calculate _model):base(_model)
+        public Class2Solver(TemperatureCalculate _model):base(_model)
         {
         }
         public override void InitalizeTemperature()
@@ -255,7 +255,7 @@ namespace PHTC.Model
     }
     public static class SolverFactory
     {
-        public static Class1Solver CreateSolver(Calculate calculate)
+        public static Class1Solver CreateSolver(TemperatureCalculate calculate)
         {
             if (calculate.Boundary is Class3Boundary)
                 return new Class3Solver(calculate);

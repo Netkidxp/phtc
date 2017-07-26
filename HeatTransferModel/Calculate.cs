@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 namespace PHTC.Model
 {
     
-    public class Calculate
+    public class TemperatureCalculate
     {
         double temperature;
         Class1Boundary boundary;
         List<Layer> layerList;
 
-        private Calculate() { }
-        public Calculate(double _hotfaceTemperature, Class1Boundary _codefaceBoundary, List<Layer> _layers)
+        private TemperatureCalculate() { }
+        public TemperatureCalculate(double _hotfaceTemperature, Class1Boundary _codefaceBoundary, List<Layer> _layers)
         {
             temperature = _hotfaceTemperature;
             boundary = _codefaceBoundary;

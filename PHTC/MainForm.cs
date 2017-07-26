@@ -22,7 +22,7 @@ namespace PHTC
 
         private void ShowNewForm(object sender, EventArgs e)
         {
-            Form childForm = new Form2();
+            Form childForm = new ProjectForm();
             childForm.MdiParent = this;
             childForm.Text = "窗口 " + childFormNumber++;
             childForm.Show();

@@ -14,11 +14,11 @@ namespace PHTC.Model
     public class ThicknessCalculate
     {
         int layerIndex;
-        Calculate calculate;
+        TemperatureCalculate calculate;
         double targetValue;
         SolverControlParameter temperatureSolveParameter;
         SolverControlParameter thicknessSolveParameter;
-        public ThicknessCalculate(Calculate _calculate,int _layerIndex,double _targetValue,SolverControlParameter _temperatureSolveParameter,SolverControlParameter _thicknessSolveParameter)
+        public ThicknessCalculate(TemperatureCalculate _calculate,int _layerIndex,double _targetValue,SolverControlParameter _temperatureSolveParameter,SolverControlParameter _thicknessSolveParameter)
         {
             Calculate = _calculate;
             LayerIndex = _layerIndex;
@@ -28,7 +28,7 @@ namespace PHTC.Model
         }
 
         public int LayerIndex { get => layerIndex; set => layerIndex = value; }
-        public Calculate Calculate { get => calculate; set => calculate = value; }
+        public TemperatureCalculate Calculate { get => calculate; set => calculate = value; }
         public double TargetValue { get => targetValue; set => targetValue = value; }
         public SolverControlParameter TemperatureSolveParameter { get => temperatureSolveParameter; set => temperatureSolveParameter = value; }
         public SolverControlParameter ThicknessSolveParameter { get => thicknessSolveParameter; set => thicknessSolveParameter = value; }

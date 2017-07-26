@@ -105,7 +105,7 @@ namespace PHTC
             layers.Add(layer);
             return layers;
         }
-        private void CreateTestSolverAndRun(Calculate cal)
+        private void CreateTestSolverAndRun(TemperatureCalculate cal)
         {
             Class1Solver solver = SolverFactory.CreateSolver(cal);
             solver.InitalizedTemperatureEndEvent += new InitalizedTemperatureEndEventHandler(OnInit);
@@ -120,7 +120,7 @@ namespace PHTC
         private void Test(Class1Boundary boundary)
         {
             List<Layer> layers = CreateTestLayers();
-            Model.Calculate cm = new Model.Calculate(1600+273.15, boundary, layers);
+            Model.TemperatureCalculate cm = new Model.TemperatureCalculate(1600+273.15, boundary, layers);
             CreateTestSolverAndRun(cm);
         }
         private void PLATE_C1(object sender, EventArgs e)
@@ -146,24 +146,24 @@ namespace PHTC
             
             
             List<Layer> layers = CreateTestLayers();
-            Class3Boundary boundary = new Class3Boundary(10, 0.0, 25 + 273.15, Calculate.OutsideArea(layers));
-            Model.Calculate cm = new Model.Calculate(1600 + 273.15, boundary, layers);
+            Class3Boundary boundary = new Class3Boundary(10, 0.0, 25 + 273.15, TemperatureCalculate.OutsideArea(layers));
+            Model.TemperatureCalculate cm = new Model.TemperatureCalculate(1600 + 273.15, boundary, layers);
             CreateTestSolverAndRun(cm);
         }
 
         private void PLATE_C3_RAD(object sender, EventArgs e)
         {
             List<Layer> layers = CreateTestLayers();
-            Class3Boundary boundary = new Class3Boundary(0.0, 0.8, 25 + 273.15, Calculate.OutsideArea(layers));
-            Model.Calculate cm = new Model.Calculate(1600 + 273.15, boundary, layers);
+            Class3Boundary boundary = new Class3Boundary(0.0, 0.8, 25 + 273.15, TemperatureCalculate.OutsideArea(layers));
+            Model.TemperatureCalculate cm = new Model.TemperatureCalculate(1600 + 273.15, boundary, layers);
             CreateTestSolverAndRun(cm);
         }
 
         private void PLATE_C3_COM(object sender, EventArgs e)
         {
             List<Layer> layers = CreateTestLayers();
-            Class3Boundary boundary = new Class3Boundary(10, 0.8, 25 + 273.15, Calculate.OutsideArea(layers));
-            Model.Calculate cm = new Model.Calculate(1600 + 273.15, boundary, layers);
+            Class3Boundary boundary = new Class3Boundary(10, 0.8, 25 + 273.15, TemperatureCalculate.OutsideArea(layers));
+            Model.TemperatureCalculate cm = new Model.TemperatureCalculate(1600 + 273.15, boundary, layers);
             CreateTestSolverAndRun(cm);
         }
 
@@ -203,7 +203,7 @@ namespace PHTC
         {
             List<Layer> layers = CreateTestTubbinessLayers();
             Class1Boundary boundary = new Class1Boundary(100+273.15);
-            Model.Calculate cm = new Model.Calculate(1600 + 273.15, boundary, layers);
+            Model.TemperatureCalculate cm = new Model.TemperatureCalculate(1600 + 273.15, boundary, layers);
             CreateTestSolverAndRun(cm);
         }
 
@@ -211,31 +211,31 @@ namespace PHTC
         {
             List<Layer> layers = CreateTestTubbinessLayers();
             Class2Boundary boundary = new Class2Boundary(14879.5);
-            Model.Calculate cm = new Model.Calculate(1600 + 273.15, boundary, layers);
+            Model.TemperatureCalculate cm = new Model.TemperatureCalculate(1600 + 273.15, boundary, layers);
             CreateTestSolverAndRun(cm);
         }
 
         private void TUBBIN_C3_COV(object sender, EventArgs e)
         {
             List<Layer> layers = CreateTestTubbinessLayers();
-            Class3Boundary boundary = new Class3Boundary(10, 0.0, 25 + 273.15, Calculate.OutsideArea(layers));
-            Model.Calculate cm = new Model.Calculate(1600 + 273.15, boundary, layers);
+            Class3Boundary boundary = new Class3Boundary(10, 0.0, 25 + 273.15, TemperatureCalculate.OutsideArea(layers));
+            Model.TemperatureCalculate cm = new Model.TemperatureCalculate(1600 + 273.15, boundary, layers);
             CreateTestSolverAndRun(cm);
         }
 
         private void TUBBIN_C3_RAD(object sender, EventArgs e)
         {
             List<Layer> layers = CreateTestTubbinessLayers();
-            Class3Boundary boundary = new Class3Boundary(0.0, 0.8, 25 + 273.15, Calculate.OutsideArea(layers));
-            Model.Calculate cm = new Model.Calculate(1600 + 273.15, boundary, layers);
+            Class3Boundary boundary = new Class3Boundary(0.0, 0.8, 25 + 273.15, TemperatureCalculate.OutsideArea(layers));
+            Model.TemperatureCalculate cm = new Model.TemperatureCalculate(1600 + 273.15, boundary, layers);
             CreateTestSolverAndRun(cm);
         }
 
         private void TUBBIN_C3_COM(object sender, EventArgs e)
         {
             List<Layer> layers = CreateTestTubbinessLayers();
-            Class3Boundary boundary = new Class3Boundary(10, 0.8, 25 + 273.15, Calculate.OutsideArea(layers));
-            Model.Calculate cm = new Model.Calculate(1600 + 273.15, boundary, layers);
+            Class3Boundary boundary = new Class3Boundary(10, 0.8, 25 + 273.15, TemperatureCalculate.OutsideArea(layers));
+            Model.TemperatureCalculate cm = new Model.TemperatureCalculate(1600 + 273.15, boundary, layers);
             CreateTestSolverAndRun(cm);
         }
 
@@ -300,7 +300,7 @@ namespace PHTC
         {
             List<Layer> layers = CreateTestLayers();
             Class1Boundary boundary = new Class1Boundary(100+273.15);
-            Model.Calculate cal = new Model.Calculate(1600 + 273.15, boundary, layers);
+            Model.TemperatureCalculate cal = new Model.TemperatureCalculate(1600 + 273.15, boundary, layers);
             SolverControlParameter par = new SolverControlParameter(SolverControlParameter.ConvergenceCriterionType.RESIDUAL_OR_MAXSTEP, 0.001, 50, 0);
             ThicknessCalculate tcal = new ThicknessCalculate(cal, 2, 1038.09, par, par);
             //ThicknessCalculate tcal = new ThicknessCalculate(cal, 2, 2038.09, par, par);
@@ -317,7 +317,7 @@ namespace PHTC
         {
             List<Layer> layers = CreateTestLayers();
             Class2Boundary boundary = new Class2Boundary(1038.09);
-            Model.Calculate cal = new Model.Calculate(1600 + 273.15, boundary, layers);
+            Model.TemperatureCalculate cal = new Model.TemperatureCalculate(1600 + 273.15, boundary, layers);
             SolverControlParameter par = new SolverControlParameter(SolverControlParameter.ConvergenceCriterionType.RESIDUAL_OR_MAXSTEP, 0.001, 50, 0);
             ThicknessCalculate tcal = new ThicknessCalculate(cal, 2, 273.15+100, par, par);
             //ThicknessCalculate tcal = new ThicknessCalculate(cal, 2, 273.15 + 900, par, par);
@@ -333,8 +333,8 @@ namespace PHTC
         private void THICKNESS_PLATE_C3_CON(object sender, EventArgs e)
         {
             List<Layer> layers = CreateTestLayers();
-            Class3Boundary boundary = new Class3Boundary(10, 0.0, 25 + 273.15, Calculate.OutsideArea(layers));
-            Model.Calculate cal = new Model.Calculate(1600 + 273.15, boundary, layers);
+            Class3Boundary boundary = new Class3Boundary(10, 0.0, 25 + 273.15, TemperatureCalculate.OutsideArea(layers));
+            Model.TemperatureCalculate cal = new Model.TemperatureCalculate(1600 + 273.15, boundary, layers);
             SolverControlParameter par = new SolverControlParameter(SolverControlParameter.ConvergenceCriterionType.RESIDUAL_OR_MAXSTEP, 0.001, 50, 0);
             ThicknessCalculate tcal = new ThicknessCalculate(cal, 2, 400.07, par, par);
             //ThicknessCalculate tcal = new ThicknessCalculate(cal, 2, 600.07, par, par);
@@ -350,8 +350,8 @@ namespace PHTC
         private void THICKNESS_PLATE_C3_RAD(object sender, EventArgs e)
         {
             List<Layer> layers = CreateTestLayers();
-            Class3Boundary boundary = new Class3Boundary(0, 0.8, 25 + 273.15, Calculate.OutsideArea(layers));
-            Model.Calculate cal = new Model.Calculate(1600 + 273.15, boundary, layers);
+            Class3Boundary boundary = new Class3Boundary(0, 0.8, 25 + 273.15, TemperatureCalculate.OutsideArea(layers));
+            Model.TemperatureCalculate cal = new Model.TemperatureCalculate(1600 + 273.15, boundary, layers);
             SolverControlParameter par = new SolverControlParameter(SolverControlParameter.ConvergenceCriterionType.RESIDUAL_OR_MAXSTEP, 0.001, 50, 0);
             ThicknessCalculate tcal = new ThicknessCalculate(cal, 2, 416.58, par, par);
             ThicknessSolver solver = ThicknessSolverFactory.CreateSolver(tcal);
@@ -366,8 +366,8 @@ namespace PHTC
         private void THICKNESS_PLATE_C3_COM(object sender, EventArgs e)
         {
             List<Layer> layers = CreateTestLayers();
-            Class3Boundary boundary = new Class3Boundary(10, 0.8, 25 + 273.15, Calculate.OutsideArea(layers));
-            Model.Calculate cal = new Model.Calculate(1600 + 273.15, boundary, layers);
+            Class3Boundary boundary = new Class3Boundary(10, 0.8, 25 + 273.15, TemperatureCalculate.OutsideArea(layers));
+            Model.TemperatureCalculate cal = new Model.TemperatureCalculate(1600 + 273.15, boundary, layers);
             SolverControlParameter par = new SolverControlParameter(SolverControlParameter.ConvergenceCriterionType.RESIDUAL_OR_MAXSTEP, 0.001, 50, 0);
             ThicknessCalculate tcal = new ThicknessCalculate(cal, 2, 361.32, par, par);
             ThicknessSolver solver = ThicknessSolverFactory.CreateSolver(tcal);
@@ -383,7 +383,7 @@ namespace PHTC
         {
             List<Layer> layers = CreateTestTubbinessLayers();
             Class1Boundary boundary = new Class1Boundary(100 + 273.15);
-            Model.Calculate cal = new Model.Calculate(1600 + 273.15, boundary, layers);
+            Model.TemperatureCalculate cal = new Model.TemperatureCalculate(1600 + 273.15, boundary, layers);
             SolverControlParameter par = new SolverControlParameter(SolverControlParameter.ConvergenceCriterionType.RESIDUAL_OR_MAXSTEP, 0.001, 50, 0);
             ThicknessCalculate tcal = new ThicknessCalculate(cal, 2, 19667.83, par, par);
             ThicknessSolver solver = ThicknessSolverFactory.CreateSolver(tcal);
@@ -399,7 +399,7 @@ namespace PHTC
         {
             List<Layer> layers = CreateTestTubbinessLayers();
             Class2Boundary boundary = new Class2Boundary(14879.50);
-            Model.Calculate cal = new Model.Calculate(1600 + 273.15, boundary, layers);
+            Model.TemperatureCalculate cal = new Model.TemperatureCalculate(1600 + 273.15, boundary, layers);
             SolverControlParameter par = new SolverControlParameter(SolverControlParameter.ConvergenceCriterionType.RESIDUAL_OR_MAXSTEP, 0.001, 50, 0);
             ThicknessCalculate tcal = new ThicknessCalculate(cal, 2, 728.99, par, par);
             ThicknessSolver solver = ThicknessSolverFactory.CreateSolver(tcal);
@@ -414,8 +414,8 @@ namespace PHTC
         private void THICKNESS_TUBBIN_C3_CON(object sender, EventArgs e)
         {
             List<Layer> layers = CreateTestTubbinessLayers();
-            Class3Boundary boundary = new Class3Boundary(10, 0, 25 + 273.15, Calculate.OutsideArea(layers));
-            Model.Calculate cal = new Model.Calculate(1600 + 273.15, boundary, layers);
+            Class3Boundary boundary = new Class3Boundary(10, 0, 25 + 273.15, TemperatureCalculate.OutsideArea(layers));
+            Model.TemperatureCalculate cal = new Model.TemperatureCalculate(1600 + 273.15, boundary, layers);
             SolverControlParameter par = new SolverControlParameter(SolverControlParameter.ConvergenceCriterionType.RESIDUAL_OR_MAXSTEP, 0.001, 50, 0);
             ThicknessCalculate tcal = new ThicknessCalculate(cal, 2, 461.49, par, par);
             ThicknessSolver solver = ThicknessSolverFactory.CreateSolver(tcal);
@@ -430,8 +430,8 @@ namespace PHTC
         private void THICKNESS_TUBBIN_C3_RAD(object sender, EventArgs e)
         {
             List<Layer> layers = CreateTestTubbinessLayers();
-            Class3Boundary boundary = new Class3Boundary(0, 0.8, 25 + 273.15, Calculate.OutsideArea(layers));
-            Model.Calculate cal = new Model.Calculate(1600 + 273.15, boundary, layers);
+            Class3Boundary boundary = new Class3Boundary(0, 0.8, 25 + 273.15, TemperatureCalculate.OutsideArea(layers));
+            Model.TemperatureCalculate cal = new Model.TemperatureCalculate(1600 + 273.15, boundary, layers);
             SolverControlParameter par = new SolverControlParameter(SolverControlParameter.ConvergenceCriterionType.RESIDUAL_OR_MAXSTEP, 0.001, 50, 0);
             ThicknessCalculate tcal = new ThicknessCalculate(cal, 2, 458.01, par, par);
             ThicknessSolver solver = ThicknessSolverFactory.CreateSolver(tcal);
@@ -447,8 +447,8 @@ namespace PHTC
         {
             
             List<Layer> layers = CreateTestTubbinessLayers();
-            Class3Boundary boundary = new Class3Boundary(10, 0.8, 25 + 273.15, Calculate.OutsideArea(layers));
-            Model.Calculate cal = new Model.Calculate(1600 + 273.15, boundary, layers);
+            Class3Boundary boundary = new Class3Boundary(10, 0.8, 25 + 273.15, TemperatureCalculate.OutsideArea(layers));
+            Model.TemperatureCalculate cal = new Model.TemperatureCalculate(1600 + 273.15, boundary, layers);
             SolverControlParameter par = new SolverControlParameter(SolverControlParameter.ConvergenceCriterionType.RESIDUAL_OR_MAXSTEP, 0.001, 50, 0);
             ThicknessCalculate tcal = new ThicknessCalculate(cal, 2, 394.94, par, par);
             ThicknessSolver solver = ThicknessSolverFactory.CreateSolver(tcal);

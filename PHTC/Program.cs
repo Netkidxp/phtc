@@ -18,7 +18,7 @@ namespace PHTC
             User.CurrentUser = DBUserAdapter.LoadWithId(1);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new ProjectForm());
         }
     }
 }

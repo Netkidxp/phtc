@@ -3,3 +3,8 @@ E:\works\VS\Therm\PHTC\PHTC\bin\Debug\PHTC.DB.pdb
 E:\works\VS\Therm\PHTC\DB\obj\Debug\DB.csprojResolveAssemblyReference.cache
 E:\works\VS\Therm\PHTC\DB\obj\Debug\PHTC.DB.dll
 E:\works\VS\Therm\PHTC\DB\obj\Debug\PHTC.DB.pdb
+E:\Git_PHTC\PHTC\bin\Debug\PHTC.DB.dll
+E:\Git_PHTC\PHTC\bin\Debug\PHTC.DB.pdb
+E:\Git_PHTC\DB\obj\Debug\DB.csprojResolveAssemblyReference.cache
+E:\Git_PHTC\DB\obj\Debug\PHTC.DB.dll
+E:\Git_PHTC\DB\obj\Debug\PHTC.DB.pdb

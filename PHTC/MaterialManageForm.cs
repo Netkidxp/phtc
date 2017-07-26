@@ -12,12 +12,14 @@ using PHTC.DB;
 using PHTC.Model;
 namespace PHTC
 {
+    public delegate void LoadEventHandler(Material mat);
     public partial class MaterialManageForm : Form
     {
 
         bool filterPanelShow;
         DataTable dt_input;
         int FILTER_PLANEL_HEIGHT = 0;
+        public event LoadEventHandler LoadEvent;
         public MaterialManageForm()
         {
             InitializeComponent();
@@ -242,7 +244,26 @@ namespace PHTC
 
         private void LoadToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            if(LoadEvent!=null)
+            {
+                int id = (int)dgv_list.CurrentRow.Cells[0].Value;
+                Material mat = DbMaterialAdapter.LoadWithId(id);
+                if (mat == null)
+                {
+                    GlobalTool.LogError("MaterialManageForm.ShowMaterial", "读取材料出现错误，请检查您的网络连接，或者向管理员寻求帮助！", true);
+                    return;
+                }
+                if(mat.OwnerId==User.CurrentUser.Id||mat.Share)
+                {
+                    LoadEvent(mat);
+                }
+                else
+                {
+                    MessageBox.Show("该材料所有者不共享材料信息，请您联系材料所有者！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+                    
+            }
         }
 
         private void FavorateToolStripMenuItem_Click(object sender, EventArgs e)

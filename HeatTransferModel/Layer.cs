@@ -8,6 +8,7 @@ namespace PHTC.Model
 {
     public class Layer
     {
+        private string name;
         protected double heatResistance;
         protected double thickness;
         protected double lowTemperature, highTemperature;
@@ -47,6 +48,9 @@ namespace PHTC.Model
 
             }
         }
+
+        public string Name { get => name; set => name = value; }
+
         private Layer() { } 
         protected Layer(double heat_resistance,double low_t,double high_t)
         {

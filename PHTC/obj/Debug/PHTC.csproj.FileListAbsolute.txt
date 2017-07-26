@@ -29,13 +29,8 @@ E:\Git_PHTC\PHTC\bin\Debug\MySql.Data.dll
 E:\Git_PHTC\PHTC\bin\Debug\MySql.Web.dll
 E:\Git_PHTC\PHTC\bin\Debug\MySql.Data.xml
 E:\Git_PHTC\PHTC\bin\Debug\MySql.Web.xml
-E:\Git_PHTC\PHTC\bin\Debug\PHTC.DB.pdb
-E:\Git_PHTC\PHTC\bin\Debug\PHTC.GlobalTool.pdb
-E:\Git_PHTC\PHTC\bin\Debug\PHTC.Model.pdb
-E:\Git_PHTC\PHTC\bin\Debug\PHTC.Solver.pdb
 E:\Git_PHTC\PHTC\obj\Debug\PHTC.csprojResolveAssemblyReference.cache
 E:\Git_PHTC\PHTC\obj\Debug\PHTC.Form1.resources
-E:\Git_PHTC\PHTC\obj\Debug\PHTC.Form2.resources
 E:\Git_PHTC\PHTC\obj\Debug\PHTC.HeatflowPlate.resources
 E:\Git_PHTC\PHTC\obj\Debug\PHTC.MainForm.resources
 E:\Git_PHTC\PHTC\obj\Debug\PHTC.MaterialDetailsControl.resources
@@ -46,3 +41,4 @@ E:\Git_PHTC\PHTC\obj\Debug\PHTC.Test_User.resources
 E:\Git_PHTC\PHTC\obj\Debug\PHTC.csproj.GenerateResource.Cache
 E:\Git_PHTC\PHTC\obj\Debug\PHTC.exe
 E:\Git_PHTC\PHTC\obj\Debug\PHTC.pdb
+E:\Git_PHTC\PHTC\obj\Debug\PHTC.ProjectForm.resources
