@@ -11,28 +11,7 @@ namespace PHTC.Model
     public delegate void ThicknessSolverUpdateEventHandler(ThicknessSolver solver);
     public delegate void ThicknessSolverStopEventHandler(ThicknessSolver solver);
 
-    public class ThicknessCalculate
-    {
-        int layerIndex;
-        TemperatureCalculate calculate;
-        double targetValue;
-        SolverControlParameter temperatureSolveParameter;
-        SolverControlParameter thicknessSolveParameter;
-        public ThicknessCalculate(TemperatureCalculate _calculate,int _layerIndex,double _targetValue,SolverControlParameter _temperatureSolveParameter,SolverControlParameter _thicknessSolveParameter)
-        {
-            Calculate = _calculate;
-            LayerIndex = _layerIndex;
-            TargetValue = _targetValue;
-            TemperatureSolveParameter = _temperatureSolveParameter;
-            ThicknessSolveParameter = _thicknessSolveParameter;
-        }
-
-        public int LayerIndex { get => layerIndex; set => layerIndex = value; }
-        public TemperatureCalculate Calculate { get => calculate; set => calculate = value; }
-        public double TargetValue { get => targetValue; set => targetValue = value; }
-        public SolverControlParameter TemperatureSolveParameter { get => temperatureSolveParameter; set => temperatureSolveParameter = value; }
-        public SolverControlParameter ThicknessSolveParameter { get => thicknessSolveParameter; set => thicknessSolveParameter = value; }
-    }
+    
 
     public class ThicknessSolver
     {

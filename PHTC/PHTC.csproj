@@ -65,14 +65,61 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ColdBoundaryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ColdBoundaryForm.Designer.cs">
+      <DependentUpon>ColdBoundaryForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ControlParameterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ControlParameterForm.Designer.cs">
+      <DependentUpon>ControlParameterForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="FTreeView.cs">
-      <SubType>Component</SubType>
+    <Compile Include="HotfaceParameterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HotfaceParameterForm.Designer.cs">
+      <DependentUpon>HotfaceParameterForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LayerDifferentialParameterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LayerDifferentialParameterForm.Designer.cs">
+      <DependentUpon>LayerDifferentialParameterForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LayerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LayerForm.Designer.cs">
+      <DependentUpon>LayerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MaterialManager.cs" />
+    <Compile Include="ProjectLoadForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProjectLoadForm.Designer.cs">
+      <DependentUpon>ProjectLoadForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectManager.cs" />
+    <Compile Include="ProjectParameterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProjectParameterForm.Designer.cs">
+      <DependentUpon>ProjectParameterForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PhtcDisplay.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PhtcDisplay.Designer.cs">
+      <DependentUpon>PhtcDisplay.cs</DependentUpon>
     </Compile>
     <Compile Include="ProjectForm.cs">
       <SubType>Form</SubType>
@@ -80,23 +127,11 @@
     <Compile Include="ProjectForm.Designer.cs">
       <DependentUpon>ProjectForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="HeatflowPlate.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="HeatflowPlate.Designer.cs">
-      <DependentUpon>HeatflowPlate.cs</DependentUpon>
-    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MaterialDetailsControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="MaterialDetailsControl.Designer.cs">
-      <DependentUpon>MaterialDetailsControl.cs</DependentUpon>
     </Compile>
     <Compile Include="MaterialDetailsForm.cs">
       <SubType>Form</SubType>
@@ -111,34 +146,60 @@
       <DependentUpon>MaterialManageForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
+    <Compile Include="ProjectSaveAsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProjectSaveAsForm.Designer.cs">
+      <DependentUpon>ProjectSaveAsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Project.cs" />
     <Compile Include="Test_User.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Test_User.Designer.cs">
       <DependentUpon>Test_User.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ColdBoundaryForm.resx">
+      <DependentUpon>ColdBoundaryForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ControlParameterForm.resx">
+      <DependentUpon>ControlParameterForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HotfaceParameterForm.resx">
+      <DependentUpon>HotfaceParameterForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LayerDifferentialParameterForm.resx">
+      <DependentUpon>LayerDifferentialParameterForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LayerForm.resx">
+      <DependentUpon>LayerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProjectLoadForm.resx">
+      <DependentUpon>ProjectLoadForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProjectParameterForm.resx">
+      <DependentUpon>ProjectParameterForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PhtcDisplay.resx">
+      <DependentUpon>PhtcDisplay.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ProjectForm.resx">
       <DependentUpon>ProjectForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="HeatflowPlate.resx">
-      <DependentUpon>HeatflowPlate.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MaterialDetailsControl.resx">
-      <DependentUpon>MaterialDetailsControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MaterialDetailsForm.resx">
       <DependentUpon>MaterialDetailsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MaterialManageForm.resx">
       <DependentUpon>MaterialManageForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProjectSaveAsForm.resx">
+      <DependentUpon>ProjectSaveAsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -31,9 +31,7 @@ E:\Git_PHTC\PHTC\bin\Debug\MySql.Data.xml
 E:\Git_PHTC\PHTC\bin\Debug\MySql.Web.xml
 E:\Git_PHTC\PHTC\obj\Debug\PHTC.csprojResolveAssemblyReference.cache
 E:\Git_PHTC\PHTC\obj\Debug\PHTC.Form1.resources
-E:\Git_PHTC\PHTC\obj\Debug\PHTC.HeatflowPlate.resources
 E:\Git_PHTC\PHTC\obj\Debug\PHTC.MainForm.resources
-E:\Git_PHTC\PHTC\obj\Debug\PHTC.MaterialDetailsControl.resources
 E:\Git_PHTC\PHTC\obj\Debug\PHTC.MaterialDetailsForm.resources
 E:\Git_PHTC\PHTC\obj\Debug\PHTC.MaterialManageForm.resources
 E:\Git_PHTC\PHTC\obj\Debug\PHTC.Properties.Resources.resources
@@ -42,3 +40,14 @@ E:\Git_PHTC\PHTC\obj\Debug\PHTC.csproj.GenerateResource.Cache
 E:\Git_PHTC\PHTC\obj\Debug\PHTC.exe
 E:\Git_PHTC\PHTC\obj\Debug\PHTC.pdb
 E:\Git_PHTC\PHTC\obj\Debug\PHTC.ProjectForm.resources
+E:\Git_PHTC\PHTC\obj\Debug\PHTC.HotfaceParameterForm.resources
+E:\Git_PHTC\PHTC\obj\Debug\PHTC.LayerForm.resources
+E:\Git_PHTC\PHTC\obj\Debug\PHTC.ColdBoundaryForm.resources
+E:\Git_PHTC\PHTC\obj\Debug\PHTC.ControlParameterForm.resources
+E:\Git_PHTC\PHTC\obj\Debug\PHTC.LayerDifferentialParameterForm.resources
+E:\Git_PHTC\PHTC\obj\Debug\PHTC.PhtcDisplay.resources
+E:\Git_PHTC\PHTC\obj\Debug\PHTC.ProjectParameterForm.resources
+E:\Git_PHTC\PHTC\obj\Debug\PHTC.ProjectSaveAsForm.resources
+E:\Git_PHTC\PHTC\obj\Debug\PHTC.ProjectLoadForm.resources
+E:\Git_PHTC\PHTC\bin\Debug\PHTC.Model.pdb
+E:\Git_PHTC\PHTC\bin\Debug\PHTC.Solver.pdb

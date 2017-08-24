@@ -22,7 +22,7 @@ namespace PHTC
             InitializeComponent();
         }
        
-        void OutputDebugInformation(Class1Solver solver)
+        void OutputDebugInformation(TemperatureSolverC1 solver)
         {
             Console.WriteLine("----------------------------------第{0}次迭代------------------------------",solver.CurrentStep);
             Console.WriteLine("残差:{0:#.###}",solver.CurrentResidual);
@@ -33,7 +33,7 @@ namespace PHTC
             }
             
         }
-        void OnUpdate(Class1Solver solver)
+        void OnUpdate(TemperatureSolverC1 solver)
         {
            
             chart1.Series[0].Points.AddXY(solver.CurrentStep, solver.CurrentResidual);
@@ -53,13 +53,13 @@ namespace PHTC
             textBox2.SelectionStart = textBox2.Text.Length;
             textBox2.ScrollToCaret();
         }
-        void OnEnd(Class1Solver solver)
+        void OnEnd(TemperatureSolverC1 solver)
         {
             textBox2.Text += "\r\n计算完毕！！！\r\n";
             textBox2.SelectionStart = textBox2.Text.Length;
             textBox2.ScrollToCaret();
         }
-        void OnInit(Class1Solver solver)
+        void OnInit(TemperatureSolverC1 solver)
         {
             
             chart1.Series[0].Points.Clear();
@@ -74,7 +74,7 @@ namespace PHTC
             textBox2.Text = "初始化完毕！！！\r\n";
 
         }
-        void OnStart(Class1Solver solver)
+        void OnStart(TemperatureSolverC1 solver)
         {
             textBox2.Text += "开始计算！！！\r\n";
         }
@@ -88,26 +88,26 @@ namespace PHTC
         private List<Layer> CreateTestLayers()
         {
             Material mat = DbMaterialAdapter.LoadWithId(9);
-            Layer layer = new Layer(mat, 0.3);
+            Layer layer = new Layer(mat, 0.3,1,1);
             List<Layer> layers = new List<Layer>();
             layers.Add(layer);
             mat = DbMaterialAdapter.LoadWithId(10);
-            layer = new Layer(mat, 0.4);
+            layer = new Layer(mat, 0.4,1,1);
             layers.Add(layer);
             mat = DbMaterialAdapter.LoadWithId(11);
-            layer = new Layer(mat, 0.5);
+            layer = new Layer(mat, 0.5,1,1);
             layers.Add(layer);
             mat = DbMaterialAdapter.LoadWithId(12);
-            layer = new Layer(mat, 0.15);
+            layer = new Layer(mat, 0.15,1,1);
             layers.Add(layer);
             mat = DbMaterialAdapter.LoadWithId(13);
-            layer = new Layer(mat, 0.1);
+            layer = new Layer(mat, 0.1,1,1);
             layers.Add(layer);
             return layers;
         }
         private void CreateTestSolverAndRun(TemperatureCalculate cal)
         {
-            Class1Solver solver = SolverFactory.CreateSolver(cal);
+            TemperatureSolverC1 solver = TemperatureSolverFactory.CreateSolver(cal);
             solver.InitalizedTemperatureEndEvent += new InitalizedTemperatureEndEventHandler(OnInit);
             solver.UpdateTemperatureEndEvent += new UpdateTemperatureEndEventHandler(OnUpdate);
             solver.SolveEndEvent += new SolveEndEventHandler(OnEnd);
@@ -127,14 +127,14 @@ namespace PHTC
         {
 
             
-            Class1Boundary boundary = new Class1Boundary(100+273.15);
+            Class1Boundary boundary = new Class1Boundary(100+273.15,1);
             Test(boundary);
         }
 
         private void PLATE_C2(object sender, EventArgs e)
         {
 
-            Class2Boundary boundary = new Class2Boundary(1038.09);
+            Class2Boundary boundary = new Class2Boundary(1038.09,1);
            
             Test(boundary);
 
@@ -182,35 +182,35 @@ namespace PHTC
         {
             Material mat = DbMaterialAdapter.LoadWithId(9);
             
-            TubbinessLayer layer = new TubbinessLayer(mat, 0.2, 1.0);
+            TubbinessLayer layer = new TubbinessLayer(mat, 0.2,1,1);
             List<Layer> layers = new List<Layer>();
             layers.Add(layer);
             mat = DbMaterialAdapter.LoadWithId(10);
-            layer = new TubbinessLayer(mat, 0.3, layer.OutsideRadius);
+            layer = new TubbinessLayer(mat, 0.3,1,1);
             layers.Add(layer);
             mat = DbMaterialAdapter.LoadWithId(11);
-            layer = new TubbinessLayer(mat, 0.15, layer.OutsideRadius);
+            layer = new TubbinessLayer(mat, 0.15,1,1);
             layers.Add(layer);
             mat = DbMaterialAdapter.LoadWithId(12);
-            layer = new TubbinessLayer(mat, 0.1, layer.OutsideRadius);
+            layer = new TubbinessLayer(mat, 0.1,1,1);
             layers.Add(layer);
             mat = DbMaterialAdapter.LoadWithId(13);
-            layer = new TubbinessLayer(mat, 0.05, layer.OutsideRadius);
+            layer = new TubbinessLayer(mat, 0.05,1,1);
             layers.Add(layer);
             return layers;
         }
         private void TUBBIN_C1(object sender, EventArgs e)
         {
             List<Layer> layers = CreateTestTubbinessLayers();
-            Class1Boundary boundary = new Class1Boundary(100+273.15);
-            Model.TemperatureCalculate cm = new Model.TemperatureCalculate(1600 + 273.15, boundary, layers);
+            Class1Boundary boundary = new Class1Boundary(100+273.15,1);
+            Model.TemperatureCalculate cm = new Model.TemperatureCalculate(1600 + 273.15,boundary, layers);
             CreateTestSolverAndRun(cm);
         }
 
         private void TUBBIN_C2(object sender, EventArgs e)
         {
             List<Layer> layers = CreateTestTubbinessLayers();
-            Class2Boundary boundary = new Class2Boundary(14879.5);
+            Class2Boundary boundary = new Class2Boundary(14879.5,1);
             Model.TemperatureCalculate cm = new Model.TemperatureCalculate(1600 + 273.15, boundary, layers);
             CreateTestSolverAndRun(cm);
         }
@@ -272,10 +272,10 @@ namespace PHTC
         void OnThicknessSolveUpdate(ThicknessSolver solver)
         {
             chart2.Series[0].Points.AddY(solver.ThicknessSolverResidual);
-            chart3.Series[0].Points.AddY(solver.ThicknessCalculate.Calculate.LayerList[solver.ThicknessCalculate.LayerIndex].Thickness);
+            chart3.Series[0].Points.AddY(solver.ThicknessCalculate.Calculate.LayerList[solver.ThicknessCalculate.TargetLayerIndex].Thickness);
             PrintThicknessSolveInformation(solver);
         }
-        void OnTemperatureSolverUpdate(Class1Solver solver)
+        void OnTemperatureSolverUpdate(TemperatureSolverC1 solver)
         {
             chart1.Series[0].Points.AddY(solver.CurrentResidual);
         }
@@ -287,7 +287,7 @@ namespace PHTC
             txt += String.Format("热流:{0:0000.00}\r\n", solver.ThicknessCalculate.Calculate.Boundary.Heatflow);
             for (int j = 0; j < solver.ThicknessCalculate.Calculate.LayerList.Count; j++)
             {
-                if(solver.ThicknessCalculate.LayerIndex==j)
+                if(solver.ThicknessCalculate.TargetLayerIndex==j)
                     txt += String.Format("**********************************\r\n第{0}层厚度:{1:0.000}，热阻:{2:0.000}\r\n**********************************\r\n", j,solver.ThicknessCalculate.Calculate.LayerList[j].Thickness, solver.ThicknessCalculate.Calculate.LayerList[j].HeatResistance);
                 else
                     txt += String.Format("第{0}层厚度:{1:0.000}，热阻:{2:0.000}\r\n", j, solver.ThicknessCalculate.Calculate.LayerList[j].Thickness, solver.ThicknessCalculate.Calculate.LayerList[j].HeatResistance);
@@ -299,7 +299,7 @@ namespace PHTC
         private void THICKNESS_PLATE_C1(object sender, EventArgs e)
         {
             List<Layer> layers = CreateTestLayers();
-            Class1Boundary boundary = new Class1Boundary(100+273.15);
+            Class1Boundary boundary = new Class1Boundary(100+273.151,1);
             Model.TemperatureCalculate cal = new Model.TemperatureCalculate(1600 + 273.15, boundary, layers);
             SolverControlParameter par = new SolverControlParameter(SolverControlParameter.ConvergenceCriterionType.RESIDUAL_OR_MAXSTEP, 0.001, 50, 0);
             ThicknessCalculate tcal = new ThicknessCalculate(cal, 2, 1038.09, par, par);
@@ -316,7 +316,7 @@ namespace PHTC
         private void THICKNESS_PLATE_C2(object sender, EventArgs e)
         {
             List<Layer> layers = CreateTestLayers();
-            Class2Boundary boundary = new Class2Boundary(1038.09);
+            Class2Boundary boundary = new Class2Boundary(1038.09,1);
             Model.TemperatureCalculate cal = new Model.TemperatureCalculate(1600 + 273.15, boundary, layers);
             SolverControlParameter par = new SolverControlParameter(SolverControlParameter.ConvergenceCriterionType.RESIDUAL_OR_MAXSTEP, 0.001, 50, 0);
             ThicknessCalculate tcal = new ThicknessCalculate(cal, 2, 273.15+100, par, par);
@@ -382,7 +382,7 @@ namespace PHTC
         private void THICKNESS_TUBBIN_C1(object sender, EventArgs e)
         {
             List<Layer> layers = CreateTestTubbinessLayers();
-            Class1Boundary boundary = new Class1Boundary(100 + 273.15);
+            Class1Boundary boundary = new Class1Boundary(100 + 273.15,1);
             Model.TemperatureCalculate cal = new Model.TemperatureCalculate(1600 + 273.15, boundary, layers);
             SolverControlParameter par = new SolverControlParameter(SolverControlParameter.ConvergenceCriterionType.RESIDUAL_OR_MAXSTEP, 0.001, 50, 0);
             ThicknessCalculate tcal = new ThicknessCalculate(cal, 2, 19667.83, par, par);
@@ -398,7 +398,7 @@ namespace PHTC
         private void THICKNESS_TUBBIN_C2(object sender, EventArgs e)
         {
             List<Layer> layers = CreateTestTubbinessLayers();
-            Class2Boundary boundary = new Class2Boundary(14879.50);
+            Class2Boundary boundary = new Class2Boundary(14879.50,1);
             Model.TemperatureCalculate cal = new Model.TemperatureCalculate(1600 + 273.15, boundary, layers);
             SolverControlParameter par = new SolverControlParameter(SolverControlParameter.ConvergenceCriterionType.RESIDUAL_OR_MAXSTEP, 0.001, 50, 0);
             ThicknessCalculate tcal = new ThicknessCalculate(cal, 2, 728.99, par, par);

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace PHTC.Model
 {
+    [Serializable]
     public class Material
     {
         //public double thermalConductivity;
@@ -126,7 +127,7 @@ namespace PHTC.Model
         }
         
     }
-    
+    [Serializable]
     public class RefValue
     {
         public double v;

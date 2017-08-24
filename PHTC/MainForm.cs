@@ -22,10 +22,10 @@ namespace PHTC
 
         private void ShowNewForm(object sender, EventArgs e)
         {
-            Form childForm = new ProjectForm();
-            childForm.MdiParent = this;
-            childForm.Text = "窗口 " + childFormNumber++;
-            childForm.Show();
+            //Form childForm = new ProjectForm();
+            //childForm.MdiParent = this;
+            //childForm.Text = "窗口 " + childFormNumber++;
+            //childForm.Show();
         }
 
         private void OpenFile(object sender, EventArgs e)

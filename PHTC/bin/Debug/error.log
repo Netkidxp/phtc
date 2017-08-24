@@ -1,0 +1,36 @@
+2017/8/2 9:49:13||source:Datebase Manager||Information:Unknown column 'id' in 'field list'
+
+2017/8/2 9:49:34||source:Datebase Manager||Information:Unknown column 'id' in 'field list'
+
+2017/8/2 9:51:23||source:Datebase Manager||Information:Unknown column 'id' in 'field list'
+
+2017/8/2 9:52:05||source:Datebase Manager||Information:Unknown column 'id' in 'field list'
+
+2017/8/2 9:52:06||source:MaterialManageForm.NewMaterial||Information:保存材料出现错误，请检查您的网络连接，或者向管理员寻求帮助！
+
+2017/8/2 9:53:05||source:Datebase Manager||Information:Unknown column 'id' in 'field list'
+
+2017/8/15 16:08:41||source:Datebase Manager||Information:Unable to connect to any of the specified MySQL hosts.
+
+2017/8/15 16:09:09||source:Datebase Manager||Information:Unable to connect to any of the specified MySQL hosts.
+
+2017/8/15 16:09:14||source:MaterialManageForm.RefreshData||Information:检索材料数据出现错误，请检查您的网络连接，或者向管理员寻求帮助！
+
+2017/8/21 13:20:35||source:Datebase Manager||Information:Column count doesn't match value count at row 1
+
+2017/8/21 13:20:45||source:Datebase Manager||Information:Column count doesn't match value count at row 1
+
+2017/8/21 13:24:31||source:Datebase Manager||Information:Column count doesn't match value count at row 1
+
+2017/8/22 9:06:34||source:Datebase Manager||Information:Unknown column '_input' in 'where clause'
+
+2017/8/22 9:06:37||source:ProjectLoadForm.RefreshData||Information:检索工程数据出现错误，请检查您的网络连接，或者向管理员寻求帮助！
+
+2017/8/22 12:13:53||source:Datebase Manager||Information:Unknown column 'mode' in 'field list'
+
+2017/8/22 12:17:18||source:Datebase Manager||Information:Unknown column 'mode' in 'field list'
+
+2017/8/22 12:53:11||source:Datebase Manager||Information:Unknown column 'code' in 'field list'
+
+2017/8/22 12:53:37||source:Datebase Manager||Information:Unknown column 'code' in 'field list'
+

@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 
 namespace PHTC.Model
 {
+    [Serializable]
     public class Class1Boundary
     {
         private double temperature;
         private double heatflow;
+        private double area;
         public virtual double Temperature
         {
             get { return temperature; }
@@ -21,25 +23,44 @@ namespace PHTC.Model
             get => heatflow;
             set => heatflow = value;
         }
-
         public Class1Boundary(double _temperature)
         {
             temperature = _temperature;
+            area = 1.0;
         }
+        public Class1Boundary(double _temperature,double _area)
+        {
+            temperature = _temperature;
+            area = _area;
+        }
+        public static Class1Boundary Default
+        {
+            get
+            {
+                return new Class1Boundary(100 + 273.15,1.0);
+            }
+        }
+
+        public double Area { get => area; set => area = value; }
     }
+    [Serializable]
     public class Class2Boundary:Class1Boundary
     {
         public Class2Boundary(double _heatflow):base(0.0)
         {
             Heatflow = _heatflow;
         }
+        public Class2Boundary(double _heatflow,double _area):base(0.0,_area)
+        {
+            Heatflow = _heatflow;
+        }
     }
+    [Serializable]
     public class Class3Boundary:Class1Boundary
     {
         private double filmCoefficient;
         private double ambientTemperature;
         private double emissivity;
-        private double area;
         private double convectiveHeatflow;
         private double radiantHeatflow;
         public static double STEFAN_BOLTZMANN = 5.67e-8;
@@ -60,7 +81,6 @@ namespace PHTC.Model
                 ambientTemperature = value;
             }
         }
-        public double Area { get => area; set => area = value; }
         public double Emissivity { get => emissivity; set => emissivity = value; }
         public double ConvectiveHeatflow
         {
@@ -84,11 +104,10 @@ namespace PHTC.Model
         {
             get { return (Temperature - AmbientTemperature) / (ConvectiveHeatflow + RadiantHeatflow); }
         }
-        public Class3Boundary(double _fileCoefficient,double _emissivity,double _ambientTemperature,double _area):base(0.0)
+        public Class3Boundary(double _fileCoefficient,double _emissivity,double _ambientTemperature,double _area):base(0.0,_area)
         {
             filmCoefficient = _fileCoefficient;
             ambientTemperature = _ambientTemperature;
-            area = _area;
             emissivity = _emissivity;
         }
         public static double StefanBoltzmannLaw(double _t1,double _t2,double _area,double _emissivity)

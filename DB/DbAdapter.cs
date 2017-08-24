@@ -119,7 +119,8 @@ namespace PHTC.DB
             {
                 DbManager dm = DbManager.Ins;
                 MySqlParameter[] pars = MakeInsertParameter(mat);
-                dm.ExecuteProcNonQuery("Material_Insert", pars);
+                DataTable dt=dm.ExecuteProcQuery("Material_Insert", pars);
+                mat.Index = (int)dt.Rows[0][0];
                 return true;
             }
             catch(Exception)
@@ -212,7 +213,16 @@ namespace PHTC.DB
                 MySqlParameter p_input = new MySqlParameter("_input", MySqlDbType.String);
                 p_input.Value = input;
                 MySqlParameter[] pars = new MySqlParameter[] { p_input };
-                return dm.ExecuteProcQuery("Material_SearchWithKeyword", pars);
+                DataTable dt= dm.ExecuteProcQuery("Material_SearchWithKeyword", pars);
+                if (dt == null)
+                    return null;
+                dt.Columns.Add("modify_time_");
+                foreach(DataRow dr in dt.Rows)
+                {
+                    dr["modify_time_"] = GlobalTool.ConvertIntDateTime((double)dr["modify_time"]);
+                }
+                dt.Columns.Remove("modify_time");
+                return dt;
             }
             catch (Exception)
             {
@@ -396,5 +406,177 @@ namespace PHTC.DB
             return str;
         }
     }
+    public class DBProjectAdapter
+    {
+        private static MySqlParameter[] MakeInsertParameter(Project project)
+        {
+            MySqlParameter p_name = new MySqlParameter("_name", MySqlDbType.String);
+            p_name.Value = project.Name;
+            MySqlParameter p_ownerid = new MySqlParameter("_owner", MySqlDbType.Int32);
+            p_ownerid.Value = project.OwnerId;
+            MySqlParameter p_mode = new MySqlParameter("_mode", MySqlDbType.Int32);
+            p_mode.Value = project.Mode;
+            MySqlParameter p_type = new MySqlParameter("_type", MySqlDbType.Int32);
+            p_type.Value = project.Schema;
+            MySqlParameter p_time = new MySqlParameter("_time", MySqlDbType.Double);
+            p_time.Value = GlobalTool.ConvertDateTimeInt(DateTime.Now);
+            MySqlParameter p_data = new MySqlParameter("_data", MySqlDbType.Blob);
+            p_data.Value = project.Serialize();
+            MySqlParameter p_share = new MySqlParameter("_share", MySqlDbType.Byte);
+            p_share.Value = project.Share;
+            MySqlParameter p_remark = new MySqlParameter("_remark", MySqlDbType.String);
+            p_remark.Value = project.Remark;
+            MySqlParameter[] pars = new MySqlParameter[] {p_name,p_ownerid,p_mode,p_type,p_time,p_data,p_share,p_remark };
+            return pars;
+        }
+        private static MySqlParameter[] MakeUpdateParameter(Project project)
+        {
+            MySqlParameter p_id = new MySqlParameter("_id", MySqlDbType.Int32);
+            p_id.Value = project.Id;
+            MySqlParameter p_name = new MySqlParameter("_name", MySqlDbType.String);
+            p_name.Value = project.Name;
+            MySqlParameter p_mode = new MySqlParameter("_mode", MySqlDbType.Int32);
+            p_mode.Value = project.Mode;
+            MySqlParameter p_type = new MySqlParameter("_type", MySqlDbType.Int32);
+            p_type.Value = project.Schema;
+            MySqlParameter p_time = new MySqlParameter("_time", MySqlDbType.Double);
+            p_time.Value = GlobalTool.ConvertDateTimeInt(DateTime.Now);
+            MySqlParameter p_data = new MySqlParameter("_data", MySqlDbType.Blob);
+            p_data.Value = project.Serialize();
+            MySqlParameter p_share = new MySqlParameter("_share", MySqlDbType.Byte);
+            p_share.Value = project.Share;
+            MySqlParameter p_remark = new MySqlParameter("_remark", MySqlDbType.String);
+            p_remark.Value = project.Remark;
+            MySqlParameter[] pars = new MySqlParameter[] { p_id,p_name, p_mode, p_type, p_time, p_data, p_share, p_remark };
+            return pars;
+        }
+        public static bool Insert(Project project)
+        {
+            try
+            {
+                DbManager dm = DbManager.Ins;
+                MySqlParameter[] pars = MakeInsertParameter(project);
+                DataTable dt = dm.ExecuteProcQuery("Project_Insert", pars);
+                project.Id = (int)dt.Rows[0][0];
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        public static bool Delete(int index)
+        {
+            try
+            {
+                DbManager dm = DbManager.Ins;
+                MySqlParameter p_index = new MySqlParameter("_id", MySqlDbType.Int32);
+                p_index.Value = index;
+                MySqlParameter[] pars = new MySqlParameter[] { p_index };
+                dm.ExecuteProcNonQuery("Project_Delete", pars);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        public static bool Update(Project project)
+        {
+            try
+            {
+                DbManager dm = DbManager.Ins;
+                MySqlParameter[] pars = MakeUpdateParameter(project);
+                dm.ExecuteProcNonQuery("Project_Update", pars);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+        }
+        public static DataTable Search(string keyword)
+        {
+            try
+            {
+                DbManager dm = DbManager.Ins;
+                MySqlParameter p_input = new MySqlParameter("_keyword", MySqlDbType.String);
+                p_input.Value = keyword;
+                MySqlParameter[] pars = new MySqlParameter[] { p_input };
+                DataTable dt = dm.ExecuteProcQuery("Project_SearchWithKeyword", pars);
+                if (dt == null)
+                    return null;
+                dt.Columns.Add("time_", typeof(DateTime));
+                dt.Columns.Add("mode_", typeof(string));
+                dt.Columns.Add("type_", typeof(string));
+                foreach (DataRow dr in dt.Rows)
+                {
+                    double t = (double)dr["time"];
+                    CalculationMode mode = (CalculationMode)dr["mode"];
+                    GeometrySchema type = (GeometrySchema)dr["type"];
+                    dr["time_"] = GlobalTool.ConvertIntDateTime(t);
+                    dr["mode_"] = (mode== CalculationMode.Temperature?"温度":"厚度");
+                    dr["type_"] = (type == GeometrySchema.Plate ? "平板" : "圆筒");
+                }
+                dt.Columns.Remove("mode");
+                dt.Columns.Remove("type");
+                return dt;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+        public static DataTable Search(string keyword,int ownerid,bool share)
+        {
+            try
+            {
+                DbManager dm = DbManager.Ins;
+                MySqlParameter p_input = new MySqlParameter("_keyword", MySqlDbType.String);
+                p_input.Value = keyword;
+                MySqlParameter p_ownerid = new MySqlParameter("_ownerid", MySqlDbType.Int32);
+                p_ownerid.Value = ownerid;
+                MySqlParameter p_share = new MySqlParameter("_share", MySqlDbType.Byte);
+                p_share.Value = share;
+                MySqlParameter[] pars = new MySqlParameter[] { p_input,p_ownerid,p_share };
+                DataTable dt= dm.ExecuteProcQuery("Project_SearchWithKeywordOwnerShare", pars);
+                if (dt == null)
+                    return null;
+                dt.Columns.Add("time_", typeof(DateTime));
+                foreach(DataRow dr in dt.Rows)
+                {
+                    double t = (double)dr["time"];
+                    dr["time_"] = GlobalTool.ConvertIntDateTime(t);
+                }
+                dt.Columns.Remove("time");
+                return dt;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+        public static Project LoadWithId(int index)
+        {
+            try
+            {
+                Project pro = null;
+                DbManager dm = DbManager.Ins;
+                MySqlParameter p_index = new MySqlParameter("_id", MySqlDbType.Int32);
+                p_index.Value = index;
+                MySqlParameter[] pars = new MySqlParameter[] { p_index };
+                DataTable dt=dm.ExecuteProcQuery("Project_LoadWithId", pars);
+                pro = Project.Deserialize((byte[])dt.Rows[0][0]);
+                pro.Id = index;
+                return pro;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+    }
+    
     
 }
