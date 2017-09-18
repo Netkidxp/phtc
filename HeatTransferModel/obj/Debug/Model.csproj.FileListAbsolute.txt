@@ -7,4 +7,3 @@ E:\Git_PHTC\PHTC\bin\Debug\PHTC.Model.dll
 E:\Git_PHTC\PHTC\bin\Debug\PHTC.Model.pdb
 E:\Git_PHTC\HeatTransferModel\obj\Debug\PHTC.Model.dll
 E:\Git_PHTC\HeatTransferModel\obj\Debug\PHTC.Model.pdb
-E:\Git_PHTC\HeatTransferModel\obj\Debug\Model.csprojResolveAssemblyReference.cache

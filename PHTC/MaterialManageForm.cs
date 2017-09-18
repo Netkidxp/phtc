@@ -13,6 +13,7 @@ using PHTC.Model;
 namespace PHTC
 {
     public delegate void LoadEventHandler(Material mat);
+  
     public partial class MaterialManageForm : Form
     {
 
@@ -25,7 +26,6 @@ namespace PHTC
             InitializeComponent();
             FILTER_PLANEL_HEIGHT = filterPanel.Height;
             dt_input = null;
-            
             FilterPanelShow = false;
             cb_filterPlanel.Checked = false;
             
@@ -115,8 +115,6 @@ namespace PHTC
         }
         private void OnDGVDoubleClick(object sender, EventArgs e)
         {
-            //ShowMaterial();
-            //RefreshData();
             LoadMaterial();
         }
 
@@ -126,7 +124,21 @@ namespace PHTC
         /// </summary>
         private void NewMaterial()
         {
-            MaterialManager.NewMaterial();
+            
+            Material mat = Material.Default;
+            MaterialDetailsForm mdf = new MaterialDetailsForm(mat, MaterialDetailsForm.ButtonType.Update);
+            if(mdf.ShowDialog()==DialogResult.OK)
+            {
+                mat = mdf.Material;
+                mat.Owner = User.CurrentUser;
+                mat.OwnerId = User.CurrentUser.Id;
+                bool res=DbMaterialAdapter.Insert(mat);
+                if(!res)
+                {
+                    GlobalTool.LogError("MaterialManageForm.NewMaterial", "保存材料出现错误，请检查您的网络连接，或者向管理员寻求帮助！", true);
+                }
+            }
+            
         }
         /// <summary>
         /// /////////////////////////////////////
@@ -134,7 +146,28 @@ namespace PHTC
         private void DeleteMaterial()
         {
             int id = (int)dgv_list.CurrentRow.Cells[0].Value;
-            MaterialManager.DeleteMaterial(id);
+            Material mat = DbMaterialAdapter.LoadWithId(id);
+            if (mat == null)
+            {
+                GlobalTool.LogError("MaterialManageForm.DeleteMaterial", "读取材料出现错误，请检查您的网络连接，或者向管理员寻求帮助！", true);
+                return;
+            }
+            if (mat.OwnerId == User.CurrentUser.Id)
+            {
+                bool res = DbMaterialAdapter.Delete(id);
+                if (!res)
+                {
+                    GlobalTool.LogError("MaterialManageForm.DeleteMaterial", "删除材料出现错误，请检查您的网络连接，或者向管理员寻求帮助！", true);
+                    return;
+                }
+                return;
+
+            }
+            else
+            {
+                MessageBox.Show("该材料不为您所有，您无法删除！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
         }
         /// <summary>
         /// ////////////////////////////////////////
@@ -142,7 +175,47 @@ namespace PHTC
         private void ShowMaterial()
         {
             int id = (int)dgv_list.CurrentRow.Cells[0].Value;
-            MaterialManager.ShowMaterial(id);
+            Material mat = DbMaterialAdapter.LoadWithId(id);
+            if(mat==null)
+            {
+                GlobalTool.LogError("MaterialManageForm.ShowMaterial", "读取材料出现错误，请检查您的网络连接，或者向管理员寻求帮助！", true);
+                return ;
+            }
+            if(mat.OwnerId!=User.CurrentUser.Id&&!mat.Share)
+            {
+                MessageBox.Show("该材料所有者不共享材料信息，请您联系材料所有者！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return ;
+            }
+            MaterialDetailsForm mdf = new MaterialDetailsForm(mat, MaterialDetailsForm.ButtonType.Update);
+            if(mdf.ShowDialog()==DialogResult.OK)
+            {
+                Material nm = mdf.Material;
+                if(mat.OwnerId!=User.CurrentUser.Id)
+                {
+                    MessageBox.Show("该材料不为您所有，您将保存为自己的副本!", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    nm.OwnerId = User.CurrentUser.Id;
+                    nm.Owner = User.CurrentUser;
+                    nm.Create_time = DateTime.Now;
+                    nm.Modify_time = DateTime.Now;
+                    bool res = DbMaterialAdapter.Insert(nm);
+                    if (!res)
+                    {
+                        GlobalTool.LogError("MaterialManageForm.ShowMaterial", "保存材料出现错误，请检查您的网络连接，或者向管理员寻求帮助！", true);
+                    }
+                }
+                else
+                {
+                    nm.OwnerId = User.CurrentUser.Id;
+                    nm.Owner = User.CurrentUser;
+                    nm.Modify_time = DateTime.Now;
+                    nm.Index = mat.Index;
+                    bool res = DbMaterialAdapter.Update(nm);
+                    if (!res)
+                    {
+                        GlobalTool.LogError("MaterialManageForm.ShowMaterial", "保存材料出现错误，请检查您的网络连接，或者向管理员寻求帮助！", true);
+                    }
+                }
+            }
         }
         
 

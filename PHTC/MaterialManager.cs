@@ -10,11 +10,11 @@ namespace PHTC
 {
     public class MaterialManager
     {
-        public static Material LoadMaterial(int id)
+        /*public static Material LoadMaterial(int id)
         {
             return DbMaterialAdapter.LoadWithId(id);
         }
-        public static int NewMaterial()
+        public static int NewMaterialForm()
         {
             List<RefValue> hcs = new List<RefValue> { new RefValue(298.15, 2.5) };
             List<RefValue> shs = new List<RefValue> { new RefValue(298.15, 20) };
@@ -23,7 +23,7 @@ namespace PHTC
             mdf.ShowDialog();
             if (mdf.ExitResult == MaterialDetailsForm.ExitResultType.Save)
             {
-                Material newmat = mdf.MaterialResult;
+                Material newmat = mdf.Material;
                 newmat.Create_time = DateTime.Now;
                 newmat.Modify_time = DateTime.Now;
                 newmat.OwnerId = User.CurrentUser.Id;
@@ -66,6 +66,7 @@ namespace PHTC
                 return false;
             }
         }
+       
         public static int ShowMaterial(int id)
         {
             Material mat = DbMaterialAdapter.LoadWithId(id);
@@ -80,7 +81,7 @@ namespace PHTC
                 mdf.ShowDialog();
                 if (mdf.ExitResult == MaterialDetailsForm.ExitResultType.Save)
                 {
-                    Material newmat = mdf.MaterialResult;
+                    Material newmat = mdf.Material;
 
                     if (mat.OwnerId == User.CurrentUser.Id)
                     {
@@ -119,5 +120,6 @@ namespace PHTC
                 return 0;
             }
         }
+        */
     }
 }

@@ -37,7 +37,7 @@ namespace PHTC
                     cb_Type.SelectedIndex = 0;
                     int i = Materials.IndexOf(value.Material);
                     cb_Material.SelectedIndex = i;
-                    tb_Thickness.Text = value.Thickness.ToString();
+                    tb_Thickness.Text = (value.Thickness*1000.0).ToString();
                 }
                 tb_Name.Text = value.Name;
                 Modify = false;
@@ -51,7 +51,7 @@ namespace PHTC
                     Layer _layer;
                     if (cb_Type.SelectedIndex == 0)
                     {
-                        double thickness = double.Parse(tb_Thickness.Text);
+                        double thickness = double.Parse(tb_Thickness.Text)/1000.0;
                         int i = cb_Material.SelectedIndex;
                         Material mat = materials[i];
                         if (schema == GeometrySchema.Plate)

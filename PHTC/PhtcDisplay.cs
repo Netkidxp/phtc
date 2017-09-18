@@ -108,6 +108,8 @@ namespace PHTC
                     else
                     {
                         double width = l.Thickness / sumThickness * (r.Width - sumResitanceLayer * rlWidth);
+                        if (width < rlWidth)
+                            width = rlWidth;
                         Rectangle rect = new Rectangle((int)t, r.Top, (int)width, r.Height);
                         rs.Add(rect);
                         t += width;

@@ -18,22 +18,12 @@ namespace PHTC
     {
         public enum ButtonType
         {
-            Select,
-            Save,
-            SaveAndDelete,
+            Update,
+            Modify
         }
-        public enum ExitResultType
-        {
-            Cancel,
-            Save,
-            Delete,
-            Select
-        }
-        private ButtonType type;
-        private ExitResultType exitResult;
+        private ButtonType type; 
         public static string REGSTR_PositiveRealNumber = @"^[0-9]\d*(\.\d+)?$";
         public static string REGSTR_RealNumber = @"^[+-]?\d+(\.\d+)?$";
-        private Material result;
         private Material material;
         private DataTable dt_hc_dis;
         private DataTable dt_sh_dis;
@@ -80,14 +70,14 @@ namespace PHTC
 
             dt_hc_fun = new DataTable("hc_fun");
             ds.Tables.Add(dt_hc_fun);
-            dt_hc_fun.Columns.Add("Kn", typeof(double));
-            dt_hc_fun.Columns.Add("n", typeof(double));
+            dt_hc_fun.Columns.Add("K", typeof(double));
+            dt_hc_fun.Columns.Add("N", typeof(double));
             
 
             dt_sh_fun = new DataTable("sh_fun");
             ds.Tables.Add(dt_sh_fun);
-            dt_sh_fun.Columns.Add("Kn", typeof(double));
-            dt_sh_fun.Columns.Add("n", typeof(double));
+            dt_sh_fun.Columns.Add("K", typeof(double));
+            dt_sh_fun.Columns.Add("N", typeof(double));
             
 
             dgv_hc.DataSource = ds;
@@ -96,33 +86,26 @@ namespace PHTC
         }
         public MaterialDetailsForm(Material mat,ButtonType _type)
         {
-
-            this.Type = _type;
             InitializeComponent();
             material = mat;
-            exitResult = ExitResultType.Cancel;
-            if (Type == ButtonType.Save)
+            if (_type == ButtonType.Modify)
             {
-                bu_f1.Visible = false;
-                bu_f2.Text = "保存";
+                bu_f1.Text = "修改";
+             
             }
-            else if(Type==ButtonType.Select)
+            else if(_type == ButtonType.Update)
             {
-                bu_f1.Visible = false;
-                bu_f2.Text = "选择";
-            }
-            else if(Type==ButtonType.SaveAndDelete)
-            {
-                bu_f1.Text = "删除";
-                bu_f2.Text = "保存";
+                bu_f1.Text = "更新";
+                
             }
             InitDataset();
 
         }
-        public Material MaterialData
+        public Material Material
         {
             get
             {
+                material = UpdateData();
                 return material;
             }
             set
@@ -131,11 +114,6 @@ namespace PHTC
                 UpdateUi();
             }
         }
-
-        public Material MaterialResult { get => result; set => result = value; }
-        public ExitResultType ExitResult { get => exitResult; set => exitResult = value; }
-        public ButtonType Type { get => type; set => type = value; }
-
         private void ListToDataTable(DataTable dt,List<RefValue> list)
         {
             dt.Clear();
@@ -184,39 +162,39 @@ namespace PHTC
         }
         private void UpdateUi()
         {
-            tb_name.Text = MaterialData.Name;
-            tb_code.Text = MaterialData.Code;
-            tb_owner.Text = MaterialData.Owner.Name;
-            tb_usefor.Text = MaterialData.Use_for;
-            tb_remark.Text = MaterialData.Remark;
-            cb_share.Checked = MaterialData.Share;
-            tb_density.Text = MaterialData.Density.ToString();
+            tb_name.Text = material.Name;
+            tb_code.Text = material.Code;
+            tb_owner.Text = material.Owner.Name;
+            tb_usefor.Text = material.Use_for;
+            tb_remark.Text = material.Remark;
+            cb_share.Checked = material.Share;
+            tb_density.Text = material.Density.ToString();
             
-            if(MaterialData.TcIsFun)
+            if(material.TcIsFun)
             {
-                ListToDataTable(dt_hc_fun, MaterialData.TCs);
+                ListToDataTable(dt_hc_fun, material.TCs);
                 dgv_hc.DataMember = "hc_fun";
             }
             else
             {
-                ListToDataTableK2C(dt_hc_dis, MaterialData.TCs);
+                ListToDataTableK2C(dt_hc_dis, material.TCs);
                 dgv_hc.DataMember = "hc_dis";
             }
-            if (MaterialData.ShIsFun)
+            if (material.ShIsFun)
             {
-                ListToDataTable(dt_sh_fun, MaterialData.SHs);
+                ListToDataTable(dt_sh_fun, material.SHs);
                 dgv_sh.DataMember = "sh_fun";
             }
             else
             {
-                ListToDataTableK2C(dt_sh_dis, MaterialData.SHs);
+                ListToDataTableK2C(dt_sh_dis, material.SHs);
                 dgv_sh.DataMember = "sh_dis";
             }
 
-            rb_hc_disperse.Checked = !MaterialData.TcIsFun;
-            rb_hc_function.Checked = MaterialData.TcIsFun;
-            rb_sh_disperse.Checked = !MaterialData.ShIsFun;
-            rb_sh_function.Checked = MaterialData.ShIsFun;
+            rb_hc_disperse.Checked = !material.TcIsFun;
+            rb_hc_function.Checked = material.TcIsFun;
+            rb_sh_disperse.Checked = !material.ShIsFun;
+            rb_sh_function.Checked = material.ShIsFun;
 
             UpdateHCChart();
             UpdateSHChart();
@@ -248,7 +226,7 @@ namespace PHTC
                 DataTableToListC2K(dt_sh_dis, shs);
             SortList(hcs);
             SortList(shs);
-            return new Material(MaterialData.Index, tb_name.Text, User.CurrentUser,User.CurrentUser.Id, tb_code.Text, tb_usefor.Text, MaterialData.Create_time, MaterialData.Modify_time, double.Parse(tb_density.Text), tb_remark.Text, hcs, shs, rb_hc_function.Checked, rb_sh_function.Checked, cb_share.Checked);
+            return new Material(material.Index, tb_name.Text, material.Owner,material.OwnerId, tb_code.Text, tb_usefor.Text, material.Create_time, material.Modify_time, double.Parse(tb_density.Text), tb_remark.Text, hcs, shs, rb_hc_function.Checked, rb_sh_function.Checked, cb_share.Checked);
         }
         
         private void UpdateChart(DataGridView d,Chart c,bool fun)
@@ -384,33 +362,13 @@ namespace PHTC
         }
         private void bu_f1_Click(object sender, EventArgs e)
         {
-            ExitResult = ExitResultType.Delete;
-            MaterialResult = MaterialData;
+            DialogResult = DialogResult.OK;
             Close();
         }
-        private void bu_f2_Click(object sender, EventArgs e)
-        {
-            if(Type==ButtonType.Save||Type==ButtonType.SaveAndDelete)
-            {
-                if (!CheckDataValidated())
-                    MessageBox.Show("您输入的数据不合法，请检查您输入的数据！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                else
-                {
-                    MaterialResult = UpdateData();
-                    ExitResult = ExitResultType.Save;
-                    Close();
-                }
-            }
-            else if(Type==ButtonType.Select)
-            {
-                MaterialResult = MaterialData;
-                ExitResult = ExitResultType.Select;
-                Close();
-            }
-        }
+       
         private void bu_cancel_Click(object sender, EventArgs e)
         {
-            MaterialResult = null;
+            //MaterialResult = null;
             this.Close();
         }
 
@@ -420,9 +378,14 @@ namespace PHTC
                 MessageBox.Show("您输入的数据不合法，请检查您输入的数据！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else
             {
-                MaterialResult = UpdateData();
+                //MaterialResult = UpdateData();
                 Close();
             }
+        }
+
+        private void bu_f2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

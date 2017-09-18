@@ -21,13 +21,13 @@ namespace PHTC
             {
                 if (value == GeometrySchema.Plate)
                 {
-                    lb_RorW.Text = @"长[m]";
-                    lb_LorH.Text=@"宽[m]";
+                    lb_RorW.Text = @"长[mm]";
+                    lb_LorH.Text=@"宽[mm]";
                 }
                 else
                 {
-                    lb_RorW.Text = @"半径[m]";
-                    lb_LorH.Text = @"轴向长度[m]";
+                    lb_RorW.Text = @"半径[mm]";
+                    lb_LorH.Text = @"轴向长度[mm]";
                 }
                 schema = value;
             }
@@ -37,12 +37,12 @@ namespace PHTC
             get
             {
                 
-                return double.Parse(tb_RorW.Text);
+                return double.Parse(tb_RorW.Text)/1000.0;
                 
             }
             set
             {
-                tb_RorW.Text = value.ToString();
+                tb_RorW.Text = (value*1000.0).ToString();
             }
         }
         public double Length
@@ -50,12 +50,12 @@ namespace PHTC
             get
             {
 
-                return double.Parse(tb_LorH.Text);
+                return double.Parse(tb_LorH.Text)/1000.0;
 
             }
             set
             {
-                tb_LorH.Text = value.ToString();
+                tb_LorH.Text = (value*1000.0).ToString();
             }
         }
         new public double Width
@@ -63,12 +63,12 @@ namespace PHTC
             get
             {
 
-                return double.Parse(tb_RorW.Text);
+                return double.Parse(tb_RorW.Text)/1000.0;
 
             }
             set
             {
-                tb_RorW.Text = value.ToString();
+                tb_RorW.Text = (value*1000.0).ToString();
             }
         }
         new public double Height
@@ -76,12 +76,12 @@ namespace PHTC
             get
             {
 
-                return double.Parse(tb_LorH.Text);
+                return double.Parse(tb_LorH.Text)/1000.0;
 
             }
             set
             {
-                tb_LorH.Text = value.ToString();
+                tb_LorH.Text = (value*1000).ToString();
             }
         }
         public double Temperature

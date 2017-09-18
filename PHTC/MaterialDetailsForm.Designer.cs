@@ -32,6 +32,7 @@
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MaterialDetailsForm));
             this.label1 = new System.Windows.Forms.Label();
             this.tb_name = new System.Windows.Forms.TextBox();
             this.tb_code = new System.Windows.Forms.TextBox();
@@ -57,8 +58,11 @@
             this.rb_sh_function = new System.Windows.Forms.RadioButton();
             this.rb_sh_disperse = new System.Windows.Forms.RadioButton();
             this.cb_share = new System.Windows.Forms.CheckBox();
-            this.bu_f2 = new System.Windows.Forms.Button();
             this.bu_f1 = new System.Windows.Forms.Button();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -67,6 +71,8 @@
             this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ct_sh)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_sh)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -212,6 +218,8 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.label7);
+            this.tabPage2.Controls.Add(this.pictureBox2);
             this.tabPage2.Controls.Add(this.ct_hc);
             this.tabPage2.Controls.Add(this.dgv_hc);
             this.tabPage2.Controls.Add(this.rb_hc_function);
@@ -257,10 +265,10 @@
             this.rb_hc_function.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.rb_hc_function.Location = new System.Drawing.Point(83, 15);
             this.rb_hc_function.Name = "rb_hc_function";
-            this.rb_hc_function.Size = new System.Drawing.Size(472, 16);
+            this.rb_hc_function.Size = new System.Drawing.Size(58, 16);
             this.rb_hc_function.TabIndex = 2;
             this.rb_hc_function.TabStop = true;
-            this.rb_hc_function.Text = "函数 (HC=∑(Kn*Temperature[K]^n，请注意：函数表示导热系数时，温度的单位为K)";
+            this.rb_hc_function.Text = "多项式";
             this.rb_hc_function.UseVisualStyleBackColor = true;
             // 
             // rb_hc_disperse
@@ -278,6 +286,8 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.label8);
+            this.tabPage3.Controls.Add(this.pictureBox1);
             this.tabPage3.Controls.Add(this.ct_sh);
             this.tabPage3.Controls.Add(this.dgv_sh);
             this.tabPage3.Controls.Add(this.rb_sh_function);
@@ -322,15 +332,15 @@
             this.rb_sh_function.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.rb_sh_function.Location = new System.Drawing.Point(83, 15);
             this.rb_sh_function.Name = "rb_sh_function";
-            this.rb_sh_function.Size = new System.Drawing.Size(460, 16);
+            this.rb_sh_function.Size = new System.Drawing.Size(58, 16);
             this.rb_sh_function.TabIndex = 2;
-            this.rb_sh_function.TabStop = true;
-            this.rb_sh_function.Text = "函数 (SH=∑(Kn*Temperature[K]^n，请注意：函数表示比热容时，温度的单位为K)";
+            this.rb_sh_function.Text = "多项式";
             this.rb_sh_function.UseVisualStyleBackColor = true;
             // 
             // rb_sh_disperse
             // 
             this.rb_sh_disperse.AutoSize = true;
+            this.rb_sh_disperse.Checked = true;
             this.rb_sh_disperse.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.rb_sh_disperse.Location = new System.Drawing.Point(18, 15);
             this.rb_sh_disperse.Name = "rb_sh_disperse";
@@ -351,35 +361,64 @@
             this.cb_share.Text = "共享";
             this.cb_share.UseVisualStyleBackColor = true;
             // 
-            // bu_f2
-            // 
-            this.bu_f2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bu_f2.Location = new System.Drawing.Point(700, 431);
-            this.bu_f2.Name = "bu_f2";
-            this.bu_f2.Size = new System.Drawing.Size(75, 23);
-            this.bu_f2.TabIndex = 10;
-            this.bu_f2.Text = "f2";
-            this.bu_f2.UseVisualStyleBackColor = true;
-            this.bu_f2.Click += new System.EventHandler(this.bu_f2_Click);
-            // 
             // bu_f1
             // 
             this.bu_f1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bu_f1.Location = new System.Drawing.Point(619, 431);
+            this.bu_f1.Location = new System.Drawing.Point(677, 431);
             this.bu_f1.Name = "bu_f1";
-            this.bu_f1.Size = new System.Drawing.Size(75, 23);
+            this.bu_f1.Size = new System.Drawing.Size(101, 23);
             this.bu_f1.TabIndex = 11;
             this.bu_f1.Text = "f1";
             this.bu_f1.UseVisualStyleBackColor = true;
             this.bu_f1.Click += new System.EventHandler(this.bu_f1_Click);
             // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Image = global::PHTC.Properties.Resources.QQ截图20170915144650;
+            this.pictureBox2.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox2.InitialImage")));
+            this.pictureBox2.Location = new System.Drawing.Point(148, 12);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(242, 23);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox2.TabIndex = 6;
+            this.pictureBox2.TabStop = false;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::PHTC.Properties.Resources.QQ截图20170915144650;
+            this.pictureBox1.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.InitialImage")));
+            this.pictureBox1.Location = new System.Drawing.Point(148, 12);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(242, 23);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 7;
+            this.pictureBox1.TabStop = false;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(393, 18);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(155, 12);
+            this.label7.TabIndex = 7;
+            this.label7.Text = "（其中T为温度值,单位为K）";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(393, 18);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(155, 12);
+            this.label8.TabIndex = 8;
+            this.label8.Text = "（其中T为温度值,单位为K）";
+            // 
             // MaterialDetailsForm
             // 
+            this.AcceptButton = this.bu_f1;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(811, 462);
             this.Controls.Add(this.bu_f1);
-            this.Controls.Add(this.bu_f2);
             this.Controls.Add(this.cb_share);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.tb_name);
@@ -401,6 +440,8 @@
             this.tabPage3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ct_sh)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_sh)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -433,7 +474,10 @@
         private System.Windows.Forms.RadioButton rb_sh_function;
         private System.Windows.Forms.RadioButton rb_sh_disperse;
         private System.Windows.Forms.CheckBox cb_share;
-        private System.Windows.Forms.Button bu_f2;
         private System.Windows.Forms.Button bu_f1;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

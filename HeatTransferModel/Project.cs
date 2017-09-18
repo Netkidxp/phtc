@@ -83,6 +83,7 @@ namespace PHTC.Model
         public int OwnerId { get => ownerId; set => ownerId = value; }
         public string Remark { get => remark; set => remark = value; }
         public bool Share { get => share; set => share = value; }
+        public DateTime LastSolveTime { get; set; }
         public TemperatureCalculate TemperatureCalculate
         {
             get

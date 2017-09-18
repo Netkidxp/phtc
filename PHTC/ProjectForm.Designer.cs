@@ -52,13 +52,17 @@
             treeNode10,
             treeNode11});
             System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("计算", 24, 24);
-            System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("结果", 1, 1);
-            System.Windows.Forms.TreeNode treeNode15 = new System.Windows.Forms.TreeNode("新建计算", 7, 7, new System.Windows.Forms.TreeNode[] {
+            System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("Word报告", 35, 35);
+            System.Windows.Forms.TreeNode treeNode15 = new System.Windows.Forms.TreeNode("Html报告", 34, 34);
+            System.Windows.Forms.TreeNode treeNode16 = new System.Windows.Forms.TreeNode("结果", 1, 1, new System.Windows.Forms.TreeNode[] {
+            treeNode14,
+            treeNode15});
+            System.Windows.Forms.TreeNode treeNode17 = new System.Windows.Forms.TreeNode("新建计算", 7, 7, new System.Windows.Forms.TreeNode[] {
             treeNode3,
             treeNode9,
             treeNode12,
             treeNode13,
-            treeNode14});
+            treeNode16});
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
@@ -67,6 +71,8 @@
             this.mi_Material_Load = new System.Windows.Forms.ToolStripMenuItem();
             this.cms_N_Layer = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mi_Layer_Add = new System.Windows.Forms.ToolStripMenuItem();
+            this.cms_N_ReportWordOrHtml = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.mi_report_refresh = new System.Windows.Forms.ToolStripMenuItem();
             this.il_treeview = new System.Windows.Forms.ImageList(this.components);
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tv_navigation = new System.Windows.Forms.TreeView();
@@ -96,8 +102,10 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.mi_File_Exit = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.cms_N_Material.SuspendLayout();
             this.cms_N_Layer.SuspendLayout();
+            this.cms_N_ReportWordOrHtml.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -149,6 +157,20 @@
             this.mi_Layer_Add.Text = "添加层(&I)";
             this.mi_Layer_Add.Click += new System.EventHandler(this.mi_Layer_Add_Click);
             // 
+            // cms_N_ReportWordOrHtml
+            // 
+            this.cms_N_ReportWordOrHtml.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mi_report_refresh});
+            this.cms_N_ReportWordOrHtml.Name = "cms_N_ReportWordOrHtml";
+            this.cms_N_ReportWordOrHtml.Size = new System.Drawing.Size(117, 26);
+            // 
+            // mi_report_refresh
+            // 
+            this.mi_report_refresh.Name = "mi_report_refresh";
+            this.mi_report_refresh.Size = new System.Drawing.Size(116, 22);
+            this.mi_report_refresh.Text = "刷新(&R)";
+            this.mi_report_refresh.Click += new System.EventHandler(this.mi_report_refresh_Click);
+            // 
             // il_treeview
             // 
             this.il_treeview.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("il_treeview.ImageStream")));
@@ -187,6 +209,8 @@
             this.il_treeview.Images.SetKeyName(31, "Thermo_Mechanical.png");
             this.il_treeview.Images.SetKeyName(32, "Wall.png");
             this.il_treeview.Images.SetKeyName(33, "solversettings_16x16.png");
+            this.il_treeview.Images.SetKeyName(34, "html.png");
+            this.il_treeview.Images.SetKeyName(35, "word_1.png");
             // 
             // splitContainer1
             // 
@@ -266,16 +290,26 @@
             treeNode13.Name = "N_Solve";
             treeNode13.SelectedImageIndex = 24;
             treeNode13.Text = "计算";
-            treeNode14.ImageIndex = 1;
-            treeNode14.Name = "N_Result";
-            treeNode14.SelectedImageIndex = 1;
-            treeNode14.Text = "结果";
-            treeNode15.ImageIndex = 7;
-            treeNode15.Name = "N_Project";
-            treeNode15.SelectedImageIndex = 7;
-            treeNode15.Text = "新建计算";
+            treeNode14.ContextMenuStrip = this.cms_N_ReportWordOrHtml;
+            treeNode14.ImageIndex = 35;
+            treeNode14.Name = "N_ReportWord";
+            treeNode14.SelectedImageIndex = 35;
+            treeNode14.Text = "Word报告";
+            treeNode15.ContextMenuStrip = this.cms_N_ReportWordOrHtml;
+            treeNode15.ImageIndex = 34;
+            treeNode15.Name = "N_ReportHtml";
+            treeNode15.SelectedImageIndex = 34;
+            treeNode15.Text = "Html报告";
+            treeNode16.ImageIndex = 1;
+            treeNode16.Name = "N_Result";
+            treeNode16.SelectedImageIndex = 1;
+            treeNode16.Text = "结果";
+            treeNode17.ImageIndex = 7;
+            treeNode17.Name = "N_Project";
+            treeNode17.SelectedImageIndex = 7;
+            treeNode17.Text = "新建计算";
             this.tv_navigation.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode15});
+            treeNode17});
             this.tv_navigation.SelectedImageIndex = 0;
             this.tv_navigation.Size = new System.Drawing.Size(287, 559);
             this.tv_navigation.TabIndex = 1;
@@ -590,6 +624,19 @@
             this.statusStrip1.TabIndex = 6;
             this.statusStrip1.Text = "statusStrip1";
             // 
+            // imageList1
+            // 
+            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList1.Images.SetKeyName(0, "exit.png");
+            this.imageList1.Images.SetKeyName(1, "list.png");
+            this.imageList1.Images.SetKeyName(2, "Material.png");
+            this.imageList1.Images.SetKeyName(3, "materials management.png");
+            this.imageList1.Images.SetKeyName(4, "new.png");
+            this.imageList1.Images.SetKeyName(5, "project.png");
+            this.imageList1.Images.SetKeyName(6, "save.png");
+            this.imageList1.Images.SetKeyName(7, "save_1.png");
+            // 
             // ProjectForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -607,6 +654,7 @@
             this.Load += new System.EventHandler(this.ProjectForm_Load);
             this.cms_N_Material.ResumeLayout(false);
             this.cms_N_Layer.ResumeLayout(false);
+            this.cms_N_ReportWordOrHtml.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
@@ -669,5 +717,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem mi_File_Exit;
         private System.Windows.Forms.ToolStripMenuItem mi_File_Load;
+        private System.Windows.Forms.ImageList imageList1;
+        private System.Windows.Forms.ContextMenuStrip cms_N_ReportWordOrHtml;
+        private System.Windows.Forms.ToolStripMenuItem mi_report_refresh;
     }
 }

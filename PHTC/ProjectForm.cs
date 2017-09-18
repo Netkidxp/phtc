@@ -8,6 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using PHTC.Model;
+using PHTC.Reporter;
+using PHTC.DB;
+using System.IO;
 namespace PHTC
 {
     public partial class ProjectForm : Form
@@ -30,6 +33,11 @@ namespace PHTC
         private const string STR_LayDifferentialCount = "N_LayDifferentialCount";
         private const string STR_Solve = "N_Solve";
         private const string STR_Result = "N_Result";
+        private const string STR_ReportWord = "N_ReportWord";
+        private const string STR_ReportWordItem = "N_ReportWordItem";
+        private const string STR_ReportHtml = "N_ReportHtml";
+        private const string STR_ReportHtmlItem = "N_ReportHtmlItem";
+
         /// <summary>
         /// 
         /// </summary>
@@ -43,10 +51,14 @@ namespace PHTC
         private TreeNode tn_TemperatureCriterion;
         private TreeNode tn_ThicknessCriterion;
         private TreeNode tn_LayDifferentialCount;
+        private TreeNode tn_ReportWord;
+        private TreeNode tn_ReportHtml;
         /// <summary>
         /// 
         /// </summary>
         private Project pro;
+        private List<ReportTemplete> WordReportTempletes;
+        private List<ReportTemplete> HtmlReportTempletes;
         private bool Modified
         {
             get;
@@ -68,6 +80,8 @@ namespace PHTC
             tn_Layer = tn_Project.Nodes[STR_CalculateModel].Nodes[STR_Layer];
             tn_ColdfaceBoundary = tn_Project.Nodes[STR_CalculateModel].Nodes[STR_ColdfaceBoundary];
             tn_SolveParameter = tn_Project.Nodes[STR_SolveParameter];
+            tn_ReportWord = tn_Project.Nodes[STR_Result].Nodes[STR_ReportWord];
+            tn_ReportHtml=tn_Project.Nodes[STR_Result].Nodes[STR_ReportHtml];
 
             pd_main.Project = Pro;
             pd_main.OnHotfaceClick += new PhtcDisplay.HotfaceDbClickHandler(ShowHotfaceParameter);
@@ -91,7 +105,7 @@ namespace PHTC
             tn_Material.Nodes.Clear();
             foreach (Material mat in Pro.MaterialList)
             {
-                TreeNode tn = new TreeNode(mat.Name+"(所有者:"+mat.Owner.Name+")");
+                TreeNode tn = new TreeNode(mat.Name);
                 tn.Name = STR_MaterialItem;
                 tn.ImageIndex = 33;
                 tn.SelectedImageIndex = 33;
@@ -159,7 +173,35 @@ namespace PHTC
                 tv_navigation.SelectedNode = old_tn;
             pd_main.Project = Pro;
             pd_main.Refresh();
+            RefreshReportTempleteNode();
+            
         }
+        private void RefreshReportTempleteNode()
+        {
+            WordReportTempletes = DBReportTempleteAdapter.ListAllTempleteWithType(0);
+            HtmlReportTempletes = DBReportTempleteAdapter.ListAllTempleteWithType(1);
+            if (WordReportTempletes != null)
+            {
+                tn_ReportWord.Nodes.Clear();
+                foreach (ReportTemplete rt in WordReportTempletes)
+                {
+                    TreeNode tn = new TreeNode(rt.Name, 35, 35);
+                    tn.Name = STR_ReportWordItem;
+                    tn_ReportWord.Nodes.Add(tn);
+                }
+            }
+            if (HtmlReportTempletes != null)
+            {
+                tn_ReportHtml.Nodes.Clear();
+                foreach (ReportTemplete rt in HtmlReportTempletes)
+                {
+                    TreeNode tn = new TreeNode(rt.Name, 34, 34);
+                    tn.Name = STR_ReportHtmlItem;
+                    tn_ReportWord.Nodes.Add(tn);
+                }
+            }
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -226,6 +268,9 @@ namespace PHTC
                 case STR_Result:
                     Result();
                     break;
+                case STR_ReportWordItem:
+                    ReportWord(tv_navigation.SelectedNode.Index);
+                    break;
             }
         }
         /// <summary>
@@ -246,6 +291,7 @@ namespace PHTC
                 ThicknessSolver solver = ThicknessSolverFactory.CreateSolver(thc);
                 solver.Solve();
             }
+            Pro.LastSolveTime = DateTime.Now;
             RefreshTreeView();
             Modified = true;
         }
@@ -364,13 +410,14 @@ namespace PHTC
         }
         private void ShowMaterial(int index)
         {
-            int id = MaterialManager.ShowMaterial(Pro.MaterialList[index].Index);
-            if(id!=0)
+
+            MaterialDetailsForm mdf = new MaterialDetailsForm(Pro.MaterialList[index], MaterialDetailsForm.ButtonType.Modify);
+            if(mdf.ShowDialog()==DialogResult.OK)
             {
-                Pro.MaterialList[index] = MaterialManager.LoadMaterial(id);
-            }
-            RefreshTreeView();
-            Modified = true;
+                Pro.MaterialList[index] = mdf.Material;
+                Modified = true;
+                RefreshTreeView();
+            }    
         }
         /// <summary>
         /// 
@@ -419,6 +466,7 @@ namespace PHTC
         private void DeleteLayer(int index)
         {
             Pro.LayerList.RemoveAt(index);
+            //待处理
             /*if (index == Pro.TargetLayerIndex)
             {
                 Pro.TargetLayerIndex = 0;
@@ -640,6 +688,7 @@ namespace PHTC
                 }
             }
             Pro = ProjectManager.New();
+            Pro.LastSolveTime =DateTime.MinValue;
             Pro.OwnerId = User.CurrentUser.Id;
             ShowProjectParameter();
             RefreshTreeView();
@@ -666,6 +715,77 @@ namespace PHTC
             Pro = _pro;
             RefreshTreeView();
             Modified = false;
+        }
+
+        private void mi_report_refresh_Click(object sender, EventArgs e)
+        {
+            
+            RefreshReportTempleteNode();
+
+        }
+        private string WriteDpImage()
+        {
+            try
+            {
+                Random r = new Random();
+                string path = TempPath + "png";
+                Bitmap bp = new Bitmap(pd_main.Bounds.Width, pd_main.Bounds.Height);
+                pd_main.DrawToBitmap(bp, pd_main.Bounds);
+                bp.Save(path);
+                return path;
+            }
+            catch(Exception)
+            {
+                return null;
+            }
+        }
+        private void ReportWord(int index)
+        {
+            ReportTemplete rt = WordReportTempletes[index];
+            string templetePath = WriteReportTempleteFile(rt.Id, "dot");
+            if(templetePath == null)
+            {
+                MessageBox.Show("载入模板文件失败，请检查网络连接或者联系管理员", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            string reportPath = TempPath + "doc";
+            string imgPath = WriteDpImage();
+            if (imgPath == null)
+            {
+                MessageBox.Show("写入图片失败", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            WordReporter wp = new WordReporter(Pro, templetePath, reportPath, imgPath);
+            wp.Report();
+            System.Diagnostics.Process.Start("Explorer.exe", reportPath);
+        }
+        private string TempPath
+        {
+            get
+            {
+                Random r = new Random();
+                string path = System.IO.Path.GetTempPath() + r.Next().ToString() + ".";
+                return path;
+            }
+        }
+        private string WriteReportTempleteFile(int id,string extname)
+        {
+            try
+            {
+                byte[] buffer = DBReportTempleteAdapter.LoadRawWithId(id);
+                Random r = new Random();
+                string path= TempPath+extname;
+                FileStream fs = new FileStream(path, FileMode.Create);
+                fs.Write(buffer, 0, buffer.Length);
+                fs.Flush();
+                fs.Close();
+                return path;
+            }
+            catch(Exception)
+            {
+                return null;
+            }
+            
         }
     }
 }

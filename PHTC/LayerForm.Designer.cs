@@ -86,9 +86,9 @@
             this.lb_Thickness.AutoSize = true;
             this.lb_Thickness.Location = new System.Drawing.Point(39, 132);
             this.lb_Thickness.Name = "lb_Thickness";
-            this.lb_Thickness.Size = new System.Drawing.Size(47, 12);
+            this.lb_Thickness.Size = new System.Drawing.Size(53, 12);
             this.lb_Thickness.TabIndex = 4;
-            this.lb_Thickness.Text = "厚度[m]";
+            this.lb_Thickness.Text = "厚度[mm]";
             // 
             // tb_Thickness
             // 

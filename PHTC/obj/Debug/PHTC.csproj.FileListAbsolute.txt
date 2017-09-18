@@ -49,5 +49,13 @@ E:\Git_PHTC\PHTC\obj\Debug\PHTC.PhtcDisplay.resources
 E:\Git_PHTC\PHTC\obj\Debug\PHTC.ProjectParameterForm.resources
 E:\Git_PHTC\PHTC\obj\Debug\PHTC.ProjectSaveAsForm.resources
 E:\Git_PHTC\PHTC\obj\Debug\PHTC.ProjectLoadForm.resources
+E:\Git_PHTC\PHTC\bin\Debug\Microsoft.Office.Interop.Word.dll
+E:\Git_PHTC\PHTC\bin\Debug\office.dll
+E:\Git_PHTC\PHTC\bin\Debug\Microsoft.Vbe.Interop.dll
+E:\Git_PHTC\PHTC\bin\Debug\stdole.dll
+E:\Git_PHTC\PHTC\bin\Debug\Microsoft.Office.Interop.Word.xml
+E:\Git_PHTC\PHTC\bin\Debug\office.xml
+E:\Git_PHTC\PHTC\bin\Debug\PHTC.DB.pdb
+E:\Git_PHTC\PHTC\bin\Debug\PHTC.Reporter.pdb
+E:\Git_PHTC\PHTC\bin\Debug\PHTC.GlobalTool.pdb
 E:\Git_PHTC\PHTC\bin\Debug\PHTC.Model.pdb
-E:\Git_PHTC\PHTC\bin\Debug\PHTC.Solver.pdb

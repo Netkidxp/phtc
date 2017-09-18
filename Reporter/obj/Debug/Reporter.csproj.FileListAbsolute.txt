@@ -1,0 +1,5 @@
+E:\Git_PHTC\PHTC\bin\Debug\PHTC.Reporter.dll
+E:\Git_PHTC\PHTC\bin\Debug\PHTC.Reporter.pdb
+E:\Git_PHTC\Reporter\obj\Debug\Reporter.csprojResolveAssemblyReference.cache
+E:\Git_PHTC\Reporter\obj\Debug\PHTC.Reporter.dll
+E:\Git_PHTC\Reporter\obj\Debug\PHTC.Reporter.pdb

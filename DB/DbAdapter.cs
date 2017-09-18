@@ -576,7 +576,110 @@ namespace PHTC.DB
                 return null;
             }
         }
+        
     }
-    
+    public class DBReportTempleteAdapter
+    {
+        private static MySqlParameter[] MakeInsertParameter(ReportTemplete rt)
+        {
+            MySqlParameter _ownerid = new MySqlParameter("_ownerid", MySqlDbType.Int32);
+            _ownerid.Value = rt.OwnerId;
+            MySqlParameter _type = new MySqlParameter("_type", MySqlDbType.Int32);
+            _type.Value = rt.Type;
+            MySqlParameter _name = new MySqlParameter("_name", MySqlDbType.String);
+            _name.Value = rt.Name;
+            MySqlParameter _induction = new MySqlParameter("_induction", MySqlDbType.String);
+            _induction.Value = rt.Induction;
+            MySqlParameter _raw = new MySqlParameter("_raw", MySqlDbType.LongBlob);
+            _raw.Value = rt.Raw;
+            return new MySqlParameter[] { _ownerid,_type,_name,_induction,_raw};
+        }
+        public static bool Insert(ReportTemplete rt)
+        {
+            try
+            {
+                DbManager dm = DbManager.Ins;
+                MySqlParameter[] pars = MakeInsertParameter(rt);
+                DataTable dt = dm.ExecuteProcQuery("ReportTemplete_Insert", pars);
+                rt.Id = (int)dt.Rows[0][0];
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+        public static bool Delete(int id)
+        {
+            try
+            {
+                DbManager dm = DbManager.Ins;
+                MySqlParameter _id= new MySqlParameter("_id", MySqlDbType.Int32);
+                _id.Value = id;
+                MySqlParameter[] pars = new MySqlParameter[] { _id };
+                dm.ExecuteProcNonQuery("ReportTemplete_Delete", pars);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        public static List<ReportTemplete> ListAllTempleteWithType(int type)
+        {
+            try
+            {
+                DbManager dm = DbManager.Ins;
+                MySqlParameter _type = new MySqlParameter("_type", MySqlDbType.Int32);
+                _type.Value = type;
+                MySqlParameter[] pars = new MySqlParameter[] { _type };
+                DataTable dt = dm.ExecuteProcQuery("ReportTemplete_ListAllWithType", pars);
+                List<ReportTemplete> rts = new List<ReportTemplete>();
+                foreach(DataRow dr in dt.Rows)
+                {
+                    ReportTemplete rt = new ReportTemplete();
+                    rt.Id = (int)dr["id"];
+                    rt.Name = (string)dr["name"];
+                    rt.Induction = (string)dr["induction"];
+                    rts.Add(rt);
+                }
+                return rts;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+        public static DataTable ListAllTemplete()
+        {
+            try
+            {
+                DbManager dm = DbManager.Ins;
+                MySqlParameter[] pars = new MySqlParameter[] {};
+                DataTable dt = dm.ExecuteProcQuery("ReportTemplete_ListAll", pars);
+                return dt;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+        public static byte[] LoadRawWithId(int id)
+        {
+            try
+            {
+                DbManager dm = DbManager.Ins;
+                MySqlParameter _id = new MySqlParameter("_id", MySqlDbType.Int32);
+                _id.Value = id;
+                MySqlParameter[] pars = new MySqlParameter[] { _id };
+                DataTable dt = dm.ExecuteProcQuery("ReportTemplete_LoadRawWithId", pars);
+                return (byte[])dt.Rows[0][0];
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+    }
     
 }

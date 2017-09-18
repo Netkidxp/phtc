@@ -63,7 +63,16 @@ namespace PHTC.Model
             ShIsFun = _shIsFun;
             share = _share;
         }
-        
+        public static Material Default
+        {
+            get
+            {
+                List<RefValue> hcs = new List<RefValue> { new RefValue(298.15, 2.5) };
+                List<RefValue> shs = new List<RefValue> { new RefValue(298.15, 20) };
+                Material mat = new Material(0, "new material", null, 0, "code", "use for", DateTime.Now, DateTime.Now, 2000, "remark", hcs, shs, false, false, true);
+                return mat;
+            }
+        }
         public double lookupThermalConductivity(double temperature)
         {
             double result = 0.0;

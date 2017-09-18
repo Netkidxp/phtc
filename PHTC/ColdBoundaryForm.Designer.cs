@@ -52,6 +52,7 @@
             this.tb_C3AmbientTemperature = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.bu_Ok = new System.Windows.Forms.Button();
+            this.bu_cancel = new System.Windows.Forms.Button();
             this.tc_main.SuspendLayout();
             this.tp_class1.SuspendLayout();
             this.tp_class2.SuspendLayout();
@@ -61,7 +62,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(27, 11);
+            this.label1.Location = new System.Drawing.Point(12, 11);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(29, 12);
             this.label1.TabIndex = 0;
@@ -75,9 +76,9 @@
             "表面温度",
             "热流密度",
             "对流 辐射"});
-            this.cb_type.Location = new System.Drawing.Point(78, 6);
+            this.cb_type.Location = new System.Drawing.Point(47, 7);
             this.cb_type.Name = "cb_type";
-            this.cb_type.Size = new System.Drawing.Size(176, 20);
+            this.cb_type.Size = new System.Drawing.Size(137, 20);
             this.cb_type.TabIndex = 1;
             this.cb_type.SelectedIndexChanged += new System.EventHandler(this.OnCbTypeChanged);
             // 
@@ -303,12 +304,25 @@
             this.bu_Ok.UseVisualStyleBackColor = true;
             this.bu_Ok.Click += new System.EventHandler(this.bu_Ok_Click);
             // 
+            // bu_cancel
+            // 
+            this.bu_cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.bu_cancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bu_cancel.Location = new System.Drawing.Point(205, 5);
+            this.bu_cancel.Name = "bu_cancel";
+            this.bu_cancel.Size = new System.Drawing.Size(64, 23);
+            this.bu_cancel.TabIndex = 3;
+            this.bu_cancel.Text = "取消";
+            this.bu_cancel.UseVisualStyleBackColor = true;
+            // 
             // ColdBoundaryForm
             // 
             this.AcceptButton = this.bu_Ok;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.bu_cancel;
             this.ClientSize = new System.Drawing.Size(342, 179);
+            this.Controls.Add(this.bu_cancel);
             this.Controls.Add(this.bu_Ok);
             this.Controls.Add(this.tc_main);
             this.Controls.Add(this.cb_type);
@@ -356,5 +370,6 @@
         private System.Windows.Forms.Label lb_C2Temperature;
         private System.Windows.Forms.Label lb_C3Temperature;
         private System.Windows.Forms.TextBox tb_C3Temperature;
+        private System.Windows.Forms.Button bu_cancel;
     }
 }
