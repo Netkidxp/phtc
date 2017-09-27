@@ -69,7 +69,7 @@ namespace PHTC.Model
             {
                 List<RefValue> hcs = new List<RefValue> { new RefValue(298.15, 2.5) };
                 List<RefValue> shs = new List<RefValue> { new RefValue(298.15, 20) };
-                Material mat = new Material(0, "new material", null, 0, "code", "use for", DateTime.Now, DateTime.Now, 2000, "remark", hcs, shs, false, false, true);
+                Material mat = new Material(0, "new material", User.CurrentUser, User.CurrentUser.Id, "code", "use for", DateTime.Now, DateTime.Now, 2000, "remark", hcs, shs, false, false, true);
                 return mat;
             }
         }
@@ -134,7 +134,17 @@ namespace PHTC.Model
             }
             return result;
         }
-        
+        public override bool Equals(object obj)
+        {
+            if(obj is Material)
+            {
+                Material m = obj as Material;
+                if (m.Index == Index)
+                    return true;
+            }
+            return false;
+        }
+
     }
     [Serializable]
     public class RefValue

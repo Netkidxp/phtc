@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<updateFiels>
+  <file path="office.xml" url="http://192.168.2.88/files/office.xml" lastver="" size="1101623" needRestart="False" />
+  <file path="PHTC.DB.dll" url="http://192.168.2.88/files/PHTC.DB.dll" lastver="1.0.0.0" size="20480" needRestart="False" />
+  <file path="PHTC.GlobalTool.dll" url="http://192.168.2.88/files/PHTC.GlobalTool.dll" lastver="1.0.0.0" size="10240" needRestart="False" />
+  <file path="sd\haha.txt" url="http://192.168.2.88/files/sd/haha.txt" lastver="" size="0" needRestart="False" />
+</updateFiels>

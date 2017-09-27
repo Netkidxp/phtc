@@ -152,9 +152,9 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(22, 120);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(53, 12);
+            this.label4.Size = new System.Drawing.Size(29, 12);
             this.label4.TabIndex = 9;
-            this.label4.Text = "工程名称";
+            this.label4.Text = "备注";
             // 
             // ProjectParameterForm
             // 
@@ -178,7 +178,7 @@
             this.Name = "ProjectParameterForm";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "模型参数";
+            this.Text = "工程参数";
             this.ResumeLayout(false);
             this.PerformLayout();
 

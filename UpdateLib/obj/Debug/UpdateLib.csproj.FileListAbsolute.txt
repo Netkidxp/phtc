@@ -1,0 +1,5 @@
+E:\Git_PHTC\PHTC\bin\Debug\PHTC.UpdateLib.dll
+E:\Git_PHTC\PHTC\bin\Debug\PHTC.UpdateLib.pdb
+E:\Git_PHTC\UpdateLib\obj\Debug\PHTC.UpdateLib.dll
+E:\Git_PHTC\UpdateLib\obj\Debug\PHTC.UpdateLib.pdb
+E:\Git_PHTC\UpdateLib\obj\Debug\UpdateLib.csprojResolveAssemblyReference.cache

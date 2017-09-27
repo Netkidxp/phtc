@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 using MySql.Data;
 using System.Data;
-using System.Security.Cryptography;//MD5加密需引入的命名空间
 using PHTC.Model;
 
 namespace PHTC.DB
@@ -289,12 +288,12 @@ namespace PHTC.DB
             MySqlParameter p_login_id = new MySqlParameter("_login_id", MySqlDbType.String);
             p_login_id.Value = user.Login_id;
             MySqlParameter p_login_password = new MySqlParameter("_login_password", MySqlDbType.String);
-            p_login_password.Value = GetMD5(user.Login_password);
+            p_login_password.Value = user.Login_password;
             MySqlParameter p_name = new MySqlParameter("_name", MySqlDbType.String);
             p_name.Value = user.Name;
             MySqlParameter p_department = new MySqlParameter("_department", MySqlDbType.String);
             p_department.Value = user.Department;
-            MySqlParameter[] pars = new MySqlParameter[] { p_login_id, p_login_password, p_name, p_department };
+            MySqlParameter[] pars = new MySqlParameter[] { p_id,p_login_id, p_login_password, p_name, p_department };
             return pars;
         }
         public static User LoadWithId(int _id)
@@ -314,8 +313,9 @@ namespace PHTC.DB
                 string department = (string)dr["department"];
                 return new User(id, login_id, login_password, name, department);
             }
-            catch(Exception)
+            catch(Exception e)
             {
+                GlobalTool.LogError("DBUserAdapter.LoadWithId", e.Message, true);
                 return null;
             }
             
@@ -329,8 +329,9 @@ namespace PHTC.DB
                 dm.ExecuteProcNonQuery("User_Insert", pars);
                 return true;
             }
-            catch(Exception)
+            catch(Exception e)
             {
+                GlobalTool.LogError("DBUserAdapter.Insert", e.Message, true);
                 return false;
             }
         }
@@ -344,8 +345,9 @@ namespace PHTC.DB
                 dm.ExecuteProcNonQuery("User_Update", pars);
                 return true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                GlobalTool.LogError("DBUserAdapter.Update", e.Message, true);
                 return false;
             }
         }
@@ -360,8 +362,9 @@ namespace PHTC.DB
                 dm.ExecuteProcNonQuery("User_Delete", pars);
                 return true;
             }
-            catch(Exception)
+            catch(Exception e)
             {
+                GlobalTool.LogError("DBUserAdapter.Delete", e.Message, true);
                 return false;
             }
         }
@@ -371,39 +374,45 @@ namespace PHTC.DB
             try
             {
                 DbManager dm = DbManager.Ins;
-                MySqlParameter p_login_id = new MySqlParameter("_login_id", MySqlDbType.Int32);
+                MySqlParameter p_login_id = new MySqlParameter("_login_id", MySqlDbType.String);
                 p_login_id.Value = _login_id;
                 MySqlParameter[] pars = new MySqlParameter[] { p_login_id };
                 DataTable dt = dm.ExecuteProcQuery("User_CountUserWithLoginId", pars);
-                if (dt.Rows[0][0].ToString() != "0")
+                if (dt == null)
                     return -1;
-                else
-                    return 1;
+                string sc = dt.Rows[0][0].ToString();
+                return int.Parse(sc);
             }
-            catch(Exception)
+            catch(Exception e)
             {
+                GlobalTool.LogError("DBUserAdapter.Exist", e.Message, true);
                 return 0;
             }
             
 
         }
-        /// <summary>
-        /// MD5加密
-        /// </summary>
-        /// <param name="strPwd">被加密的字符串</param>
-        /// <returns>返回加密后的字符串</returns>
-        public static string GetMD5(string strPwd)
+        public static User LoadWithName(string _name)
         {
-            MD5 md5 = new MD5CryptoServiceProvider();
-            byte[] data = System.Text.Encoding.Default.GetBytes(strPwd);
-            byte[] md5data = md5.ComputeHash(data);
-            md5.Clear();
-            string str = "";
-            for (int i = 0; i < md5data.Length - 1; i++)
+            try
             {
-                str += md5data[i].ToString("x").PadLeft(2, '0');
+                DbManager dm = DbManager.Ins;
+                MySqlParameter p_index = new MySqlParameter("_name", MySqlDbType.String);
+                p_index.Value = _name;
+                MySqlParameter[] pars = new MySqlParameter[] { p_index };
+                DataTable dt = dm.ExecuteProcQuery("User_LoadWithName", pars);
+                DataRow dr = dt.Rows[0];
+                int id = (int)dr["id"];
+                string login_id = (string)dr["login_id"];
+                string login_password = (string)dr["login_password"];
+                string name = (string)dr["name"];
+                string department = (string)dr["department"];
+                return new User(id, login_id, login_password, name, department);
             }
-            return str;
+            catch (Exception e)
+            {
+                GlobalTool.LogError("DBUserAdapter.LoadWithName", e.Message, true);
+                return null;
+            }
         }
     }
     public class DBProjectAdapter

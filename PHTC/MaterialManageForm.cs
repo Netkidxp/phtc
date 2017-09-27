@@ -28,7 +28,7 @@ namespace PHTC
             dt_input = null;
             FilterPanelShow = false;
             cb_filterPlanel.Checked = false;
-            
+            tb_input.Text = "%";
         }
         public bool FilterPanelShow
         { get => filterPanelShow;
@@ -122,7 +122,7 @@ namespace PHTC
         /// <summary>
         /// /////////////////////////////////
         /// </summary>
-        private void NewMaterial()
+        private int NewMaterial()
         {
             
             Material mat = Material.Default;
@@ -136,8 +136,11 @@ namespace PHTC
                 if(!res)
                 {
                     GlobalTool.LogError("MaterialManageForm.NewMaterial", "保存材料出现错误，请检查您的网络连接，或者向管理员寻求帮助！", true);
+                    return -1;
                 }
+                return mat.Index;
             }
+            return 0;
             
         }
         /// <summary>
@@ -232,8 +235,10 @@ namespace PHTC
         }
         private void NewToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            NewMaterial();
+            int id=NewMaterial();
             RefreshData();
+            if (id > 0)
+                SetSelectCell(id);
         }
         private void DetailsToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -244,6 +249,33 @@ namespace PHTC
         private void LoadToolStripMenuItem_Click(object sender, EventArgs e)
         {
             LoadMaterial();
+        }
+        private int CopyMaterial()
+        {
+            int id = (int)dgv_list.CurrentRow.Cells[0].Value;
+            Material mat = DbMaterialAdapter.LoadWithId(id);
+            if(mat==null)
+            {
+                GlobalTool.LogError("MaterialManageForm.CopyMaterial", "读取材料出现错误，请检查您的网络连接，或者向管理员寻求帮助！", true);
+                return -1;
+            }
+            if (mat.OwnerId == User.CurrentUser.Id || mat.Share)
+            {
+                mat.OwnerId = User.CurrentUser.Id;
+                mat.Name = mat.Name + " 副本";
+                bool res = DbMaterialAdapter.Insert(mat);
+                if (!res)
+                {
+                    GlobalTool.LogError("MaterialManageForm.NewMaterial", "保存材料出现错误，请检查您的网络连接，或者向管理员寻求帮助！", true);
+                    return -1;
+                }
+                return mat.Index;
+            }
+            else
+            {
+                MessageBox.Show("该材料所有者不共享材料信息，请您联系材料所有者！", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return -1;
+            }
         }
         private void LoadMaterial()
         {
@@ -356,9 +388,28 @@ namespace PHTC
 
         private void OnContentMenuOpened(object sender, EventArgs e)
         {
-            CDeleteToolStripMenuItem.Enabled = (dgv_list.CurrentRow != null);
-            CDetailsToolStripMenuItem.Enabled = (dgv_list.CurrentRow != null);
-            CLoadToolStripMenuItem.Enabled = (dgv_list.CurrentRow != null);
+            CDeleteToolStripMenuItem.Visible = (dgv_list.CurrentRow != null);
+            CDetailsToolStripMenuItem.Visible = (dgv_list.CurrentRow != null);
+            CLoadToolStripMenuItem.Visible = (dgv_list.CurrentRow != null&& LoadEvent != null);
+            CCopyToolStripMenuItem.Visible = (dgv_list.CurrentRow != null);
+        }
+
+        private void CCopyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+             
+            int id=CopyMaterial();
+            RefreshData();
+            if(id>0)
+                SetSelectCell(id);
+        }
+        private void SetSelectCell(int id)
+        {
+            dgv_list.CurrentCell = null;
+            foreach (DataGridViewRow r in dgv_list.Rows)
+            {
+                if ((int)(r.Cells[0].Value) == id)
+                    r.Selected = true;
+            }
         }
     }
 }

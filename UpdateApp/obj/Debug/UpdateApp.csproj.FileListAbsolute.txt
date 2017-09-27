@@ -1,0 +1,8 @@
+E:\Git_PHTC\UpdateApp\obj\Debug\UpdateApp.csprojResolveAssemblyReference.cache
+E:\Git_PHTC\UpdateApp\obj\Debug\PHTC.Properties.Resources.resources
+E:\Git_PHTC\UpdateApp\obj\Debug\UpdateApp.csproj.GenerateResource.Cache
+E:\Git_PHTC\PHTC\bin\Debug\PHTC.Update.exe.config
+E:\Git_PHTC\PHTC\bin\Debug\PHTC.Update.exe
+E:\Git_PHTC\PHTC\bin\Debug\PHTC.Update.pdb
+E:\Git_PHTC\UpdateApp\obj\Debug\PHTC.Update.exe
+E:\Git_PHTC\UpdateApp\obj\Debug\PHTC.Update.pdb

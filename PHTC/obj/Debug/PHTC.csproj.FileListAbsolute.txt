@@ -55,7 +55,7 @@ E:\Git_PHTC\PHTC\bin\Debug\Microsoft.Vbe.Interop.dll
 E:\Git_PHTC\PHTC\bin\Debug\stdole.dll
 E:\Git_PHTC\PHTC\bin\Debug\Microsoft.Office.Interop.Word.xml
 E:\Git_PHTC\PHTC\bin\Debug\office.xml
-E:\Git_PHTC\PHTC\bin\Debug\PHTC.DB.pdb
-E:\Git_PHTC\PHTC\bin\Debug\PHTC.Reporter.pdb
-E:\Git_PHTC\PHTC\bin\Debug\PHTC.GlobalTool.pdb
-E:\Git_PHTC\PHTC\bin\Debug\PHTC.Model.pdb
+E:\Git_PHTC\PHTC\obj\Debug\PHTC.MainDisplay.resources
+E:\Git_PHTC\PHTC\obj\Debug\PHTC.LoginForm.resources
+E:\Git_PHTC\PHTC\obj\Debug\PHTC.ChangePasswordForm.resources
+E:\Git_PHTC\PHTC\bin\Debug\Autoupdater.config

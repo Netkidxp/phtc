@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Configuration;
 using System.IO;
+using Microsoft.Win32;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace PHTC
 {
@@ -88,6 +90,70 @@ namespace PHTC
         {
             return c + 273.15;
         }
-        
+        public static string ReadRegKeyValue(string key, string name)
+        {
+            RegistryKey machine = Registry.CurrentUser;
+            RegistryKey phtc = machine.OpenSubKey("software\\phtc\\" + key, true);
+            string res = null;
+            if (phtc == null)
+            {
+                machine.Close();
+                return null;
+            }
+            object value = phtc.GetValue(name);
+            if (value == null)
+            {
+                res = null;
+            }
+            else
+            {
+                res = value.ToString();
+            }
+            phtc.Close();
+            machine.Close();
+            return res;
+
+
+
+        }
+        public static void WriteRegKeyValue(string key, string name, string value)
+        {
+            RegistryKey machine = Registry.CurrentUser;
+            RegistryKey phtc = machine.OpenSubKey("software\\phtc\\" + key, true);
+            if (phtc == null)
+                phtc = machine.CreateSubKey("software\\phtc\\" + key);
+            phtc.SetValue(name, value);
+            phtc.Close();
+            machine.Close();
+        }
+        public static void DeleteRegKeyValue(string key,string name)
+        {
+            RegistryKey machine = Registry.CurrentUser;
+            RegistryKey phtc = machine.OpenSubKey("software\\phtc\\" + key, true);
+            if (phtc == null)
+                return;
+            if(phtc.GetValue(name)!=null)
+                phtc.DeleteValue(name);
+            phtc.Close();
+            machine.Close();
+        }
+        public static object Clone(object o)
+        {
+            object obj = null;
+            //将对象序列化成内存中的二进制流  
+            BinaryFormatter inputFormatter = new BinaryFormatter();
+            MemoryStream inputStream;
+            using (inputStream = new MemoryStream())
+            {
+                inputFormatter.Serialize(inputStream, o);
+            }
+            //将二进制流反序列化为对象  
+            using (MemoryStream outputStream = new MemoryStream(inputStream.ToArray()))
+            {
+                BinaryFormatter outputFormatter = new BinaryFormatter();
+                obj = outputFormatter.Deserialize(outputStream);
+            }
+            return obj;
+        }
     }
 }

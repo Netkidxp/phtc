@@ -1,0 +1,11 @@
+E:\Git_PHTC\Test\bin\Debug\Test.exe.config
+E:\Git_PHTC\Test\bin\Debug\Test.exe
+E:\Git_PHTC\Test\bin\Debug\Test.pdb
+E:\Git_PHTC\Test\bin\Debug\PHTC.UpdateLib.dll
+E:\Git_PHTC\Test\bin\Debug\PHTC.UpdateLib.pdb
+E:\Git_PHTC\Test\obj\Debug\Test.csprojResolveAssemblyReference.cache
+E:\Git_PHTC\Test\obj\Debug\Test.Form1.resources
+E:\Git_PHTC\Test\obj\Debug\Test.Properties.Resources.resources
+E:\Git_PHTC\Test\obj\Debug\Test.csproj.GenerateResource.Cache
+E:\Git_PHTC\Test\obj\Debug\Test.exe
+E:\Git_PHTC\Test\obj\Debug\Test.pdb

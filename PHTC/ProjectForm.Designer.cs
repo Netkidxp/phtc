@@ -53,20 +53,14 @@
             treeNode11});
             System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("计算", 24, 24);
             System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("Word报告", 35, 35);
-            System.Windows.Forms.TreeNode treeNode15 = new System.Windows.Forms.TreeNode("Html报告", 34, 34);
-            System.Windows.Forms.TreeNode treeNode16 = new System.Windows.Forms.TreeNode("结果", 1, 1, new System.Windows.Forms.TreeNode[] {
-            treeNode14,
-            treeNode15});
-            System.Windows.Forms.TreeNode treeNode17 = new System.Windows.Forms.TreeNode("新建计算", 7, 7, new System.Windows.Forms.TreeNode[] {
+            System.Windows.Forms.TreeNode treeNode15 = new System.Windows.Forms.TreeNode("结果", 1, 1, new System.Windows.Forms.TreeNode[] {
+            treeNode14});
+            System.Windows.Forms.TreeNode treeNode16 = new System.Windows.Forms.TreeNode("新建计算", 7, 7, new System.Windows.Forms.TreeNode[] {
             treeNode3,
             treeNode9,
             treeNode12,
             treeNode13,
-            treeNode16});
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            treeNode15});
             this.cms_N_Material = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mi_Material_Load = new System.Windows.Forms.ToolStripMenuItem();
             this.cms_N_Layer = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -77,12 +71,7 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tv_navigation = new System.Windows.Forms.TreeView();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
-            this.pd_main = new PHTC.PhtcDisplay();
-            this.splitContainer4 = new System.Windows.Forms.SplitContainer();
-            this.splitContainer5 = new System.Windows.Forms.SplitContainer();
-            this.ct_temperature = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.ct_thickness = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.wb_monitor = new System.Windows.Forms.WebBrowser();
+            this.mainDisplay1 = new PHTC.MainDisplay();
             this.il_ui = new System.Windows.Forms.ImageList(this.components);
             this.cms_N_MarerialItem = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mi_MaterialItem_Show = new System.Windows.Forms.ToolStripMenuItem();
@@ -93,16 +82,60 @@
             this.mi_LayerItem_Up = new System.Windows.Forms.ToolStripMenuItem();
             this.mi_LayerItem_Down = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.文件FToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.系统SToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mi_user_loginoff = new System.Windows.Forms.ToolStripMenuItem();
+            this.mi_user_changepassword = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.mi_user_exit = new System.Windows.Forms.ToolStripMenuItem();
+            this.mi_project_new = new System.Windows.Forms.ToolStripMenuItem();
             this.mi_File_New = new System.Windows.Forms.ToolStripMenuItem();
             this.mi_File_Load = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.mi_File_Save = new System.Windows.Forms.ToolStripMenuItem();
             this.mi_File_SaveAs = new System.Windows.Forms.ToolStripMenuItem();
+            this.mi_material = new System.Windows.Forms.ToolStripMenuItem();
+            this.mi_material_loadin = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.mi_material_new = new System.Windows.Forms.ToolStripMenuItem();
+            this.mi_material_detail = new System.Windows.Forms.ToolStripMenuItem();
+            this.mi_material_delete = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.mi_File_Exit = new System.Windows.Forms.ToolStripMenuItem();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.mi_material_managelib = new System.Windows.Forms.ToolStripMenuItem();
+            this.计算模型CToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mi_calculatemode_hotface = new System.Windows.Forms.ToolStripMenuItem();
+            this.mi_calculatemode_coldboundary = new System.Windows.Forms.ToolStripMenuItem();
+            this.层管理LToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mi_layer_new = new System.Windows.Forms.ToolStripMenuItem();
+            this.mi_layer_detail = new System.Windows.Forms.ToolStripMenuItem();
+            this.mi_layer_delete = new System.Windows.Forms.ToolStripMenuItem();
+            this.mi_layer_move = new System.Windows.Forms.ToolStripMenuItem();
+            this.mi_layer_move_up = new System.Windows.Forms.ToolStripMenuItem();
+            this.mi_layer_move_down = new System.Windows.Forms.ToolStripMenuItem();
+            this.解算参数SToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mi_solveparameter_temperature = new System.Windows.Forms.ToolStripMenuItem();
+            this.mi_solveparameter_thickness = new System.Windows.Forms.ToolStripMenuItem();
+            this.mi_solveparameter_laydiff = new System.Windows.Forms.ToolStripMenuItem();
+            this.解算SToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mi_solve_run = new System.Windows.Forms.ToolStripMenuItem();
+            this.结果RToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mi_result_word = new System.Windows.Forms.ToolStripMenuItem();
+            this.帮助HToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mi_help_doc = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.mi_help_about = new System.Windows.Forms.ToolStripMenuItem();
+            this.ss_bottom = new System.Windows.Forms.StatusStrip();
+            this.db_user = new System.Windows.Forms.ToolStripDropDownButton();
+            this.mi_logoff = new System.Windows.Forms.ToolStripMenuItem();
+            this.mi_changepassword = new System.Windows.Forms.ToolStripMenuItem();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            this.cmi_material_new = new System.Windows.Forms.ToolStripMenuItem();
+            this.mi_material_update = new System.Windows.Forms.ToolStripMenuItem();
+            this.mi_material_copy = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmi_materialitem_update = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmi_materialitem_copy = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.mi_result_refreshreporter = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.cms_N_Material.SuspendLayout();
             this.cms_N_Layer.SuspendLayout();
             this.cms_N_ReportWordOrHtml.SuspendLayout();
@@ -112,39 +145,32 @@
             this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).BeginInit();
             this.splitContainer3.Panel1.SuspendLayout();
-            this.splitContainer3.Panel2.SuspendLayout();
             this.splitContainer3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).BeginInit();
-            this.splitContainer4.Panel1.SuspendLayout();
-            this.splitContainer4.Panel2.SuspendLayout();
-            this.splitContainer4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).BeginInit();
-            this.splitContainer5.Panel1.SuspendLayout();
-            this.splitContainer5.Panel2.SuspendLayout();
-            this.splitContainer5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ct_temperature)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ct_thickness)).BeginInit();
             this.cms_N_MarerialItem.SuspendLayout();
             this.cms_N_LayerItem.SuspendLayout();
             this.menuStrip1.SuspendLayout();
+            this.ss_bottom.SuspendLayout();
             this.SuspendLayout();
             // 
             // cms_N_Material
             // 
+            this.cms_N_Material.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.cms_N_Material.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mi_Material_Load});
+            this.mi_Material_Load,
+            this.cmi_material_new});
             this.cms_N_Material.Name = "cms_N_Material";
-            this.cms_N_Material.Size = new System.Drawing.Size(160, 26);
+            this.cms_N_Material.Size = new System.Drawing.Size(160, 48);
             // 
             // mi_Material_Load
             // 
             this.mi_Material_Load.Name = "mi_Material_Load";
             this.mi_Material_Load.Size = new System.Drawing.Size(159, 22);
-            this.mi_Material_Load.Text = "数据库载入(&L)...";
+            this.mi_Material_Load.Text = "数据库载入...(&L)";
             this.mi_Material_Load.Click += new System.EventHandler(this.mi_Material_Load_Click);
             // 
             // cms_N_Layer
             // 
+            this.cms_N_Layer.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.cms_N_Layer.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mi_Layer_Add});
             this.cms_N_Layer.Name = "cms_N_Layer";
@@ -159,6 +185,7 @@
             // 
             // cms_N_ReportWordOrHtml
             // 
+            this.cms_N_ReportWordOrHtml.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.cms_N_ReportWordOrHtml.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mi_report_refresh});
             this.cms_N_ReportWordOrHtml.Name = "cms_N_ReportWordOrHtml";
@@ -226,7 +253,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer3);
-            this.splitContainer1.Size = new System.Drawing.Size(1054, 559);
+            this.splitContainer1.Size = new System.Drawing.Size(1054, 589);
             this.splitContainer1.SplitterDistance = 287;
             this.splitContainer1.TabIndex = 1;
             // 
@@ -295,23 +322,18 @@
             treeNode14.Name = "N_ReportWord";
             treeNode14.SelectedImageIndex = 35;
             treeNode14.Text = "Word报告";
-            treeNode15.ContextMenuStrip = this.cms_N_ReportWordOrHtml;
-            treeNode15.ImageIndex = 34;
-            treeNode15.Name = "N_ReportHtml";
-            treeNode15.SelectedImageIndex = 34;
-            treeNode15.Text = "Html报告";
-            treeNode16.ImageIndex = 1;
-            treeNode16.Name = "N_Result";
-            treeNode16.SelectedImageIndex = 1;
-            treeNode16.Text = "结果";
-            treeNode17.ImageIndex = 7;
-            treeNode17.Name = "N_Project";
-            treeNode17.SelectedImageIndex = 7;
-            treeNode17.Text = "新建计算";
+            treeNode15.ImageIndex = 1;
+            treeNode15.Name = "N_Result";
+            treeNode15.SelectedImageIndex = 1;
+            treeNode15.Text = "结果";
+            treeNode16.ImageIndex = 7;
+            treeNode16.Name = "N_Project";
+            treeNode16.SelectedImageIndex = 7;
+            treeNode16.Text = "新建计算";
             this.tv_navigation.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode17});
+            treeNode16});
             this.tv_navigation.SelectedImageIndex = 0;
-            this.tv_navigation.Size = new System.Drawing.Size(287, 559);
+            this.tv_navigation.Size = new System.Drawing.Size(287, 589);
             this.tv_navigation.TabIndex = 1;
             this.tv_navigation.BeforeCollapse += new System.Windows.Forms.TreeViewCancelEventHandler(this.BeforeTvNavCollapse);
             this.tv_navigation.BeforeExpand += new System.Windows.Forms.TreeViewCancelEventHandler(this.BeforeTvNavExpand);
@@ -329,111 +351,29 @@
             // 
             // splitContainer3.Panel1
             // 
-            this.splitContainer3.Panel1.Controls.Add(this.pd_main);
-            // 
-            // splitContainer3.Panel2
-            // 
-            this.splitContainer3.Panel2.Controls.Add(this.splitContainer4);
-            this.splitContainer3.Size = new System.Drawing.Size(763, 559);
-            this.splitContainer3.SplitterDistance = 250;
+            this.splitContainer3.Panel1.Controls.Add(this.mainDisplay1);
+            this.splitContainer3.Size = new System.Drawing.Size(763, 589);
+            this.splitContainer3.SplitterDistance = 300;
             this.splitContainer3.TabIndex = 0;
             // 
-            // pd_main
+            // mainDisplay1
             // 
-            this.pd_main.BackColor = System.Drawing.Color.White;
-            this.pd_main.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pd_main.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pd_main.Location = new System.Drawing.Point(0, 0);
-            this.pd_main.Name = "pd_main";
-            this.pd_main.OnColdfaceClick = null;
-            this.pd_main.OnHotfaceClick = null;
-            this.pd_main.OnLayerDbClick = null;
-            this.pd_main.Project = null;
-            this.pd_main.Size = new System.Drawing.Size(763, 250);
-            this.pd_main.TabIndex = 0;
-            // 
-            // splitContainer4
-            // 
-            this.splitContainer4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer4.IsSplitterFixed = true;
-            this.splitContainer4.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer4.Name = "splitContainer4";
-            // 
-            // splitContainer4.Panel1
-            // 
-            this.splitContainer4.Panel1.Controls.Add(this.splitContainer5);
-            // 
-            // splitContainer4.Panel2
-            // 
-            this.splitContainer4.Panel2.Controls.Add(this.wb_monitor);
-            this.splitContainer4.Size = new System.Drawing.Size(763, 305);
-            this.splitContainer4.SplitterDistance = 387;
-            this.splitContainer4.TabIndex = 0;
-            // 
-            // splitContainer5
-            // 
-            this.splitContainer5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer5.IsSplitterFixed = true;
-            this.splitContainer5.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer5.Name = "splitContainer5";
-            this.splitContainer5.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainer5.Panel1
-            // 
-            this.splitContainer5.Panel1.Controls.Add(this.ct_temperature);
-            // 
-            // splitContainer5.Panel2
-            // 
-            this.splitContainer5.Panel2.Controls.Add(this.ct_thickness);
-            this.splitContainer5.Size = new System.Drawing.Size(387, 305);
-            this.splitContainer5.SplitterDistance = 150;
-            this.splitContainer5.TabIndex = 0;
-            // 
-            // ct_temperature
-            // 
-            chartArea1.Name = "ChartArea1";
-            this.ct_temperature.ChartAreas.Add(chartArea1);
-            this.ct_temperature.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ct_temperature.Location = new System.Drawing.Point(0, 0);
-            this.ct_temperature.Name = "ct_temperature";
-            series1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            series1.BorderWidth = 3;
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series1.Name = "Series1";
-            this.ct_temperature.Series.Add(series1);
-            this.ct_temperature.Size = new System.Drawing.Size(387, 150);
-            this.ct_temperature.TabIndex = 0;
-            this.ct_temperature.Text = "chart1";
-            // 
-            // ct_thickness
-            // 
-            chartArea2.Name = "ChartArea1";
-            this.ct_thickness.ChartAreas.Add(chartArea2);
-            this.ct_thickness.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ct_thickness.Location = new System.Drawing.Point(0, 0);
-            this.ct_thickness.Name = "ct_thickness";
-            series2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            series2.BorderWidth = 3;
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series2.Name = "Series1";
-            this.ct_thickness.Series.Add(series2);
-            this.ct_thickness.Size = new System.Drawing.Size(387, 151);
-            this.ct_thickness.TabIndex = 1;
-            this.ct_thickness.Text = "chart2";
-            // 
-            // wb_monitor
-            // 
-            this.wb_monitor.AllowNavigation = false;
-            this.wb_monitor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.wb_monitor.IsWebBrowserContextMenuEnabled = false;
-            this.wb_monitor.Location = new System.Drawing.Point(0, 0);
-            this.wb_monitor.MinimumSize = new System.Drawing.Size(20, 20);
-            this.wb_monitor.Name = "wb_monitor";
-            this.wb_monitor.Size = new System.Drawing.Size(372, 305);
-            this.wb_monitor.TabIndex = 0;
-            this.wb_monitor.Url = new System.Uri("", System.UriKind.Relative);
+            this.mainDisplay1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.mainDisplay1.BoundaryWidth = 20;
+            this.mainDisplay1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mainDisplay1.Location = new System.Drawing.Point(0, 0);
+            this.mainDisplay1.Margin = new System.Windows.Forms.Padding(4);
+            this.mainDisplay1.MaxColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.mainDisplay1.MinColor = System.Drawing.Color.Green;
+            this.mainDisplay1.MinWidth = 5;
+            this.mainDisplay1.Name = "mainDisplay1";
+            this.mainDisplay1.OnColdfaceClick = null;
+            this.mainDisplay1.OnHotfaceClick = null;
+            this.mainDisplay1.OnLayerDbClick = null;
+            this.mainDisplay1.Pro = null;
+            this.mainDisplay1.Size = new System.Drawing.Size(763, 300);
+            this.mainDisplay1.Space = 5;
+            this.mainDisplay1.TabIndex = 0;
             // 
             // il_ui
             // 
@@ -489,28 +429,33 @@
             // 
             // cms_N_MarerialItem
             // 
+            this.cms_N_MarerialItem.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.cms_N_MarerialItem.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mi_MaterialItem_Show,
-            this.mi_MaterialItem_Delete});
+            this.mi_MaterialItem_Delete,
+            this.toolStripSeparator6,
+            this.cmi_materialitem_copy,
+            this.cmi_materialitem_update});
             this.cms_N_MarerialItem.Name = "cms_N_MarerialItem";
-            this.cms_N_MarerialItem.Size = new System.Drawing.Size(126, 48);
+            this.cms_N_MarerialItem.Size = new System.Drawing.Size(166, 98);
             // 
             // mi_MaterialItem_Show
             // 
             this.mi_MaterialItem_Show.Name = "mi_MaterialItem_Show";
-            this.mi_MaterialItem_Show.Size = new System.Drawing.Size(125, 22);
+            this.mi_MaterialItem_Show.Size = new System.Drawing.Size(165, 22);
             this.mi_MaterialItem_Show.Text = "详情...(&V)";
             this.mi_MaterialItem_Show.Click += new System.EventHandler(this.mi_MaterialItem_Show_Click);
             // 
             // mi_MaterialItem_Delete
             // 
             this.mi_MaterialItem_Delete.Name = "mi_MaterialItem_Delete";
-            this.mi_MaterialItem_Delete.Size = new System.Drawing.Size(125, 22);
+            this.mi_MaterialItem_Delete.Size = new System.Drawing.Size(165, 22);
             this.mi_MaterialItem_Delete.Text = "删除(&D)";
             this.mi_MaterialItem_Delete.Click += new System.EventHandler(this.mi_MaterialItem_Delete_Click);
             // 
             // cms_N_LayerItem
             // 
+            this.cms_N_LayerItem.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.cms_N_LayerItem.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mi_LayerItem_Details,
             this.mi_LayerItem_Delete,
@@ -549,80 +494,373 @@
             // 
             // menuStrip1
             // 
+            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.文件FToolStripMenuItem});
+            this.系统SToolStripMenuItem,
+            this.mi_project_new,
+            this.mi_material,
+            this.计算模型CToolStripMenuItem,
+            this.层管理LToolStripMenuItem,
+            this.解算参数SToolStripMenuItem,
+            this.解算SToolStripMenuItem,
+            this.结果RToolStripMenuItem,
+            this.帮助HToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1054, 25);
             this.menuStrip1.TabIndex = 4;
             this.menuStrip1.Text = "menuStrip1";
             // 
-            // 文件FToolStripMenuItem
+            // 系统SToolStripMenuItem
             // 
-            this.文件FToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.系统SToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mi_user_loginoff,
+            this.mi_user_changepassword,
+            this.toolStripSeparator3,
+            this.mi_user_exit});
+            this.系统SToolStripMenuItem.Name = "系统SToolStripMenuItem";
+            this.系统SToolStripMenuItem.Size = new System.Drawing.Size(61, 21);
+            this.系统SToolStripMenuItem.Text = "用户(&U)";
+            // 
+            // mi_user_loginoff
+            // 
+            this.mi_user_loginoff.Name = "mi_user_loginoff";
+            this.mi_user_loginoff.Size = new System.Drawing.Size(152, 22);
+            this.mi_user_loginoff.Text = "注销(&L)";
+            this.mi_user_loginoff.Click += new System.EventHandler(this.mi_user_loginoff_Click);
+            // 
+            // mi_user_changepassword
+            // 
+            this.mi_user_changepassword.Name = "mi_user_changepassword";
+            this.mi_user_changepassword.Size = new System.Drawing.Size(152, 22);
+            this.mi_user_changepassword.Text = "修改密码...(&C)";
+            this.mi_user_changepassword.Click += new System.EventHandler(this.mi_user_changepassword_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(149, 6);
+            // 
+            // mi_user_exit
+            // 
+            this.mi_user_exit.Name = "mi_user_exit";
+            this.mi_user_exit.Size = new System.Drawing.Size(152, 22);
+            this.mi_user_exit.Text = "退出(&X)";
+            this.mi_user_exit.Click += new System.EventHandler(this.mi_user_exit_Click);
+            // 
+            // mi_project_new
+            // 
+            this.mi_project_new.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mi_File_New,
             this.mi_File_Load,
             this.toolStripSeparator1,
             this.mi_File_Save,
-            this.mi_File_SaveAs,
-            this.toolStripSeparator2,
-            this.mi_File_Exit});
-            this.文件FToolStripMenuItem.Name = "文件FToolStripMenuItem";
-            this.文件FToolStripMenuItem.Size = new System.Drawing.Size(58, 21);
-            this.文件FToolStripMenuItem.Text = "文件(&F)";
+            this.mi_File_SaveAs});
+            this.mi_project_new.Name = "mi_project_new";
+            this.mi_project_new.Size = new System.Drawing.Size(58, 21);
+            this.mi_project_new.Text = "工程(&F)";
             // 
             // mi_File_New
             // 
             this.mi_File_New.Name = "mi_File_New";
-            this.mi_File_New.Size = new System.Drawing.Size(128, 22);
+            this.mi_File_New.Size = new System.Drawing.Size(152, 22);
             this.mi_File_New.Text = "新建(&N)";
             this.mi_File_New.Click += new System.EventHandler(this.mi_File_New_Click);
             // 
             // mi_File_Load
             // 
             this.mi_File_Load.Name = "mi_File_Load";
-            this.mi_File_Load.Size = new System.Drawing.Size(128, 22);
+            this.mi_File_Load.Size = new System.Drawing.Size(152, 22);
             this.mi_File_Load.Text = "载入...(&L)";
             this.mi_File_Load.Click += new System.EventHandler(this.mi_File_Load_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(125, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
             // 
             // mi_File_Save
             // 
             this.mi_File_Save.Name = "mi_File_Save";
-            this.mi_File_Save.Size = new System.Drawing.Size(128, 22);
+            this.mi_File_Save.Size = new System.Drawing.Size(152, 22);
             this.mi_File_Save.Text = "保存(&S)";
             this.mi_File_Save.Click += new System.EventHandler(this.mi_File_Save_Click);
             // 
             // mi_File_SaveAs
             // 
             this.mi_File_SaveAs.Name = "mi_File_SaveAs";
-            this.mi_File_SaveAs.Size = new System.Drawing.Size(128, 22);
+            this.mi_File_SaveAs.Size = new System.Drawing.Size(152, 22);
             this.mi_File_SaveAs.Text = "另存为(&A)";
             this.mi_File_SaveAs.Click += new System.EventHandler(this.mi_File_SaveAs_Click);
+            // 
+            // mi_material
+            // 
+            this.mi_material.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mi_material_loadin,
+            this.mi_material_update,
+            this.toolStripSeparator4,
+            this.mi_material_new,
+            this.mi_material_detail,
+            this.mi_material_delete,
+            this.mi_material_copy,
+            this.toolStripSeparator2,
+            this.mi_material_managelib});
+            this.mi_material.Name = "mi_material";
+            this.mi_material.Size = new System.Drawing.Size(64, 21);
+            this.mi_material.Text = "材料(&M)";
+            this.mi_material.DropDownOpening += new System.EventHandler(this.OnMiMaterialDropDownOpening);
+            // 
+            // mi_material_loadin
+            // 
+            this.mi_material_loadin.Name = "mi_material_loadin";
+            this.mi_material_loadin.Size = new System.Drawing.Size(165, 22);
+            this.mi_material_loadin.Text = "材料库导入...(&L)";
+            this.mi_material_loadin.Click += new System.EventHandler(this.mi_material_loadin_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(162, 6);
+            // 
+            // mi_material_new
+            // 
+            this.mi_material_new.Name = "mi_material_new";
+            this.mi_material_new.Size = new System.Drawing.Size(165, 22);
+            this.mi_material_new.Text = "新建...(&N)";
+            this.mi_material_new.Click += new System.EventHandler(this.mi_material_new_Click);
+            // 
+            // mi_material_detail
+            // 
+            this.mi_material_detail.Name = "mi_material_detail";
+            this.mi_material_detail.Size = new System.Drawing.Size(165, 22);
+            this.mi_material_detail.Text = "详情...(&D)";
+            this.mi_material_detail.Click += new System.EventHandler(this.mi_material_detail_Click);
+            // 
+            // mi_material_delete
+            // 
+            this.mi_material_delete.Name = "mi_material_delete";
+            this.mi_material_delete.Size = new System.Drawing.Size(165, 22);
+            this.mi_material_delete.Text = "删除(&R)";
+            this.mi_material_delete.Click += new System.EventHandler(this.mi_material_delete_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(125, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(162, 6);
             // 
-            // mi_File_Exit
+            // mi_material_managelib
             // 
-            this.mi_File_Exit.Name = "mi_File_Exit";
-            this.mi_File_Exit.Size = new System.Drawing.Size(128, 22);
-            this.mi_File_Exit.Text = "退出(&X)";
-            this.mi_File_Exit.Click += new System.EventHandler(this.mi_File_Exit_Click);
+            this.mi_material_managelib.Name = "mi_material_managelib";
+            this.mi_material_managelib.Size = new System.Drawing.Size(165, 22);
+            this.mi_material_managelib.Text = "管理材料库...(&M)";
+            this.mi_material_managelib.Click += new System.EventHandler(this.mi_material_managelib_Click);
             // 
-            // statusStrip1
+            // 计算模型CToolStripMenuItem
             // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 590);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1054, 22);
-            this.statusStrip1.TabIndex = 6;
-            this.statusStrip1.Text = "statusStrip1";
+            this.计算模型CToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mi_calculatemode_hotface,
+            this.mi_calculatemode_coldboundary});
+            this.计算模型CToolStripMenuItem.Name = "计算模型CToolStripMenuItem";
+            this.计算模型CToolStripMenuItem.Size = new System.Drawing.Size(84, 21);
+            this.计算模型CToolStripMenuItem.Text = "计算模型(&C)";
+            // 
+            // mi_calculatemode_hotface
+            // 
+            this.mi_calculatemode_hotface.Name = "mi_calculatemode_hotface";
+            this.mi_calculatemode_hotface.Size = new System.Drawing.Size(152, 22);
+            this.mi_calculatemode_hotface.Text = "热面参数...(&H)";
+            this.mi_calculatemode_hotface.Click += new System.EventHandler(this.mi_calculatemode_hotface_Click);
+            // 
+            // mi_calculatemode_coldboundary
+            // 
+            this.mi_calculatemode_coldboundary.Name = "mi_calculatemode_coldboundary";
+            this.mi_calculatemode_coldboundary.Size = new System.Drawing.Size(152, 22);
+            this.mi_calculatemode_coldboundary.Text = "冷面边界...(&C)";
+            this.mi_calculatemode_coldboundary.Click += new System.EventHandler(this.mi_calculatemode_coldboundary_Click);
+            // 
+            // 层管理LToolStripMenuItem
+            // 
+            this.层管理LToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mi_layer_new,
+            this.mi_layer_detail,
+            this.mi_layer_delete,
+            this.mi_layer_move});
+            this.层管理LToolStripMenuItem.Name = "层管理LToolStripMenuItem";
+            this.层管理LToolStripMenuItem.Size = new System.Drawing.Size(70, 21);
+            this.层管理LToolStripMenuItem.Text = "层管理(&L)";
+            this.层管理LToolStripMenuItem.DropDownOpening += new System.EventHandler(this.OnMiLayerDropDownOpening);
+            // 
+            // mi_layer_new
+            // 
+            this.mi_layer_new.Name = "mi_layer_new";
+            this.mi_layer_new.Size = new System.Drawing.Size(152, 22);
+            this.mi_layer_new.Text = "添加层...(&I)";
+            this.mi_layer_new.Click += new System.EventHandler(this.mi_layer_new_Click);
+            // 
+            // mi_layer_detail
+            // 
+            this.mi_layer_detail.Name = "mi_layer_detail";
+            this.mi_layer_detail.Size = new System.Drawing.Size(152, 22);
+            this.mi_layer_detail.Text = "层详情...(&D)";
+            this.mi_layer_detail.Click += new System.EventHandler(this.mi_layer_detail_Click);
+            // 
+            // mi_layer_delete
+            // 
+            this.mi_layer_delete.Name = "mi_layer_delete";
+            this.mi_layer_delete.Size = new System.Drawing.Size(152, 22);
+            this.mi_layer_delete.Text = "删除层(&R)";
+            this.mi_layer_delete.Click += new System.EventHandler(this.mi_layer_delete_Click);
+            // 
+            // mi_layer_move
+            // 
+            this.mi_layer_move.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mi_layer_move_up,
+            this.mi_layer_move_down});
+            this.mi_layer_move.Name = "mi_layer_move";
+            this.mi_layer_move.Size = new System.Drawing.Size(152, 22);
+            this.mi_layer_move.Text = "层移动(&M)";
+            // 
+            // mi_layer_move_up
+            // 
+            this.mi_layer_move_up.Name = "mi_layer_move_up";
+            this.mi_layer_move_up.Size = new System.Drawing.Size(152, 22);
+            this.mi_layer_move_up.Text = "上移(&U)";
+            this.mi_layer_move_up.Click += new System.EventHandler(this.mi_layer_move_up_Click);
+            // 
+            // mi_layer_move_down
+            // 
+            this.mi_layer_move_down.Name = "mi_layer_move_down";
+            this.mi_layer_move_down.Size = new System.Drawing.Size(152, 22);
+            this.mi_layer_move_down.Text = "下移(&D)";
+            this.mi_layer_move_down.Click += new System.EventHandler(this.mi_layer_move_down_Click);
+            // 
+            // 解算参数SToolStripMenuItem
+            // 
+            this.解算参数SToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mi_solveparameter_temperature,
+            this.mi_solveparameter_thickness,
+            this.mi_solveparameter_laydiff});
+            this.解算参数SToolStripMenuItem.Name = "解算参数SToolStripMenuItem";
+            this.解算参数SToolStripMenuItem.Size = new System.Drawing.Size(83, 21);
+            this.解算参数SToolStripMenuItem.Text = "解算参数(&S)";
+            this.解算参数SToolStripMenuItem.DropDownOpening += new System.EventHandler(this.OnMiSolveParameterDropDownOpening);
+            // 
+            // mi_solveparameter_temperature
+            // 
+            this.mi_solveparameter_temperature.Name = "mi_solveparameter_temperature";
+            this.mi_solveparameter_temperature.Size = new System.Drawing.Size(198, 22);
+            this.mi_solveparameter_temperature.Text = "温度解算收敛准则...(&T)";
+            this.mi_solveparameter_temperature.Click += new System.EventHandler(this.mi_solveparameter_temperature_Click);
+            // 
+            // mi_solveparameter_thickness
+            // 
+            this.mi_solveparameter_thickness.Name = "mi_solveparameter_thickness";
+            this.mi_solveparameter_thickness.Size = new System.Drawing.Size(198, 22);
+            this.mi_solveparameter_thickness.Text = "厚度解算收敛准则...(&H)";
+            this.mi_solveparameter_thickness.Click += new System.EventHandler(this.mi_solveparameter_thickness_Click);
+            // 
+            // mi_solveparameter_laydiff
+            // 
+            this.mi_solveparameter_laydiff.Name = "mi_solveparameter_laydiff";
+            this.mi_solveparameter_laydiff.Size = new System.Drawing.Size(198, 22);
+            this.mi_solveparameter_laydiff.Text = "层微分...(&L)";
+            this.mi_solveparameter_laydiff.Click += new System.EventHandler(this.mi_solveparameter_laydiff_Click);
+            // 
+            // 解算SToolStripMenuItem
+            // 
+            this.解算SToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mi_solve_run});
+            this.解算SToolStripMenuItem.Name = "解算SToolStripMenuItem";
+            this.解算SToolStripMenuItem.Size = new System.Drawing.Size(64, 21);
+            this.解算SToolStripMenuItem.Text = "解算(&W)";
+            // 
+            // mi_solve_run
+            // 
+            this.mi_solve_run.Name = "mi_solve_run";
+            this.mi_solve_run.Size = new System.Drawing.Size(152, 22);
+            this.mi_solve_run.Text = "计算(&R)";
+            this.mi_solve_run.Click += new System.EventHandler(this.mi_solve_run_Click);
+            // 
+            // 结果RToolStripMenuItem
+            // 
+            this.结果RToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mi_result_word,
+            this.toolStripSeparator7,
+            this.mi_result_refreshreporter});
+            this.结果RToolStripMenuItem.Name = "结果RToolStripMenuItem";
+            this.结果RToolStripMenuItem.Size = new System.Drawing.Size(60, 21);
+            this.结果RToolStripMenuItem.Text = "结果(&R)";
+            // 
+            // mi_result_word
+            // 
+            this.mi_result_word.Name = "mi_result_word";
+            this.mi_result_word.Size = new System.Drawing.Size(164, 22);
+            this.mi_result_word.Text = "Word报表(&W)";
+            // 
+            // 帮助HToolStripMenuItem
+            // 
+            this.帮助HToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mi_help_doc,
+            this.toolStripSeparator5,
+            this.mi_help_about});
+            this.帮助HToolStripMenuItem.Name = "帮助HToolStripMenuItem";
+            this.帮助HToolStripMenuItem.Size = new System.Drawing.Size(61, 21);
+            this.帮助HToolStripMenuItem.Text = "帮助(&H)";
+            // 
+            // mi_help_doc
+            // 
+            this.mi_help_doc.Name = "mi_help_doc";
+            this.mi_help_doc.Size = new System.Drawing.Size(150, 22);
+            this.mi_help_doc.Text = "帮助文档...(&D)";
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(147, 6);
+            // 
+            // mi_help_about
+            // 
+            this.mi_help_about.Name = "mi_help_about";
+            this.mi_help_about.Size = new System.Drawing.Size(150, 22);
+            this.mi_help_about.Text = "关于...(&A)";
+            // 
+            // ss_bottom
+            // 
+            this.ss_bottom.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.ss_bottom.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.db_user});
+            this.ss_bottom.Location = new System.Drawing.Point(0, 619);
+            this.ss_bottom.Name = "ss_bottom";
+            this.ss_bottom.Size = new System.Drawing.Size(1054, 23);
+            this.ss_bottom.TabIndex = 6;
+            this.ss_bottom.Text = "statusStrip1";
+            // 
+            // db_user
+            // 
+            this.db_user.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.db_user.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.db_user.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mi_logoff,
+            this.mi_changepassword});
+            this.db_user.Image = ((System.Drawing.Image)(resources.GetObject("db_user.Image")));
+            this.db_user.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.db_user.Name = "db_user";
+            this.db_user.Size = new System.Drawing.Size(57, 21);
+            this.db_user.Text = "傅秋华";
+            // 
+            // mi_logoff
+            // 
+            this.mi_logoff.Name = "mi_logoff";
+            this.mi_logoff.Size = new System.Drawing.Size(124, 22);
+            this.mi_logoff.Text = "注销";
+            this.mi_logoff.Click += new System.EventHandler(this.mi_logoff_Click);
+            // 
+            // mi_changepassword
+            // 
+            this.mi_changepassword.Name = "mi_changepassword";
+            this.mi_changepassword.Size = new System.Drawing.Size(124, 22);
+            this.mi_changepassword.Text = "修改密码";
+            this.mi_changepassword.Click += new System.EventHandler(this.mi_changepassword_Click);
             // 
             // imageList1
             // 
@@ -637,13 +875,65 @@
             this.imageList1.Images.SetKeyName(6, "save.png");
             this.imageList1.Images.SetKeyName(7, "save_1.png");
             // 
+            // cmi_material_new
+            // 
+            this.cmi_material_new.Name = "cmi_material_new";
+            this.cmi_material_new.Size = new System.Drawing.Size(159, 22);
+            this.cmi_material_new.Text = "新建...(&N)";
+            this.cmi_material_new.Click += new System.EventHandler(this.cmi_material_new_Click);
+            // 
+            // mi_material_update
+            // 
+            this.mi_material_update.Name = "mi_material_update";
+            this.mi_material_update.Size = new System.Drawing.Size(165, 22);
+            this.mi_material_update.Text = "上载到数据库(&U)";
+            this.mi_material_update.Click += new System.EventHandler(this.mi_material_update_Click);
+            // 
+            // mi_material_copy
+            // 
+            this.mi_material_copy.Name = "mi_material_copy";
+            this.mi_material_copy.Size = new System.Drawing.Size(165, 22);
+            this.mi_material_copy.Text = "复制副本(&C)";
+            this.mi_material_copy.Click += new System.EventHandler(this.mi_material_copy_Click);
+            // 
+            // cmi_materialitem_update
+            // 
+            this.cmi_materialitem_update.Name = "cmi_materialitem_update";
+            this.cmi_materialitem_update.Size = new System.Drawing.Size(165, 22);
+            this.cmi_materialitem_update.Text = "上载到数据库(&U)";
+            this.cmi_materialitem_update.Click += new System.EventHandler(this.cmi_materialitem_update_Click);
+            // 
+            // cmi_materialitem_copy
+            // 
+            this.cmi_materialitem_copy.Name = "cmi_materialitem_copy";
+            this.cmi_materialitem_copy.Size = new System.Drawing.Size(165, 22);
+            this.cmi_materialitem_copy.Text = "复制副本(&C)";
+            this.cmi_materialitem_copy.Click += new System.EventHandler(this.cmi_materialitem_copy_Click);
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(162, 6);
+            // 
+            // mi_result_refreshreporter
+            // 
+            this.mi_result_refreshreporter.Name = "mi_result_refreshreporter";
+            this.mi_result_refreshreporter.Size = new System.Drawing.Size(164, 22);
+            this.mi_result_refreshreporter.Text = "刷新报表模板(&R)";
+            this.mi_result_refreshreporter.Click += new System.EventHandler(this.mi_result_refreshreporter_Click);
+            // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(161, 6);
+            // 
             // ProjectForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1054, 612);
-            this.Controls.Add(this.statusStrip1);
+            this.ClientSize = new System.Drawing.Size(1054, 642);
+            this.Controls.Add(this.ss_bottom);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.splitContainer1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -660,23 +950,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.splitContainer3.Panel1.ResumeLayout(false);
-            this.splitContainer3.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
             this.splitContainer3.ResumeLayout(false);
-            this.splitContainer4.Panel1.ResumeLayout(false);
-            this.splitContainer4.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).EndInit();
-            this.splitContainer4.ResumeLayout(false);
-            this.splitContainer5.Panel1.ResumeLayout(false);
-            this.splitContainer5.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).EndInit();
-            this.splitContainer5.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.ct_temperature)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ct_thickness)).EndInit();
             this.cms_N_MarerialItem.ResumeLayout(false);
             this.cms_N_LayerItem.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.ss_bottom.ResumeLayout(false);
+            this.ss_bottom.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -700,25 +981,64 @@
         private System.Windows.Forms.ToolStripMenuItem mi_LayerItem_Up;
         private System.Windows.Forms.ToolStripMenuItem mi_LayerItem_Down;
         private System.Windows.Forms.SplitContainer splitContainer3;
-        private PhtcDisplay pd_main;
-        private System.Windows.Forms.SplitContainer splitContainer4;
-        private System.Windows.Forms.SplitContainer splitContainer5;
-        private System.Windows.Forms.DataVisualization.Charting.Chart ct_temperature;
-        private System.Windows.Forms.DataVisualization.Charting.Chart ct_thickness;
         private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem 文件FToolStripMenuItem;
-        private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.WebBrowser wb_monitor;
+        private System.Windows.Forms.ToolStripMenuItem mi_project_new;
+        private System.Windows.Forms.StatusStrip ss_bottom;
         private System.Windows.Forms.TreeView tv_navigation;
         private System.Windows.Forms.ToolStripMenuItem mi_File_New;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem mi_File_Save;
         private System.Windows.Forms.ToolStripMenuItem mi_File_SaveAs;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripMenuItem mi_File_Exit;
         private System.Windows.Forms.ToolStripMenuItem mi_File_Load;
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.ContextMenuStrip cms_N_ReportWordOrHtml;
         private System.Windows.Forms.ToolStripMenuItem mi_report_refresh;
+        private MainDisplay mainDisplay1;
+        private System.Windows.Forms.ToolStripDropDownButton db_user;
+        private System.Windows.Forms.ToolStripMenuItem mi_logoff;
+        private System.Windows.Forms.ToolStripMenuItem mi_changepassword;
+        private System.Windows.Forms.ToolStripMenuItem 系统SToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mi_user_loginoff;
+        private System.Windows.Forms.ToolStripMenuItem mi_user_changepassword;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripMenuItem mi_user_exit;
+        private System.Windows.Forms.ToolStripMenuItem mi_material;
+        private System.Windows.Forms.ToolStripMenuItem mi_material_loadin;
+        private System.Windows.Forms.ToolStripMenuItem mi_material_new;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem mi_material_managelib;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripMenuItem mi_material_detail;
+        private System.Windows.Forms.ToolStripMenuItem mi_material_delete;
+        private System.Windows.Forms.ToolStripMenuItem 计算模型CToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mi_calculatemode_hotface;
+        private System.Windows.Forms.ToolStripMenuItem mi_calculatemode_coldboundary;
+        private System.Windows.Forms.ToolStripMenuItem 层管理LToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mi_layer_new;
+        private System.Windows.Forms.ToolStripMenuItem mi_layer_detail;
+        private System.Windows.Forms.ToolStripMenuItem mi_layer_delete;
+        private System.Windows.Forms.ToolStripMenuItem mi_layer_move;
+        private System.Windows.Forms.ToolStripMenuItem mi_layer_move_up;
+        private System.Windows.Forms.ToolStripMenuItem mi_layer_move_down;
+        private System.Windows.Forms.ToolStripMenuItem 解算参数SToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mi_solveparameter_temperature;
+        private System.Windows.Forms.ToolStripMenuItem mi_solveparameter_thickness;
+        private System.Windows.Forms.ToolStripMenuItem mi_solveparameter_laydiff;
+        private System.Windows.Forms.ToolStripMenuItem 解算SToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mi_solve_run;
+        private System.Windows.Forms.ToolStripMenuItem 结果RToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mi_result_word;
+        private System.Windows.Forms.ToolStripMenuItem 帮助HToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mi_help_doc;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripMenuItem mi_help_about;
+        private System.Windows.Forms.ToolStripMenuItem cmi_material_new;
+        private System.Windows.Forms.ToolStripMenuItem mi_material_update;
+        private System.Windows.Forms.ToolStripMenuItem mi_material_copy;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+        private System.Windows.Forms.ToolStripMenuItem cmi_materialitem_copy;
+        private System.Windows.Forms.ToolStripMenuItem cmi_materialitem_update;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
+        private System.Windows.Forms.ToolStripMenuItem mi_result_refreshreporter;
     }
 }

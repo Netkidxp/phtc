@@ -65,6 +65,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChangePasswordForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChangePasswordForm.Designer.cs">
+      <DependentUpon>ChangePasswordForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ColdBoundaryForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -100,6 +106,18 @@
     </Compile>
     <Compile Include="LayerForm.Designer.cs">
       <DependentUpon>LayerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LoginForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LoginForm.Designer.cs">
+      <DependentUpon>LoginForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainDisplay.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MainDisplay.Designer.cs">
+      <DependentUpon>MainDisplay.cs</DependentUpon>
     </Compile>
     <Compile Include="MaterialManager.cs" />
     <Compile Include="ProjectLoadForm.cs">
@@ -159,6 +177,10 @@
     <Compile Include="Test_User.Designer.cs">
       <DependentUpon>Test_User.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserManager.cs" />
+    <EmbeddedResource Include="ChangePasswordForm.resx">
+      <DependentUpon>ChangePasswordForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ColdBoundaryForm.resx">
       <DependentUpon>ColdBoundaryForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -176,6 +198,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="LayerForm.resx">
       <DependentUpon>LayerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LoginForm.resx">
+      <DependentUpon>LoginForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainDisplay.resx">
+      <DependentUpon>MainDisplay.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ProjectLoadForm.resx">
       <DependentUpon>ProjectLoadForm.cs</DependentUpon>
@@ -214,6 +242,9 @@
     <EmbeddedResource Include="Test_User.resx">
       <DependentUpon>Test_User.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="Autoupdater.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -272,6 +303,10 @@
     <ProjectReference Include="..\Reporter\Reporter.csproj">
       <Project>{0cc585e9-583a-42a7-a04d-8e033b4466ed}</Project>
       <Name>Reporter</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\Setup\AutoUpdater\AutoUpdater\AutoUpdater\AutoUpdater.csproj">
+      <Project>{4ba4719c-c6ab-49ba-9754-848ca24c1fd6}</Project>
+      <Name>AutoUpdater</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

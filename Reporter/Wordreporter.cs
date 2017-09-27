@@ -77,7 +77,7 @@ namespace PHTC.Reporter
                 WriteBookmarkText(doc, MS_ProMode, (Pro.Mode == CalculationMode.Temperature) ? "温度" : "厚度");
                 WriteBookmarkText(doc, MS_ProType, (Pro.Schema == GeometrySchema.Plate) ? "平板" : "圆筒");
                 WriteBookmarkText(doc, MS_RepTime, DateTime.Now.ToShortDateString());
-                WriteBookmarkText(doc, MS_ProHotfaceTemperature, GlobalTool.K2C(Pro.HotfaceTemperature).ToString());
+                WriteBookmarkText(doc, MS_ProHotfaceTemperature, GlobalTool.K2C(Pro.HotfaceTemperature).ToString("F1"));
                 if(Pro.Mode==CalculationMode.Thickness)
                 {
                     WriteBookmarkText(doc, MS_ProTargetLayer, Pro.LayerList[Pro.TargetLayerIndex].Name + "(编号" + Pro.TargetLayerIndex.ToString() + ")");
@@ -87,7 +87,7 @@ namespace PHTC.Reporter
                 {
                     Class3Boundary b = Pro.ColdfaceBoundary as Class3Boundary;
                     WriteBookmarkText(doc, MS_ProColdfaceType, "第三类边界");
-                    WriteBookmarkText(doc, MS_ProColdfaceAmbientTemperature, GlobalTool.K2C(b.AmbientTemperature).ToString());
+                    WriteBookmarkText(doc, MS_ProColdfaceAmbientTemperature, GlobalTool.K2C(b.AmbientTemperature).ToString("F3"));
                     WriteBookmarkText(doc, MS_ProColdfaceEmissivity, b.Emissivity.ToString());
                     WriteBookmarkText(doc, MS_ProColdfaceFilmCoefficient, b.FilmCoefficient.ToString());
                 }
@@ -99,7 +99,7 @@ namespace PHTC.Reporter
                 {
                     WriteBookmarkText(doc, MS_ProColdfaceType, "第一类边界");
                 }
-                WriteBookmarkText(doc, MS_ProColdfaceTemperature, Pro.ColdfaceBoundary.Temperature.ToString());
+                WriteBookmarkText(doc, MS_ProColdfaceTemperature, GlobalTool.K2C(Pro.ColdfaceBoundary.Temperature).ToString("F3"));
                 WriteBookmarkText(doc, MS_ProColdfaceHeatflow, Pro.ColdfaceBoundary.Heatflow.ToString());
                 if(LayerPicturePath!=string.Empty&&LayerPicturePath!=null)
                 {
@@ -108,7 +108,9 @@ namespace PHTC.Reporter
                 WriteLayersTable(doc, Pro.LayerList, MS_ProLayers);
                 object savechanges = app.Options.BackgroundSave;
                 object savepath = ReportFilePath;
-                doc.SaveAs2(ref savepath, ref missing, ref missing, ref missing, ref missing, ref missing, ref missing, ref missing);
+
+                object format = Microsoft.Office.Interop.Word.WdSaveFormat.wdFormatDocumentDefault;
+                doc.SaveAs2(ref savepath, ref format, ref missing, ref missing, ref missing, ref missing, ref missing, ref missing);
                 return true;
             }
             catch(Exception e)
@@ -170,7 +172,7 @@ namespace PHTC.Reporter
                     else
                     {
                         r.Cells[4].Range.Text = l.Material.Name+ "(编号" + l.Material.Index.ToString() + ")";
-                        r.Cells[5].Range.Text = (l.Thickness*1000.0).ToString("F3");
+                        r.Cells[5].Range.Text = (l.Thickness*1000.0).ToString("F0");
                         r.Cells[6].Range.Text = l.HeatResistance.ToString("F3");
                     }
                     r.Cells[7].Range.Text = GlobalTool.K2C(l.LowTemperature).ToString("F3") + "-" + GlobalTool.K2C(l.HighTemperature).ToString("F3");

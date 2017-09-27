@@ -71,8 +71,15 @@ namespace PHTC
         /// <param name="_pro"></param>
         public ProjectForm()
         {
-            pro = ProjectManager.New();
+            
             InitializeComponent();
+            InitControls();
+
+        }
+        private void InitControls()
+        {
+            pro = ProjectManager.New();
+            pro.OwnerId = User.CurrentUser.Id;
             tn_Project = tv_navigation.Nodes[STR_Project];
             tn_Material = tn_Project.Nodes[STR_Material];
             tn_ModelParameter = tn_Project.Nodes[STR_CalculateModel].Nodes[STR_ModelParameter];
@@ -81,15 +88,14 @@ namespace PHTC
             tn_ColdfaceBoundary = tn_Project.Nodes[STR_CalculateModel].Nodes[STR_ColdfaceBoundary];
             tn_SolveParameter = tn_Project.Nodes[STR_SolveParameter];
             tn_ReportWord = tn_Project.Nodes[STR_Result].Nodes[STR_ReportWord];
-            tn_ReportHtml=tn_Project.Nodes[STR_Result].Nodes[STR_ReportHtml];
-
-            pd_main.Project = Pro;
-            pd_main.OnHotfaceClick += new PhtcDisplay.HotfaceDbClickHandler(ShowHotfaceParameter);
-            pd_main.OnColdfaceClick += new PhtcDisplay.ColdfaceDbClickHandler(ShowColdfaceBoudary);
-            pd_main.OnLayerDbClick += new PhtcDisplay.LayerDbClickHandler(ShowLayer);
+            tn_ReportHtml = tn_Project.Nodes[STR_Result].Nodes[STR_ReportHtml];
+            mainDisplay1.Pro = Pro;
+            mainDisplay1.OnHotfaceClick += new MainDisplay.HotfaceDbClickHandler(ShowHotfaceParameter);
+            mainDisplay1.OnColdfaceClick += new MainDisplay.ColdfaceDbClickHandler(ShowColdfaceBoudary);
+            mainDisplay1.OnLayerDbClick += new MainDisplay.LayerDbClickHandler(ShowLayer);
             RefreshTreeView();
+            db_user.Text = User.CurrentUser.Name;
         }
-        
         private void ProjectForm_Load(object sender, EventArgs e)
         {
             tv_navigation.ExpandAll();
@@ -105,7 +111,7 @@ namespace PHTC
             tn_Material.Nodes.Clear();
             foreach (Material mat in Pro.MaterialList)
             {
-                TreeNode tn = new TreeNode(mat.Name);
+                TreeNode tn = new TreeNode(mat.Name+"("+mat.Index.ToString()+")");
                 tn.Name = STR_MaterialItem;
                 tn.ImageIndex = 33;
                 tn.SelectedImageIndex = 33;
@@ -123,7 +129,7 @@ namespace PHTC
                 sModelParameter += "几何类型:圆筒";
             sModelParameter = "(" + sModelParameter + ")";
             tn_Project.Text = Pro.Name+sModelParameter;
-            string sHotfaceTemperature = "(热面温度:"+GlobalTool.K2C(Pro.HotfaceTemperature).ToString()+"℃)";
+            string sHotfaceTemperature = "热面（温度:"+GlobalTool.K2C(Pro.HotfaceTemperature).ToString()+"℃)";
             tn_HotfaceParameter.Text = sHotfaceTemperature;
             tn_Layer.Nodes.Clear();
             tn_Layer.Text = "层列表(层数量:" + Pro.LayerList.Count.ToString() + ")";
@@ -139,7 +145,7 @@ namespace PHTC
                     if (Pro.Mode == CalculationMode.Thickness && i == Pro.TargetLayerIndex)
                         sThickness = "待求";
                     else
-                        sThickness = l.Thickness.ToString();
+                        sThickness = (l.Thickness*1000).ToString()+"mm";
                     sLayer = "材料:" + l.Material.Name + ";厚度:" + sThickness;
                 }
                 TreeNode tn = new TreeNode(l.Name+"("+sLayer+")");
@@ -150,7 +156,12 @@ namespace PHTC
                 tn_Layer.Nodes.Add(tn);
                 i++;
             }
-
+            if (Pro.ColdfaceBoundary is Class3Boundary)
+                tn_ColdfaceBoundary.Text = "冷面(第三类边界)";
+            else if (Pro.ColdfaceBoundary is Class2Boundary)
+                tn_ColdfaceBoundary.Text = "冷面(第二类边界)";
+            else
+                tn_ColdfaceBoundary.Text = "冷面(第一类边界)";
             tn_SolveParameter.Nodes.Clear();
             tn_TemperatureCriterion = new TreeNode("温度收敛准则");
             tn_TemperatureCriterion.Name = STR_TemperatureCriterion;
@@ -171,8 +182,8 @@ namespace PHTC
             tn_SolveParameter.Nodes.Add(tn_LayDifferentialCount);
             if (old_tn != null)
                 tv_navigation.SelectedNode = old_tn;
-            pd_main.Project = Pro;
-            pd_main.Refresh();
+            mainDisplay1.Pro = Pro;
+            mainDisplay1.Refresh();
             RefreshReportTempleteNode();
             
         }
@@ -183,14 +194,18 @@ namespace PHTC
             if (WordReportTempletes != null)
             {
                 tn_ReportWord.Nodes.Clear();
+                mi_result_word.DropDownItems.Clear();
                 foreach (ReportTemplete rt in WordReportTempletes)
                 {
                     TreeNode tn = new TreeNode(rt.Name, 35, 35);
                     tn.Name = STR_ReportWordItem;
                     tn_ReportWord.Nodes.Add(tn);
+                    ToolStripMenuItem mi = new ToolStripMenuItem(rt.Name);
+                    mi.Click += new EventHandler(mi_result_word_Click);
+                    mi_result_word.DropDownItems.Add(mi);
                 }
             }
-            if (HtmlReportTempletes != null)
+            /*if (HtmlReportTempletes != null)
             {
                 tn_ReportHtml.Nodes.Clear();
                 foreach (ReportTemplete rt in HtmlReportTempletes)
@@ -199,9 +214,26 @@ namespace PHTC
                     tn.Name = STR_ReportHtmlItem;
                     tn_ReportWord.Nodes.Add(tn);
                 }
+            }*/
+        }
+        private void RefreshProLayersMaterials()
+        {
+            foreach(Layer l in Pro.LayerList)
+            {
+                int id = l.Material.Index;
+                l.Material = GetLoaclMaterial(id);
             }
         }
-
+        private Material GetLoaclMaterial(int id)
+        {
+            Material m = null;
+            foreach(Material mat in Pro.MaterialList)
+            {
+                if (mat.Index == id)
+                    m = mat;
+            }
+            return m;
+        }
         /// <summary>
         /// 
         /// </summary>
@@ -393,6 +425,9 @@ namespace PHTC
         }
         private void MaterialLoadEventHandle(Material mat)
         {
+            Random r = new Random();
+            int rid = r.Next();
+            mat.Index = rid;
             Pro.MaterialList.Add(mat);
             RefreshTreeView();
             Modified = true;
@@ -415,6 +450,7 @@ namespace PHTC
             if(mdf.ShowDialog()==DialogResult.OK)
             {
                 Pro.MaterialList[index] = mdf.Material;
+                RefreshProLayersMaterials();
                 Modified = true;
                 RefreshTreeView();
             }    
@@ -433,7 +469,7 @@ namespace PHTC
                 }
                 return;
             }
-            Layer layer = new Layer(Pro.MaterialList[0], 1.0,1,1);
+            Layer layer = new Layer(Pro.MaterialList[0], 0.2,1,1);
             layer.Name = "新建层"+ (Pro.LayerList.Count+1).ToString();
             LayerForm lf = new LayerForm(layer, Pro.Mode, Pro.Schema, Pro.MaterialList, false);
             if(lf.ShowDialog()==DialogResult.OK)
@@ -729,8 +765,8 @@ namespace PHTC
             {
                 Random r = new Random();
                 string path = TempPath + "png";
-                Bitmap bp = new Bitmap(pd_main.Bounds.Width, pd_main.Bounds.Height);
-                pd_main.DrawToBitmap(bp, pd_main.Bounds);
+                Bitmap bp = new Bitmap(mainDisplay1.Bounds.Width, mainDisplay1.Bounds.Height);
+                mainDisplay1.DrawToBitmap(bp, mainDisplay1.Bounds);
                 bp.Save(path);
                 return path;
             }
@@ -748,7 +784,7 @@ namespace PHTC
                 MessageBox.Show("载入模板文件失败，请检查网络连接或者联系管理员", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            string reportPath = TempPath + "doc";
+            string reportPath = TempPath + "docx";
             string imgPath = WriteDpImage();
             if (imgPath == null)
             {
@@ -786,6 +822,280 @@ namespace PHTC
                 return null;
             }
             
+        }
+        private void LogOff()
+        {
+            if (Modified)
+            {
+                DialogResult dr = MessageBox.Show("当前工程已经更改，是否更新?", "选择", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                if (dr == DialogResult.Cancel)
+                    return;
+                else if (dr == DialogResult.Yes)
+                {
+                    SaveProject();
+                }
+            }
+            LoginForm lf = new LoginForm();
+            while (lf.ShowDialog() == DialogResult.OK)
+            {
+                User u = UserManager.LoginOn(lf.LoginName, lf.LoginPassword);
+                if (u != null)
+                {
+                    User.CurrentUser = u;
+                    UserManager.WriteRememberName(lf.LoginName);
+                    if (lf.Remember)
+                    {
+                        UserManager.WriteRememberPassword(lf.LoginPassword);
+                    }
+                    else
+                    {
+                        UserManager.DeleteRememberPassword();
+                    }
+                    InitControls();
+                    return;
+                }
+                else
+                {
+                    MessageBox.Show("用户不存在或者密码错误", "登录失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+        private void mi_logoff_Click(object sender, EventArgs e)
+        {
+            LogOff();
+        }
+        private void ChangePassword()
+        {
+            ChangePasswordForm cpf = new ChangePasswordForm();
+            while (cpf.ShowDialog() == DialogResult.OK)
+            {
+                if (UserManager.ValidateUser(User.CurrentUser.Login_id, cpf.OldPassword))
+                {
+                    bool res = UserManager.ChangePassword(User.CurrentUser.Login_id, cpf.OldPassword, cpf.Password1);
+                    if (res)
+                    {
+                        MessageBox.Show("修改密码成功", "修改成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
+                    else
+                    {
+                        GlobalTool.LogError("ProjectForm.ChangePassword", "数据库操作失败，请联系管理员", true);
+                        return;
+                    }
+                }
+                else
+                    MessageBox.Show("您输入的原密码错误", "密码错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        private void mi_changepassword_Click(object sender, EventArgs e)
+        {
+            ChangePassword();
+        }
+
+        private void mi_user_loginoff_Click(object sender, EventArgs e)
+        {
+            mi_logoff_Click(sender, e);
+        }
+
+        private void mi_user_changepassword_Click(object sender, EventArgs e)
+        {
+            mi_changepassword_Click(sender, e);
+        }
+
+        private void mi_user_exit_Click(object sender, EventArgs e)
+        {
+            mi_File_Exit_Click(sender, e);
+        }
+
+        private void mi_material_loadin_Click(object sender, EventArgs e)
+        {
+            mi_Material_Load_Click(sender, e);
+        }
+
+        private void cmi_material_new_Click(object sender, EventArgs e)
+        {
+            Random r = new Random();
+            int rid = r.Next();
+            Material mat = Material.Default;
+            mat.Index = rid;
+            Pro.MaterialList.Add(mat);
+            RefreshTreeView();
+            MaterialDetailsForm mdf = new MaterialDetailsForm(Pro.MaterialList[Pro.MaterialList.Count-1], MaterialDetailsForm.ButtonType.Modify);
+            if (mdf.ShowDialog() == DialogResult.OK)
+            {
+                Pro.MaterialList[Pro.MaterialList.Count - 1] = mdf.Material;
+                RefreshProLayersMaterials();
+                Modified = true;
+                RefreshTreeView();
+            }
+            Modified = true;
+        }
+
+        private void mi_material_new_Click(object sender, EventArgs e)
+        {
+            cmi_material_new_Click(sender, e);
+        }
+
+        private void OnMiMaterialDropDownOpening(object sender, EventArgs e)
+        {
+            mi_material_delete.Visible = 
+                mi_material_detail.Visible = 
+                mi_material_update.Visible = 
+                mi_material_copy.Visible = 
+                IsSelectedNodeName(STR_MaterialItem);
+        }
+        private bool IsSelectedNodeName(string name)
+        {
+            TreeNode n = tv_navigation.SelectedNode;
+            if (n != null)
+                if (n.Name == name)
+                    return true;
+            return false;
+        }
+        private void cmi_materialitem_copy_Click(object sender, EventArgs e)
+        {
+            Material mat = Pro.MaterialList[tv_navigation.SelectedNode.Index];
+            Material nmat = (Material)GlobalTool.Clone(mat);
+            Random r = new Random();
+            int rid = r.Next();
+            nmat.Name = nmat.Name + "副本";
+            nmat.Index = r.Next();
+            nmat.Create_time = nmat.Modify_time = DateTime.Now;
+            Pro.MaterialList.Add(nmat);
+            RefreshTreeView();
+            Modified = true;
+        }
+
+        private void cmi_materialitem_update_Click(object sender, EventArgs e)
+        {
+            Material mat = Pro.MaterialList[tv_navigation.SelectedNode.Index];
+            bool res = DbMaterialAdapter.Insert(mat);
+            if (!res)
+            {
+                GlobalTool.LogError("ProjecForm.Update", "保存材料出现错误，请检查您的网络连接，或者向管理员寻求帮助！", true);
+            }
+            else
+            {
+                MessageBox.Show("上传成功", "上传成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void mi_material_update_Click(object sender, EventArgs e)
+        {
+            cmi_materialitem_update_Click(sender, e);
+        }
+
+        private void mi_material_detail_Click(object sender, EventArgs e)
+        {
+            mi_MaterialItem_Show_Click(sender, e);
+        }
+
+        private void mi_material_delete_Click(object sender, EventArgs e)
+        {
+            mi_MaterialItem_Delete_Click(sender, e);
+        }
+
+        private void mi_material_copy_Click(object sender, EventArgs e)
+        {
+            cmi_materialitem_copy_Click(sender, e);
+        }
+
+        private void mi_material_managelib_Click(object sender, EventArgs e)
+        {
+            MaterialManageForm mmf = new MaterialManageForm();
+            mmf.Show();
+        }
+
+        private void mi_calculatemode_hotface_Click(object sender, EventArgs e)
+        {
+            ShowHotfaceParameter();
+        }
+
+        private void mi_calculatemode_coldboundary_Click(object sender, EventArgs e)
+        {
+            ShowColdfaceBoudary();
+        }
+
+        private void OnMiLayerDropDownOpening(object sender, EventArgs e)
+        {
+            mi_layer_delete.Visible
+                = mi_layer_detail.Visible
+                = mi_layer_move.Visible
+                = IsSelectedNodeName(STR_LayerItem);
+        }
+
+        private void mi_layer_new_Click(object sender, EventArgs e)
+        {
+            AddLayer();
+        }
+
+        private void mi_layer_detail_Click(object sender, EventArgs e)
+        {
+            mi_LayerItem_Details_Click(sender, e);
+
+        }
+
+        private void mi_layer_delete_Click(object sender, EventArgs e)
+        {
+            mi_LayerItem_Delete_Click(sender, e);
+        }
+
+        private void mi_layer_move_up_Click(object sender, EventArgs e)
+        {
+            mi_LayerItem_Up_Click(sender, e);
+
+        }
+
+        private void mi_layer_move_down_Click(object sender, EventArgs e)
+        {
+            mi_LayerItem_Down_Click(sender, e);
+        }
+
+        private void OnMiSolveParameterDropDownOpening(object sender, EventArgs e)
+        {
+            mi_solveparameter_thickness.Visible = (Pro.Mode == CalculationMode.Thickness);
+        }
+
+        private void mi_solveparameter_temperature_Click(object sender, EventArgs e)
+        {
+            ShowTemperatureSolveParameter();
+        }
+
+        private void mi_solveparameter_thickness_Click(object sender, EventArgs e)
+        {
+            ShowThicknessSolveParameter();
+        }
+
+        private void mi_solveparameter_laydiff_Click(object sender, EventArgs e)
+        {
+            ShowLayDifferentialCount();
+        }
+
+        private void mi_solve_run_Click(object sender, EventArgs e)
+        {
+            Solve();
+        }
+        private void mi_result_word_Click(object sender, EventArgs e)
+        {
+            int index = -1;
+            ToolStripMenuItem mi = sender as ToolStripMenuItem;
+            for(int i=0;i<WordReportTempletes.Count;i++)
+            {
+                if (WordReportTempletes[i].Name == mi.Text)
+                {
+                    index = i;
+                    break;
+                }     
+            }
+            if(index!=-1)
+            {
+                ReportWord(index);
+            }
+        }
+
+        private void mi_result_refreshreporter_Click(object sender, EventArgs e)
+        {
+            mi_report_refresh_Click(sender, e);
         }
     }
 }
