@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using PHTC.UpdateLib;
+using System.IO;
 namespace Test
 {
     public partial class Form1 : Form
@@ -31,10 +32,9 @@ namespace Test
 
         private void button3_Click(object sender, EventArgs e)
         {
-            List<LocalFile> llist = Local.LocalFileList("E:\\Git_PHTC\\PHTC\\bin\\Debug\\test");
-            List<RemoteFile> rlist = Local.DefaultRemoteFileList("E:\\Git_PHTC\\PHTC\\bin\\Debug\\test", "http://192.168.2.88");
-            Serializer.SerializeJson<List<RemoteFile>>(rlist, "c:\\sss.txt");
-            List<RemoteFile> l = Serializer.DeserializeJson<List<RemoteFile>>("c:\\sss.txt");
+
+            Directory.CreateDirectory(Path.GetDirectoryName("e:\\hahah\\sdsd\\d.txt"));
+            File.Copy("c:\\sss.txt", "e:\\hahah\\sdsd\\d.txt");
 
         }
     }

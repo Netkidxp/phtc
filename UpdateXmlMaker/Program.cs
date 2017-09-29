@@ -26,6 +26,29 @@ namespace UpdateXmlMaker
             xmldoc.Save("AutoupdateService.xml");
             Console.WriteLine("生成AutoupdateService.xml成功！");
         }
+
+        public static string FileMd5(string path)
+        {
+            try
+            {
+                FileStream file = new FileStream(path, FileMode.Open);
+                System.Security.Cryptography.MD5 md5 = new System.Security.Cryptography.MD5CryptoServiceProvider();
+                byte[] retVal = md5.ComputeHash(file);
+                file.Close();
+
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < retVal.Length; i++)
+                {
+                    sb.Append(retVal[i].ToString("x2"));
+                }
+                return sb.ToString();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("FileMd5() fail,error:" + ex.Message);
+            }
+        }
+
         static void MakeDirNode(string basedir,string dir,XmlDocument xml,string server)
         {
             DirectoryInfo folder = new DirectoryInfo(dir);
@@ -49,6 +72,9 @@ namespace UpdateXmlMaker
                 XmlAttribute xa_needRestart = xml.CreateAttribute("needRestart");
                 xa_needRestart.Value = "False";
                 node.Attributes.Append(xa_needRestart);
+                XmlAttribute xa_md5 = xml.CreateAttribute("md5");
+                xa_md5.Value = FileMd5(file.FullName);
+                node.Attributes.Append(xa_md5);
                 xml.ChildNodes[1].AppendChild(node);
             }
             foreach (DirectoryInfo nextdir in folder.GetDirectories())

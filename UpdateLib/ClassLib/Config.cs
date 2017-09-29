@@ -12,7 +12,10 @@ namespace PHTC.UpdateLib
     {
         public bool Enable { get; set; }
         public string FileListUrl { get; set; }
-        private Config() { }
+        public Config()
+        {
+
+        }
         public Config(bool enable,string xmlurl)
         {
             Enable = enable;
@@ -20,6 +23,7 @@ namespace PHTC.UpdateLib
         }
         public static Config Read(string path)
         {
+            
             Config c = Serializer.DeserializeJson<Config>(path);
             if (c == null)
                 return null;

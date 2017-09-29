@@ -12,7 +12,7 @@ namespace PHTC.UpdateLib
     {
         public string Name { set; get; }
         public string Path { set; get; }
-        public string Url { set; get; }
+        //public string Url { set; get; }
         public string Md5 { set; get; }
         public long Size { set; get; }
         public bool Restart { get; set; }

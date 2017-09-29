@@ -9,5 +9,6 @@ namespace PHTC.UpdateLib
     public static class Const
     {
         public static string ConfigFilePath = @"ServerConfig.config";
+        public static string TempDirName = @"TempDir";
     }
 }

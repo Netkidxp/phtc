@@ -45,11 +45,7 @@ namespace PHTC.UpdateLib
                 rf.Name = lf.Name;
                 rf.Path = lf.Path;
                 rf.Restart = false;
-                rf.Size = lf.Size;
-                if (lf.Path.Length == 0)
-                    rf.Url = urlroot + "/" + lf.Name;
-                else
-                    rf.Url = urlroot + "/" + lf.Path.Replace('\\', '/') + "/" + lf.Name;
+                rf.Size = lf.Size; 
                 list.Add(rf);
             }
             return list;

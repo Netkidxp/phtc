@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.Threading;
 using System.Net;
 using System.Xml;
+using PHTC.UpdateLib;
 namespace PHTC
 {
     static class Program
@@ -14,60 +15,31 @@ namespace PHTC
         /// 应用程序的主入口点。
         /// </summary>
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
             bool notrun = false;
             Mutex m1 = new Mutex(true, "PHTC.Updater", out notrun);
             if (!notrun)
+            {
+                MessageBox.Show("同一时间只能运行一个升级程序实例");
                 return;
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            bool bHasError = false;
-            IAutoUpdater autoUpdater = new AutoUpdater();
-            string path= System.IO.Directory.GetCurrentDirectory();
-            try
-            {
-                autoUpdater.Update(path);
             }
-            catch (WebException exp)
+            string updatedir = "";
+            if (args.Length == 0)
             {
-                GlobalTool.LogError("UpdateApp.WebException", exp.Message, false);
-                bHasError = true;
+                updatedir = System.AppDomain.CurrentDomain.BaseDirectory;
             }
-            catch (XmlException exp)
+            else
             {
-                bHasError = true;
-                GlobalTool.LogError("UpdateApp.XmlException", exp.Message, false);
+                updatedir = args[0];
+
             }
-            catch (NotSupportedException exp)
-            {
-                bHasError = true;
-                GlobalTool.LogError("UpdateApp.NotSupportedException", exp.Message, false);
-            }
-            catch (ArgumentException exp)
-            {
-                bHasError = true;
-                GlobalTool.LogError("UpdateApp.ArgumentException", exp.Message, false);
-            }
-            catch (Exception exp)
-            {
-                bHasError = true;
-                GlobalTool.LogError("UpdateApp.Other", exp.Message, false);
-            }
-            finally
-            {
-                if (bHasError == true)
-                {
-                    try
-                    {
-                        autoUpdater.RollBack();
-                    }
-                    catch (Exception exp)
-                    {
-                        GlobalTool.LogError("UpdateApp.Rollback", exp.Message, true);
-                    }
-                }
-            }
+
+            AutoUpdater updater = new AutoUpdater(updatedir);
+            updater.Update();
+            
             m1.ReleaseMutex();
             m1.Close();
         }

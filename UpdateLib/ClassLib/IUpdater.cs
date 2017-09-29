@@ -9,6 +9,6 @@ namespace PHTC.UpdateLib
     public interface IUpdater
     {
         void Update();
-        void RollBack();
+
     }
 }

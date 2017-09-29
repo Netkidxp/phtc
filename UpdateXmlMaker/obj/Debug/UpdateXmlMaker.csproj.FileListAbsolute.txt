@@ -6,3 +6,4 @@ E:\Git_PHTC\UpdateXmlMaker\obj\Debug\UpdateXmlMaker.pdb
 E:\Git_PHTC\PHTC\bin\Debug\UpdateXmlMaker.exe.config
 E:\Git_PHTC\PHTC\bin\Debug\UpdateXmlMaker.exe
 E:\Git_PHTC\PHTC\bin\Debug\UpdateXmlMaker.pdb
+E:\Git_PHTC\UpdateXmlMaker\obj\Debug\UpdateXmlMaker.csprojResolveAssemblyReference.cache

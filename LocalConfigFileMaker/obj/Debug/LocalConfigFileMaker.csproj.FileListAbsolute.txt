@@ -1,0 +1,8 @@
+E:\Git_PHTC\LocalConfigFileMaker\bin\Debug\LocalConfigFileMaker.exe.config
+E:\Git_PHTC\LocalConfigFileMaker\bin\Debug\LocalConfigFileMaker.exe
+E:\Git_PHTC\LocalConfigFileMaker\bin\Debug\LocalConfigFileMaker.pdb
+E:\Git_PHTC\LocalConfigFileMaker\bin\Debug\PHTC.UpdateLib.dll
+E:\Git_PHTC\LocalConfigFileMaker\bin\Debug\PHTC.UpdateLib.pdb
+E:\Git_PHTC\LocalConfigFileMaker\obj\Debug\LocalConfigFileMaker.csprojResolveAssemblyReference.cache
+E:\Git_PHTC\LocalConfigFileMaker\obj\Debug\LocalConfigFileMaker.exe
+E:\Git_PHTC\LocalConfigFileMaker\obj\Debug\LocalConfigFileMaker.pdb

@@ -10,6 +10,7 @@ namespace PHTC.UpdateLib
 {
     public class DownLoader
     {
+
         public static bool DownloadFile(string strFileName, string url)
         {
             bool flag = false;

@@ -33,6 +33,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
@@ -47,16 +48,11 @@
     <Compile Include="ClassLib\Const.cs" />
     <Compile Include="ClassLib\AutoUpdater.cs" />
     <Compile Include="ClassLib\DownLoader.cs" />
-    <Compile Include="DownloadProgress.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="DownloadProgress.designer.cs">
-      <DependentUpon>DownloadProgress.cs</DependentUpon>
-    </Compile>
     <Compile Include="ClassLib\IUpdater.cs" />
     <Compile Include="ClassLib\Local.cs" />
     <Compile Include="ClassLib\LocalFile.cs" />
     <Compile Include="ClassLib\Md5.cs" />
+    <Compile Include="ClassLib\UpdateInformation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ClassLib\RemoteFile.cs" />
     <Compile Include="ClassLib\Serializer.cs" />
@@ -66,13 +62,19 @@
     <Compile Include="UpdateConfirm.Designer.cs">
       <DependentUpon>UpdateConfirm.cs</DependentUpon>
     </Compile>
+    <Compile Include="UpdateProgress.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UpdateProgress.Designer.cs">
+      <DependentUpon>UpdateProgress.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="DownloadProgress.resx">
-      <DependentUpon>DownloadProgress.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="UpdateConfirm.resx">
       <DependentUpon>UpdateConfirm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UpdateProgress.resx">
+      <DependentUpon>UpdateProgress.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
