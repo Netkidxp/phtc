@@ -11,7 +11,7 @@ namespace PHTC
 {
     public class UserManager
     {
-        private static string GetMD5(string strPwd)
+        public static string GetMD5(string strPwd)
         {
             MD5 md5 = new MD5CryptoServiceProvider();
             byte[] data = System.Text.Encoding.Default.GetBytes(strPwd);
@@ -27,8 +27,7 @@ namespace PHTC
         public static bool ValidateUser(string name,string password)
         {
             string md5pass = GetMD5(password);
-            int res = DBUserAdapter.Exist(name);
-            if (res != 1)
+            if(!Exist(name))
                 return false;
             User u = DBUserAdapter.LoadWithName(name);
             if (u == null)
@@ -37,6 +36,14 @@ namespace PHTC
                 return true;
             else
                 return false;
+        }
+        public static bool Exist(string name)
+        {
+            int res = DBUserAdapter.Exist(name);
+            if (res != 1)
+                return false;
+            else
+                return true;
         }
         public static User LoginOn(string name,string password)
         {
@@ -87,5 +94,12 @@ namespace PHTC
         {
             GlobalTool.DeleteRegKeyValue("lastuser", "name");
         }
+        public static bool NewUser(string login_name,string login_password,string name,string department)
+        {
+            string pw = GetMD5(login_password);
+            User u = new User(0, login_name, pw, name, department);
+            return DBUserAdapter.Insert(u);
+        }
+
     }
 }

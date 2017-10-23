@@ -3,9 +3,10 @@ E:\Git_PHTC\UpdatePackageMaker\bin\Debug\UpdatePackageMaker.exe
 E:\Git_PHTC\UpdatePackageMaker\bin\Debug\UpdatePackageMaker.pdb
 E:\Git_PHTC\UpdatePackageMaker\bin\Debug\PHTC.UpdateLib.dll
 E:\Git_PHTC\UpdatePackageMaker\bin\Debug\PHTC.UpdateLib.pdb
+E:\Git_PHTC\PHTC\bin\Debug\UpdatePackageMaker.exe.config
+E:\Git_PHTC\PHTC\bin\Debug\UpdatePackageMaker.exe
 E:\Git_PHTC\UpdatePackageMaker\obj\Debug\UpdatePackageMaker.csprojResolveAssemblyReference.cache
 E:\Git_PHTC\UpdatePackageMaker\obj\Debug\UpdatePackageMaker.Form1.resources
 E:\Git_PHTC\UpdatePackageMaker\obj\Debug\UpdatePackageMaker.Properties.Resources.resources
 E:\Git_PHTC\UpdatePackageMaker\obj\Debug\UpdatePackageMaker.csproj.GenerateResource.Cache
 E:\Git_PHTC\UpdatePackageMaker\obj\Debug\UpdatePackageMaker.exe
-E:\Git_PHTC\UpdatePackageMaker\obj\Debug\UpdatePackageMaker.pdb

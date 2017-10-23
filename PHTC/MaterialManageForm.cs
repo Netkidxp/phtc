@@ -16,19 +16,25 @@ namespace PHTC
   
     public partial class MaterialManageForm : Form
     {
-
+        bool isManage = false;
         bool filterPanelShow;
         DataTable dt_input;
         int FILTER_PLANEL_HEIGHT = 0;
         public event LoadEventHandler LoadEvent;
-        public MaterialManageForm()
+        public MaterialManageForm(bool manage)
         {
+            isManage = manage;
             InitializeComponent();
             FILTER_PLANEL_HEIGHT = filterPanel.Height;
             dt_input = null;
             FilterPanelShow = false;
             cb_filterPlanel.Checked = false;
             tb_input.Text = "%";
+            CNewToolStripMenuItem.Visible = isManage;
+            CCopyToolStripMenuItem.Visible = isManage;
+            CDeleteToolStripMenuItem.Visible = isManage;
+            CLoadToolStripMenuItem.Visible = !isManage;
+
         }
         public bool FilterPanelShow
         { get => filterPanelShow;
@@ -224,9 +230,10 @@ namespace PHTC
 
         private void OnDGVCurrentCellChanged(object sender, EventArgs e)
         {
-            CDeleteToolStripMenuItem.Enabled = (dgv_list.CurrentRow != null);
-            CDetailsToolStripMenuItem.Enabled = (dgv_list.CurrentRow != null);
-            CLoadToolStripMenuItem.Enabled = (dgv_list.CurrentRow != null);
+            //CDeleteToolStripMenuItem.Enabled = (dgv_list.CurrentRow != null);
+            //CDetailsToolStripMenuItem.Enabled = (dgv_list.CurrentRow != null);
+            //CLoadToolStripMenuItem.Enabled = (dgv_list.CurrentRow != null);
+            //CCopyToolStripMenuItem.Enabled= (dgv_list.CurrentRow != null);
         }
         private void DeleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -388,10 +395,11 @@ namespace PHTC
 
         private void OnContentMenuOpened(object sender, EventArgs e)
         {
-            CDeleteToolStripMenuItem.Visible = (dgv_list.CurrentRow != null);
+            CDeleteToolStripMenuItem.Visible = (dgv_list.CurrentRow != null&&isManage);
             CDetailsToolStripMenuItem.Visible = (dgv_list.CurrentRow != null);
-            CLoadToolStripMenuItem.Visible = (dgv_list.CurrentRow != null&& LoadEvent != null);
-            CCopyToolStripMenuItem.Visible = (dgv_list.CurrentRow != null);
+            CLoadToolStripMenuItem.Visible = (dgv_list.CurrentRow != null&& LoadEvent != null&&!isManage);
+            CCopyToolStripMenuItem.Visible = (dgv_list.CurrentRow != null&&isManage);
+            CNewToolStripMenuItem.Visible = isManage;
         }
 
         private void CCopyToolStripMenuItem_Click(object sender, EventArgs e)

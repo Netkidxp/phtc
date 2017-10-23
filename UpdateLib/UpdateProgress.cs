@@ -12,12 +12,15 @@ namespace PHTC.UpdateLib
 {
     public partial class UpdateProgress : Form
     {
-        
-        public UpdateProgress()
+        private AutoUpdater Updater;
+        public UpdateProgress(AutoUpdater updater)
         {
             InitializeComponent();
-            
-            
+            Updater = updater;
+            Updater.ErrorEvent += new AutoUpdater.ErrorEventHandler(LogAddNewline);
+            Updater.InformationEvent += new AutoUpdater.InformationEventHandler(LogAddNewline);
+            Updater.DownloadProgressEvent += new AutoUpdater.DownloadProgressEventHandler(SetProgress);
+            Updater.FinishedEvent += new AutoUpdater.FinishedEventHandler(Finished);
         }
         public void LogAdd(string inf)
         {
@@ -59,10 +62,27 @@ namespace PHTC.UpdateLib
                 pgb_current.Invoke(new MethodInvoker(delegate () { pgb_current.Value = v; }));
             }
         }
-
+        public void SetProgress(float v)
+        {
+            CurrentProgress = v;
+        }
         private void OnLoad(object sender, EventArgs e)
         {
+            Updater.StartUpdate();
 
+        }
+
+        private void OnClosing(object sender, FormClosingEventArgs e)
+        {
+            if(!Updater.IsFinished)
+            {
+                MessageBox.Show("正在升级，请在升级完成后退出");
+                e.Cancel = true;
+            }
+        }
+        private void Finished()
+        {
+            //Close();
         }
     }
 }

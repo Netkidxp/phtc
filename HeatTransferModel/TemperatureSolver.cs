@@ -11,6 +11,7 @@ namespace PHTC.Model
     public delegate void UpdateTemperatureEndEventHandler(TemperatureSolverC1 solver);
     public delegate void SolveEndEventHandler(TemperatureSolverC1 solver);
     public delegate void SolveStartEventHandler(TemperatureSolverC1 solver);
+
     public class TemperatureSolverC1
     {
         
@@ -24,8 +25,7 @@ namespace PHTC.Model
         {
             get => calculate;
         }
-     
-
+ 
         public event InitalizedTemperatureEndEventHandler InitalizedTemperatureEndEvent;
         public event UpdateTemperatureEndEventHandler UpdateTemperatureEndEvent;
         public event SolveEndEventHandler SolveEndEvent;

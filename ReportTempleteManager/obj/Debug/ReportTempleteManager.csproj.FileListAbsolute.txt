@@ -1,9 +1,7 @@
 E:\Git_PHTC\PHTC\bin\Debug\ReportTempleteManager.exe.config
 E:\Git_PHTC\PHTC\bin\Debug\ReportTempleteManager.exe
-E:\Git_PHTC\PHTC\bin\Debug\ReportTempleteManager.pdb
+E:\Git_PHTC\ReportTempleteManager\obj\Debug\ReportTempleteManager.csprojResolveAssemblyReference.cache
 E:\Git_PHTC\ReportTempleteManager\obj\Debug\ReportTempleteManager.ReportTempleteManager.resources
 E:\Git_PHTC\ReportTempleteManager\obj\Debug\ReportTempleteManager.Properties.Resources.resources
 E:\Git_PHTC\ReportTempleteManager\obj\Debug\ReportTempleteManager.csproj.GenerateResource.Cache
 E:\Git_PHTC\ReportTempleteManager\obj\Debug\ReportTempleteManager.exe
-E:\Git_PHTC\ReportTempleteManager\obj\Debug\ReportTempleteManager.pdb
-E:\Git_PHTC\ReportTempleteManager\obj\Debug\ReportTempleteManager.csprojResolveAssemblyReference.cache

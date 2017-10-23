@@ -14,6 +14,7 @@ namespace PHTC.Model
         private string login_password;
         private string name;
         private string department;
+
         private volatile static User currentUser=null;
 
         public int Id { get => id; set => id = value; }
@@ -22,7 +23,7 @@ namespace PHTC.Model
         public string Name { get => name; set => name = value; }
         public string Department { get => department; set => department = value; }
         public static User CurrentUser { get => currentUser; set => currentUser = value; }
-
+        public int Level { get; set; }
         private User() { }
         public User(int _id,string _login_id,string _login_password,string _name,string _department)
         {
@@ -31,6 +32,7 @@ namespace PHTC.Model
             login_password = _login_password;
             name = _name;
             department = _department;
+            Level = 10;
         }
 
     }

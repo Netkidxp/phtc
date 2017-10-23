@@ -17,6 +17,7 @@ namespace PHTC.Model
         double hotfaceRadius;
         double height;
         double width;
+        string validityInformation;
         private TemperatureCalculate() { }
         public TemperatureCalculate(double _hotfaceTemperature, Class1Boundary _codefaceBoundary, List<Layer> _layers)
         {
@@ -202,13 +203,28 @@ namespace PHTC.Model
                 }
             }
         }
-        public string CheckInput()
+
+        public string ValidityInformation { get => validityInformation; }
+
+        public bool CheckValidition()
         {
-            string res = string.Empty;
+            validityInformation = "";
+            bool res = true;
             if (FlowDirection <= 0)
-                res += "Temperature Calculate:热流方向为负/r/n";
+            {
+                validityInformation += "热流方向为负\r\n";
+                res = false;
+            }
             if(GeomLayerCount==0)
-                res += "Temperature Calculate:实体层为0/r/n";
+            {
+                validityInformation += "实体层数量为0\r\n";
+                res = false;
+            }
+            if(Boundary.Area<=0)
+            {
+                validityInformation += "热流面积小于0\r\n";
+                res = false;
+            }
             return res;
         }
         public TemperatureCalculate Clone()
@@ -236,6 +252,7 @@ namespace PHTC.Model
         int targetLayerIndex;
         TemperatureCalculate calculate;
         double targetValue;
+        string validityInformation;
         SolverControlParameter temperatureSolveParameter;
         SolverControlParameter thicknessSolveParameter;
         public ThicknessCalculate(TemperatureCalculate _calculate, int _targetLayerIndex, double _targetValue, SolverControlParameter _temperatureSolveParameter, SolverControlParameter _thicknessSolveParameter)
@@ -251,6 +268,8 @@ namespace PHTC.Model
         public double TargetValue { get => targetValue; set => targetValue = value; }
         public SolverControlParameter TemperatureSolveParameter { get => temperatureSolveParameter; set => temperatureSolveParameter = value; }
         public SolverControlParameter ThicknessSolveParameter { get => thicknessSolveParameter; set => thicknessSolveParameter = value; }
+        public string ValidityInformation { get => validityInformation;  }
+
         public double CalculateMaxTargetValue()
         {
             TemperatureCalculate tc = Calculate.Clone();
@@ -262,6 +281,32 @@ namespace PHTC.Model
                 return tc.Boundary.Temperature;
             else
                 return tc.Boundary.Heatflow;
+        }
+        public bool CheckValidition()
+        {
+            bool res = Calculate.CheckValidition();
+            validityInformation = Calculate.ValidityInformation;
+            if (!res)
+                return res;
+            double maxTV = CalculateMaxTargetValue();
+            if (TargetValue>maxTV)
+            {
+                string smax="";
+                if (Calculate.Boundary is Class3Boundary)
+                    smax = "温度为:"+(maxTV - 273.15).ToString() + "℃";
+                else if (Calculate.Boundary is Class2Boundary)
+                    smax = "温度为:" + (maxTV - 273.15).ToString() + "℃";
+                else
+                    smax = "热流量为:"+maxTV.ToString() + "W";
+                validityInformation += "目标值太大会导致计算结果出现负值，最大目标"+smax+"\r\n";
+                res = false;
+            }
+            if(TargetLayerIndex>Calculate.LayerList.Count)
+            {
+                validityInformation += "目标值层索引超出范围\r\n";
+                res = false;
+            }
+            return res;
         }
     }
 }

@@ -11,6 +11,7 @@ namespace PHTC.UpdateLib
     public class Config
     {
         public bool Enable { get; set; }
+        public string LastVer { get; set; }
         public string FileListUrl { get; set; }
         public Config()
         {

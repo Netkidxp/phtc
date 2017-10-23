@@ -1,0 +1,4 @@
+E:\Git_PHTC\PHTC\bin\Release\PHTC.Model.dll
+E:\Git_PHTC\PHTC\bin\Release\PHTC.Model.pdb
+E:\Git_PHTC\HeatTransferModel\obj\Release\PHTC.Model.dll
+E:\Git_PHTC\HeatTransferModel\obj\Release\PHTC.Model.pdb

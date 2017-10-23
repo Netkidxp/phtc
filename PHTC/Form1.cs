@@ -82,8 +82,8 @@ namespace PHTC
         {
 
             //DbMaterialAdapter.Delete(15);
-            MaterialManageForm mmf = new MaterialManageForm();
-            mmf.Show();
+            //MaterialManageForm mmf = new MaterialManageForm();
+            //mmf.Show();
         }
         private List<Layer> CreateTestLayers()
         {

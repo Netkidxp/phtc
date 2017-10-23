@@ -232,12 +232,14 @@
             // 
             // bu_Advanced
             // 
-            this.bu_Advanced.Location = new System.Drawing.Point(309, 44);
+            this.bu_Advanced.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bu_Advanced.Location = new System.Drawing.Point(309, 13);
             this.bu_Advanced.Name = "bu_Advanced";
-            this.bu_Advanced.Size = new System.Drawing.Size(38, 23);
+            this.bu_Advanced.Size = new System.Drawing.Size(38, 52);
             this.bu_Advanced.TabIndex = 8;
-            this.bu_Advanced.Text = "辅助";
+            this.bu_Advanced.Text = "计算";
             this.bu_Advanced.UseVisualStyleBackColor = true;
+            this.bu_Advanced.Click += new System.EventHandler(this.bu_Advanced_Click);
             // 
             // tb_C3Emissivity
             // 

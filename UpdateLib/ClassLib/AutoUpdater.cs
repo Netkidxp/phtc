@@ -12,12 +12,12 @@ using System.IO.Compression;
 
 namespace PHTC.UpdateLib
 {
+    
     public class AutoUpdater:IUpdater
     {
         private Config config = null;
         private string rootdir = null;
-        private bool error = false;
-        private UpdateProgress formUpdateProgress = null;
+        private string lastError = null;
         private WebClient webClient = null;
         private string tempBaseDirName = null;
         private string rollbackDir = null;
@@ -26,29 +26,30 @@ namespace PHTC.UpdateLib
         private List<RemoteFile> coverFileList = null;
         private List<RemoteFile> createFileList = null;
         private bool rollPrepared = false;
-        public DownloadProgressChangedEventHandler DownloadProgressChangedEvent = null;
-        public AsyncCompletedEventHandler DownloadCompletedEvent = null;
+
         public UpdateInformation updateInformation = null;
+        
+        private ManualResetEvent finished = null;
+        public ManualResetEvent Finished { get => finished; }
+        public string LastError { get => lastError; }
+        public bool IsFinished { get; set; }
+        private AutoUpdater() { }
+        public delegate void ErrorEventHandler(string information);
+        public delegate void InformationEventHandler(string information);
+        public delegate void DownloadProgressEventHandler(float progress);
+        public delegate void FinishedEventHandler();
 
         public ErrorEventHandler ErrorEvent = null;
-        
-        public bool Error
-        {
-            get
-            {
-                return error;
-            }
-        }
-        private AutoUpdater() { }
-        
-        public delegate void ErrorEventHandler(string information);
+        public InformationEventHandler InformationEvent = null;
+        public DownloadProgressEventHandler DownloadProgressEvent = null;
+        public FinishedEventHandler FinishedEvent = null;
 
+        
         public AutoUpdater(string root)
         {
             rootdir = root;
-            formUpdateProgress = new UpdateProgress();
-            this.ErrorEvent += new ErrorEventHandler(formUpdateProgress.LogAddNewline);
-            
+            finished = new ManualResetEvent(false);
+            IsFinished = false;
         }
         private string CreatezTempDir()
         {
@@ -61,14 +62,17 @@ namespace PHTC.UpdateLib
         {
             if (ErrorEvent != null)
                 ErrorEvent(error);
+            lastError = error;
         }
         private void LogInformation(string information)
         {
-            formUpdateProgress.LogAddNewline(information);
+            if (InformationEvent != null)
+                InformationEvent(information);
         }
+         
         public Config ReadConfig()
         {
-            string configPath = Path.Combine(rootdir, Const.ConfigFilePath);
+            string configPath = Path.Combine(rootdir, Const.ConfigFileName);
             try
             {
                 if (File.Exists(configPath))
@@ -89,6 +93,29 @@ namespace PHTC.UpdateLib
                 return null;
             }
             
+        }
+        public bool WriteConfig(Config c)
+        {
+            string configPath = Path.Combine(rootdir, Const.ConfigFileName);
+            try
+            {
+                bool res=c.Write(configPath);
+                if (res)
+                {
+                    LogInformation("写入本地配置成功");
+                    return true;
+                }
+                else
+                {
+                    LogError("写入本地配置文件\"" + configPath + "\"失败");
+                    return false;
+                }
+            }
+            catch (Exception e)
+            {
+                LogError("写入本地配置文件\"" + configPath + "\"失败:"+e.Message);
+                return false;
+            }
         }
         public string DownloadUpdateInformationFile()
         {
@@ -120,6 +147,17 @@ namespace PHTC.UpdateLib
                 return null;
             }
         }
+        public void Abort()
+        {
+
+        }
+        public void Finish()
+        {
+            finished.Set();
+            IsFinished = true;
+            if (FinishedEvent != null)
+                FinishedEvent();
+        }
         public string Download()
         {
             ManualResetEvent downloadEvent = new ManualResetEvent(false);
@@ -130,7 +168,9 @@ namespace PHTC.UpdateLib
             webClient.Credentials = System.Net.CredentialCache.DefaultCredentials;
             webClient.DownloadProgressChanged += (object sender, DownloadProgressChangedEventArgs e) =>
             {
-                formUpdateProgress.CurrentProgress = (float)e.BytesReceived / (float)updateInformation.Size;
+                //formUpdateProgress.CurrentProgress = (float)e.BytesReceived / (float)updateInformation.Size;
+                if (DownloadProgressEvent != null)
+                    DownloadProgressEvent((float)e.BytesReceived / (float)updateInformation.Size);
             };
             webClient.DownloadFileCompleted += (object sender, AsyncCompletedEventArgs e) =>
             {
@@ -144,12 +184,12 @@ namespace PHTC.UpdateLib
                 LogInformation("下载完毕,正在验证...");
                 if(Md5.FileMd5(fileName)==updateInformation.Md5)
                 {
-                    LogInformation("更新文件验证成功");
+                    LogInformation("更新包验证成功");
                     return fileName;
                 }
                 else
                 {
-                    LogError("更新文件验证失败");
+                    LogError("更新包验证失败");
                     return null;
                 }
             }
@@ -256,17 +296,21 @@ namespace PHTC.UpdateLib
                 Directory.CreateDirectory(desDir);
             File.Copy(srcFileName, desFileName,true);
         }
-        public void Update()
+        public void StartUpdate()
         {
-            ThreadPool.QueueUserWorkItem(new WaitCallback(UpdateProc));
-            formUpdateProgress.ShowDialog();
-            
+            ThreadPool.QueueUserWorkItem(new WaitCallback(UpdateProc),false);
+        }
+        public void StartUpdateSilence()
+        {
+            ThreadPool.QueueUserWorkItem(new WaitCallback(UpdateProc), true);
         }
         private List<RemoteFile> MakeUpdateList()
         {
             List<RemoteFile> list = new List<RemoteFile>();
             foreach(RemoteFile rf in updateInformation.FileList)
             {
+                if (string.Compare(rf.Name, Const.ConfigFileName, true) == 0)
+                    continue;
                 if (IsNeedUpdate(rf))
                     list.Add(rf);
             }
@@ -319,45 +363,142 @@ namespace PHTC.UpdateLib
             }
             return true;
         }
+        
         public void UpdateProc(object o)
         {
+
+            bool silence = (bool)o;
+            IsFinished = false;
+            lastError = null;
+            finished.Reset();
             config = ReadConfig();
             if (config == null)
+            {
+                Finish();
                 return;
+            }
+               
             if (!config.Enable)
+            {
+                Finish();
                 return;
+            }
             string infpath = DownloadUpdateInformationFile();
             if (infpath == null)
+            {
+                Finish();
                 return;
+            }
             updateInformation = ResoluteUpdateInfromationFile(infpath);
             if (updateInformation == null)
+            {
+                Finish();
                 return;
+            }
             localFileList = Local.LocalFileList(rootdir);
             needUpdateList = MakeUpdateList();
             createFileList = MakeCreateFileList();
             coverFileList = MakeCoverFileList();
-            if (needUpdateList.Count == 0)
+            Version verLocal = new Version(config.LastVer);
+            Version verRemote = new Version(updateInformation.Ver);
+            if (needUpdateList.Count == 0&&verLocal>=verRemote)
             {
-                MessageBox.Show("您的软件是最新版本，不需要更新", "不需要更新", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
-            if (new UpdateConfirm().ShowDialog() == DialogResult.Cancel)
-            {
+                LogInformation("您的软件是最新版本，不需要更新");
+                Finish();
                 return;
             }
             string tempfile = Download();
             if (tempfile == null)
+            {
+                Finish();
                 return;
+            }
             tempBaseDirName = CreatezTempDir();
             bool res = Unzip(tempfile, tempBaseDirName);
             if (!res)
+            {
+                Finish();
                 return;
+            }
             if (!ValidateUpdateFiles())
+            {
+                Finish();
                 return;
+            }
             rollPrepared = PrepareRollback();
             res = UpdateFiles();
             if (!res && rollPrepared)
+            {
                 res = Rollback();
+            }
+            else
+            {
+                config.LastVer = updateInformation.Ver;
+                WriteConfig(config);
+            }
+            Finish();
+        }
+        public bool CheckUpdate(object o)
+        {
+            lastError = null;
+            finished.Reset();
+            config = ReadConfig();
+            if (config == null)
+            {
+                return false; ;
+            }
+            string infpath = DownloadUpdateInformationFile();
+            if (infpath == null)
+            {
+                return false;
+            }
+            updateInformation = ResoluteUpdateInfromationFile(infpath);
+            if (updateInformation == null)
+            {
+                return false;
+            }
+            localFileList = Local.LocalFileList(rootdir);
+            needUpdateList = MakeUpdateList();
+            createFileList = MakeCreateFileList();
+            coverFileList = MakeCoverFileList();
+            Version verLocal = new Version(config.LastVer);
+            Version verRemote = new Version(updateInformation.Ver);
+            if (needUpdateList.Count == 0 && verLocal >= verRemote)
+            {
+                LogInformation("您的软件是最新版本，不需要更新");
+                return false;
+            }
+            return true;
+        }
+        public bool ProcessUpdate(object o)
+        {
+            string tempfile = Download();
+            if (tempfile == null)
+            {
+                return false;
+            }
+            tempBaseDirName = CreatezTempDir();
+            bool res = Unzip(tempfile, tempBaseDirName);
+            if (!res)
+            {
+                return false;
+            }
+            if (!ValidateUpdateFiles())
+            {
+                return false;
+            }
+            rollPrepared = PrepareRollback();
+            res = UpdateFiles();
+            if (!res && rollPrepared)
+            {
+                res = Rollback();
+            }
+            else
+            {
+                config.LastVer = updateInformation.Ver;
+                WriteConfig(config);
+            }
+            return true;
         }
     }
 }

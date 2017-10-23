@@ -38,7 +38,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.pgb_current = new System.Windows.Forms.ProgressBar();
             this.tb_log = new System.Windows.Forms.TextBox();
-            this.bu_abort = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -85,63 +84,55 @@
             // 
             // pgb_total
             // 
-            this.pgb_total.Location = new System.Drawing.Point(84, 107);
+            this.pgb_total.Location = new System.Drawing.Point(102, 88);
             this.pgb_total.Name = "pgb_total";
-            this.pgb_total.Size = new System.Drawing.Size(757, 15);
+            this.pgb_total.Size = new System.Drawing.Size(739, 15);
             this.pgb_total.Step = 1;
             this.pgb_total.TabIndex = 5;
+            this.pgb_total.Visible = false;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(25, 108);
+            this.label2.Location = new System.Drawing.Point(25, 89);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(41, 12);
             this.label2.TabIndex = 6;
             this.label2.Text = "总进度";
+            this.label2.Visible = false;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(25, 142);
+            this.label3.Location = new System.Drawing.Point(25, 108);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(53, 12);
             this.label3.TabIndex = 8;
-            this.label3.Text = "当前文件";
+            this.label3.Text = "更新进度";
             // 
             // pgb_current
             // 
-            this.pgb_current.Location = new System.Drawing.Point(84, 141);
+            this.pgb_current.Location = new System.Drawing.Point(102, 105);
             this.pgb_current.Name = "pgb_current";
-            this.pgb_current.Size = new System.Drawing.Size(757, 15);
+            this.pgb_current.Size = new System.Drawing.Size(739, 20);
             this.pgb_current.Step = 1;
             this.pgb_current.TabIndex = 7;
             // 
             // tb_log
             // 
             this.tb_log.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tb_log.Location = new System.Drawing.Point(27, 177);
+            this.tb_log.Location = new System.Drawing.Point(27, 144);
             this.tb_log.Multiline = true;
             this.tb_log.Name = "tb_log";
             this.tb_log.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.tb_log.Size = new System.Drawing.Size(831, 333);
+            this.tb_log.Size = new System.Drawing.Size(831, 376);
             this.tb_log.TabIndex = 9;
-            // 
-            // bu_abort
-            // 
-            this.bu_abort.Location = new System.Drawing.Point(766, 523);
-            this.bu_abort.Name = "bu_abort";
-            this.bu_abort.Size = new System.Drawing.Size(75, 23);
-            this.bu_abort.TabIndex = 10;
-            this.bu_abort.Text = "中断";
-            this.bu_abort.UseVisualStyleBackColor = true;
             // 
             // UpdateProgress
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(870, 566);
-            this.Controls.Add(this.bu_abort);
+            this.ClientSize = new System.Drawing.Size(870, 549);
             this.Controls.Add(this.tb_log);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.panel1);
@@ -149,8 +140,10 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.pgb_total);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "UpdateProgress";
             this.Text = "UpdateProgress";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnClosing);
             this.Load += new System.EventHandler(this.OnLoad);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -171,6 +164,5 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox tb_log;
-        private System.Windows.Forms.Button bu_abort;
     }
 }

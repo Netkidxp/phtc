@@ -31,7 +31,7 @@ namespace UpdatePackageMaker
             inf.FileList = list;
             inf.UpdateDescribe = tb_desc.Text;
             inf.Url = tb_urlbase.Text;
-            inf.Ver = tb_ver.Text;
+            inf.Ver = new Version(tb_ver.Text).ToString();
             string file = Path.Combine(dialog.SelectedPath, "update.pkg");
             if (File.Exists(file))
                 File.Delete(file);

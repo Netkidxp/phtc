@@ -79,9 +79,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(42, 119);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(23, 12);
+            this.label1.Size = new System.Drawing.Size(59, 12);
             this.label1.TabIndex = 5;
-            this.label1.Text = "Url";
+            this.label1.Text = "更新包Url";
             // 
             // tb_urlbase
             // 
@@ -89,7 +89,7 @@
             this.tb_urlbase.Name = "tb_urlbase";
             this.tb_urlbase.Size = new System.Drawing.Size(256, 21);
             this.tb_urlbase.TabIndex = 4;
-            this.tb_urlbase.Text = "http://";
+            this.tb_urlbase.Text = "http://192.168.2.88/update/update.pkg";
             // 
             // label2
             // 

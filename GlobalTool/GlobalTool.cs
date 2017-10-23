@@ -7,16 +7,22 @@ using System.Configuration;
 using System.IO;
 using Microsoft.Win32;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Security.Cryptography;
 
 namespace PHTC
 {
     public static class GlobalTool
     {
         private static string mainConnectString = "main";
+        private static byte[] Keys = { 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF };
+        private static string KEY = "FQHLJFLG";
         //private static readonly object lockHelper = new object();
         public static string GetConnectStringsConfig()
         {
-            return ConfigurationManager.ConnectionStrings[mainConnectString].ConnectionString.ToString();
+            string raw= ReadRegKeyValue("db","server");
+            if (raw == null)
+                return null;
+            return NetCryptoHelper.DecryptDes(raw, NetCryptoHelper.DesKey, NetCryptoHelper.DesIv);
         }
         public static string GetErrorLogFileNameConfig()
         {
@@ -112,9 +118,6 @@ namespace PHTC
             phtc.Close();
             machine.Close();
             return res;
-
-
-
         }
         public static void WriteRegKeyValue(string key, string name, string value)
         {
@@ -154,6 +157,11 @@ namespace PHTC
                 obj = outputFormatter.Deserialize(outputStream);
             }
             return obj;
+        }
+        public static void SetConnectionString(string s)
+        {
+            string ns = NetCryptoHelper.EncryptDes(s, NetCryptoHelper.DesKey, NetCryptoHelper.DesIv);
+            WriteRegKeyValue("db", "server", ns);
         }
     }
 }

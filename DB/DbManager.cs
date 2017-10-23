@@ -265,5 +265,25 @@ namespace PHTC.DB
             }
         }
 
+        public bool TestConnection()
+        {
+            bool connected = false;
+            MySqlConnection con = new MySqlConnection(ConnStr);
+            try
+            {
+                con.Open();
+                connected= true;
+            }
+            catch(Exception)
+            {
+                connected = false;
+            }
+            finally
+            {
+                if (connected)
+                    con.Close();
+            }
+            return connected;
+        }
     }
 }

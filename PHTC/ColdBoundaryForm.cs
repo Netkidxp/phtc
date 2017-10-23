@@ -228,5 +228,11 @@ namespace PHTC
             }
             return true;
         }
+
+        private void bu_Advanced_Click(object sender, EventArgs e)
+        {
+            //AirNaturalConvectionCoefficient af = new AirNaturalConvectionCoefficient();
+            //af.ShowDialog();
+        }
     }
 }

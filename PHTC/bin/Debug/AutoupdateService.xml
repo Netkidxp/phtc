@@ -1,8 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<updateFiels>
-  <file path="PHTC.AutoUpdater.dll" url="http://192.168.2.88:8080/update/files/PHTC.AutoUpdater.dll" lastver="1.0.0.0" size="36352" needRestart="False" md5="f4c814dd278ece85d71efdfc4b62c6ac" />
-  <file path="PHTC.DB.dll" url="http://192.168.2.88:8080/update/files/PHTC.DB.dll" lastver="1.0.0.0" size="20480" needRestart="False" md5="3da34a5c8882c05a601d375f01df4f13" />
-  <file path="PHTC.Update.exe" url="http://192.168.2.88:8080/update/files/PHTC.Update.exe" lastver="1.0.0.0" size="8192" needRestart="False" md5="4cc1d6700e9e9f32d7ceea47f99416ea" />
-  <file path="ReportTempleteManager.exe" url="http://192.168.2.88:8080/update/files/ReportTempleteManager.exe" lastver="1.0.0.0" size="14848" needRestart="False" md5="475ac4f2673c0003ddb22a2773f995f3" />
-  <file path="t1\PHTC.DB.dll" url="http://192.168.2.88:8080/update/files/t1/PHTC.DB.dll" lastver="1.0.0.0" size="20480" needRestart="False" md5="3da34a5c8882c05a601d375f01df4f13" />
-</updateFiels>

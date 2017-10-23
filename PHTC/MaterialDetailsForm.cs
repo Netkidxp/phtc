@@ -22,8 +22,8 @@ namespace PHTC
             Modify
         }
         private ButtonType type; 
-        public static string REGSTR_PositiveRealNumber = @"^[0-9]\d*(\.\d+)?$";
-        public static string REGSTR_RealNumber = @"^[+-]?\d+(\.\d+)?$";
+        //public static string REGSTR_PositiveRealNumber = @"^[0-9]\d*(\.\d+)?$";
+        //public static string REGSTR_RealNumber = @"^[+-]?\d+(\.\d+)?$";
         private Material material;
         private DataTable dt_hc_dis;
         private DataTable dt_sh_dis;
@@ -203,7 +203,7 @@ namespace PHTC
         {
             if (tb_name.Text.Length == 0)
                 return false;
-            if (!Regex.IsMatch(tb_density.Text, REGSTR_RealNumber))
+            if (!IsRealNumberString(tb_density.Text))
                 return false;
             if (dgv_hc.Rows.Count == 0 || dgv_sh.Rows.Count == 0)
                 return false;
@@ -261,7 +261,6 @@ namespace PHTC
             c.Series.Clear();
             c.Series.Add(s);
             c.ChartAreas[0].RecalculateAxesScale();
-
         }
         private void UpdateHCChart()
         {
@@ -287,13 +286,27 @@ namespace PHTC
         {
             UpdateSHChart();
         }
-
+        private bool IsRealNumberString(string s)
+        {
+            double v = 0;
+            return double.TryParse(s, out v);
+        }
+        private bool IsPositiveRealNumberString(string s)
+        {
+            double v = 0;
+            bool res = double.TryParse(s, out v);
+            if (res && v > 0)
+                return true;
+            else
+                return false;
+        }
         private void OnHCDGVCellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
             
             if(rb_hc_function.Checked)
             {
-                if (Regex.IsMatch(e.FormattedValue.ToString(), REGSTR_RealNumber) || e.FormattedValue.ToString()=="")
+                //if (Regex.IsMatch(e.FormattedValue.ToString(), REGSTR_RealNumber) || e.FormattedValue.ToString()=="")
+                if(IsRealNumberString(e.FormattedValue.ToString())|| e.FormattedValue.ToString() == "")
                 {
                     e.Cancel = false;
                 }
@@ -304,7 +317,7 @@ namespace PHTC
             }
             else
             {
-                if (Regex.IsMatch(e.FormattedValue.ToString(), REGSTR_PositiveRealNumber) && double.Parse(e.FormattedValue.ToString()) != 0 || e.FormattedValue.ToString() == "")
+                if (IsPositiveRealNumberString(e.FormattedValue.ToString()) || e.FormattedValue.ToString() == "")
                 {
                     e.Cancel = false;
                 }
@@ -320,7 +333,8 @@ namespace PHTC
         {
             if (rb_sh_function.Checked)
             {
-                if (Regex.IsMatch(e.FormattedValue.ToString(), REGSTR_RealNumber) || e.FormattedValue.ToString() == "")
+                //if (Regex.IsMatch(e.FormattedValue.ToString(), REGSTR_RealNumber) || e.FormattedValue.ToString() == "")
+                if (IsRealNumberString(e.FormattedValue.ToString()) || e.FormattedValue.ToString() == "")
                 {
                     e.Cancel = false;
                 }
@@ -331,7 +345,8 @@ namespace PHTC
             }
             else
             {
-                if (Regex.IsMatch(e.FormattedValue.ToString(), REGSTR_PositiveRealNumber) && double.Parse(e.FormattedValue.ToString()) != 0 || e.FormattedValue.ToString() == "")
+                //if (Regex.IsMatch(e.FormattedValue.ToString(), REGSTR_PositiveRealNumber) && double.Parse(e.FormattedValue.ToString()) != 0 || e.FormattedValue.ToString() == "")
+                if (IsPositiveRealNumberString(e.FormattedValue.ToString()) || e.FormattedValue.ToString() == "")
                 {
                     e.Cancel = false;
                 }

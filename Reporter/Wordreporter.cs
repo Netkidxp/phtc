@@ -171,7 +171,7 @@ namespace PHTC.Reporter
                     }
                     else
                     {
-                        r.Cells[4].Range.Text = l.Material.Name+ "(编号" + l.Material.Index.ToString() + ")";
+                        r.Cells[4].Range.Text = l.Material.Name;
                         r.Cells[5].Range.Text = (l.Thickness*1000.0).ToString("F0");
                         r.Cells[6].Range.Text = l.HeatResistance.ToString("F3");
                     }

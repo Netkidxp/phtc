@@ -1,56 +1,8 @@
-2017/8/2 9:49:13||source:Datebase Manager||Information:Unknown column 'id' in 'field list'
+2017/10/16 16:02:58||source:Datebase Manager||Information:Procedure or function '`ReportTemplete_SearchAllWithCLass`' cannot be found in database '`phtc`'.
 
-2017/8/2 9:49:34||source:Datebase Manager||Information:Unknown column 'id' in 'field list'
+2017/10/16 16:04:08||source:Datebase Manager||Information:Procedure or function '`ReportTemplete_SearchAllWithCLass`' cannot be found in database '`phtc`'.
 
-2017/8/2 9:51:23||source:Datebase Manager||Information:Unknown column 'id' in 'field list'
+2017/10/16 16:05:40||source:Datebase Manager||Information:Procedure or function '`ReportTemplete_SearchAllWithClass`' cannot be found in database '`phtc`'.
 
-2017/8/2 9:52:05||source:Datebase Manager||Information:Unknown column 'id' in 'field list'
-
-2017/8/2 9:52:06||source:MaterialManageForm.NewMaterial||Information:保存材料出现错误，请检查您的网络连接，或者向管理员寻求帮助！
-
-2017/8/2 9:53:05||source:Datebase Manager||Information:Unknown column 'id' in 'field list'
-
-2017/8/15 16:08:41||source:Datebase Manager||Information:Unable to connect to any of the specified MySQL hosts.
-
-2017/8/15 16:09:09||source:Datebase Manager||Information:Unable to connect to any of the specified MySQL hosts.
-
-2017/8/15 16:09:14||source:MaterialManageForm.RefreshData||Information:检索材料数据出现错误，请检查您的网络连接，或者向管理员寻求帮助！
-
-2017/8/21 13:20:35||source:Datebase Manager||Information:Column count doesn't match value count at row 1
-
-2017/8/21 13:20:45||source:Datebase Manager||Information:Column count doesn't match value count at row 1
-
-2017/8/21 13:24:31||source:Datebase Manager||Information:Column count doesn't match value count at row 1
-
-2017/8/22 9:06:34||source:Datebase Manager||Information:Unknown column '_input' in 'where clause'
-
-2017/8/22 9:06:37||source:ProjectLoadForm.RefreshData||Information:检索工程数据出现错误，请检查您的网络连接，或者向管理员寻求帮助！
-
-2017/8/22 12:13:53||source:Datebase Manager||Information:Unknown column 'mode' in 'field list'
-
-2017/8/22 12:17:18||source:Datebase Manager||Information:Unknown column 'mode' in 'field list'
-
-2017/8/22 12:53:11||source:Datebase Manager||Information:Unknown column 'code' in 'field list'
-
-2017/8/22 12:53:37||source:Datebase Manager||Information:Unknown column 'code' in 'field list'
-
-2017/9/19 18:54:50||source:DBUserAdapter.Exist||Information:输入字符串的格式不正确。
-
-2017/9/19 18:55:13||source:DBUserAdapter.Exist||Information:输入字符串的格式不正确。
-
-2017/9/19 19:02:43||source:DBUserAdapter.Exist||Information:指定的转换无效。
-
-2017/9/20 9:44:02||source:DBUserAdapter.Update||Information:Parameter '_id' not found in the collection.
-
-2017/9/20 9:44:17||source:ProjectForm.ChangePassword||Information:数据库操作失败，请联系管理员
-
-2017/9/21 12:53:11||source:Datebase Manager||Information:Unable to connect to any of the specified MySQL hosts.
-
-2017/9/21 12:53:29||source:Datebase Manager||Information:Unable to connect to any of the specified MySQL hosts.
-
-2017/9/21 12:53:50||source:Datebase Manager||Information:Unable to connect to any of the specified MySQL hosts.
-
-2017/9/21 12:54:09||source:Datebase Manager||Information:Unable to connect to any of the specified MySQL hosts.
-
-2017/9/21 12:54:12||source:Datebase Manager||Information:Unable to connect to any of the specified MySQL hosts.
+2017/10/16 16:46:38||source:Datebase Manager||Information:Procedure or function '`ProjectTemplete_Delete`' cannot be found in database '`phtc`'.
 

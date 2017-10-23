@@ -44,6 +44,7 @@ namespace PHTC.Model
         double sizeLorH;
         string remark;
         bool share;
+        string validityInformation;
         public static  Project Default()
         {
             Project p = new Project();
@@ -84,6 +85,7 @@ namespace PHTC.Model
         public string Remark { get => remark; set => remark = value; }
         public bool Share { get => share; set => share = value; }
         public DateTime LastSolveTime { get; set; }
+        
         public TemperatureCalculate TemperatureCalculate
         {
             get
@@ -98,12 +100,24 @@ namespace PHTC.Model
                 return new ThicknessCalculate(TemperatureCalculate, TargetLayerIndex,TargetValue, TemperatureSolverControlParameter, ThicknessSolverControlParameter);
             }
         }
-        public string CheckProjectInput()
+
+        public string ValidityInformation { get => validityInformation; }
+
+        public bool CheckValidition()
         {
-            string res = string.Empty;
-            res += TemperatureCalculate.CheckInput();
-            if (TargetValue > ThicknessCalculate.CalculateMaxTargetValue())
-                res += "ThicknessCalculate:目标参数超出范围，会使目标层厚度计算结果为负";
+            bool res = true;
+            if (Mode==CalculationMode.Temperature)
+            {
+                TemperatureCalculate c = this.TemperatureCalculate;
+                res = c.CheckValidition();
+                validityInformation = c.ValidityInformation;
+            }
+            else if(Mode==CalculationMode.Thickness)
+            {
+                ThicknessCalculate c = this.ThicknessCalculate;
+                res = c.CheckValidition();
+                validityInformation = c.ValidityInformation;
+            }
             return res;
         }
         public byte[] Serialize()
@@ -124,6 +138,40 @@ namespace PHTC.Model
             object o=bf.Deserialize(stream);
             return (Project)o;
         }
+        public bool ToFile(string filename)
+        {
+            byte[] buffer = Serialize();
+            try
+            {
+                FileStream fs = new FileStream(filename, FileMode.Create);
+                fs.Write(buffer, 0, buffer.Length);
+                fs.Flush();
+                fs.Close();
+                return true;
+            }
+            catch(Exception e)
+            {
+                return false;
+            }
+        }
+        public static Project FromFile(string filename)
+        {
+            try
+            {
+                FileStream fs = new FileStream(filename, FileMode.Open);
+                byte[] buffer = new byte[fs.Length];
+                fs.Seek(0, SeekOrigin.Begin);
+                fs.Read(buffer, 0, (int)fs.Length);
+                fs.Close();
+                return Deserialize(buffer);
+            }
+            catch(Exception e)
+            {
+                return null;
+            }
+                
+        }
+        
     }
 
 }

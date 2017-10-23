@@ -1,0 +1,9 @@
+E:\Git_PHTC\RegSet\bin\Debug\PHTC.RegSet.exe.config
+E:\Git_PHTC\RegSet\bin\Debug\PHTC.RegSet.exe
+E:\Git_PHTC\RegSet\bin\Debug\PHTC.RegSet.pdb
+E:\Git_PHTC\PHTC\bin\Debug\RegSet.exe.config
+E:\Git_PHTC\PHTC\bin\Debug\RegSet.exe
+E:\Git_PHTC\PHTC\bin\Debug\RegSet.pdb
+E:\Git_PHTC\RegSet\obj\Debug\RegSet.csprojResolveAssemblyReference.cache
+E:\Git_PHTC\RegSet\obj\Debug\RegSet.exe
+E:\Git_PHTC\RegSet\obj\Debug\RegSet.pdb

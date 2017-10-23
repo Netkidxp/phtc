@@ -11,6 +11,10 @@ using PHTC.Model;
 using PHTC.Reporter;
 using PHTC.DB;
 using System.IO;
+using System.Diagnostics;
+using System.Threading;
+using PHTC.UpdateLib;
+
 namespace PHTC
 {
     public partial class ProjectForm : Form
@@ -37,7 +41,7 @@ namespace PHTC
         private const string STR_ReportWordItem = "N_ReportWordItem";
         private const string STR_ReportHtml = "N_ReportHtml";
         private const string STR_ReportHtmlItem = "N_ReportHtmlItem";
-
+        private delegate void RefreshTvAndMd();
         /// <summary>
         /// 
         /// </summary>
@@ -57,6 +61,9 @@ namespace PHTC
         /// 
         /// </summary>
         private Project pro;
+        private string CurrentFileName = "";
+        private bool IsSolving;
+        private string[] Args;
         private List<ReportTemplete> WordReportTempletes;
         private List<ReportTemplete> HtmlReportTempletes;
         private bool Modified
@@ -69,15 +76,45 @@ namespace PHTC
         /// 
         /// </summary>
         /// <param name="_pro"></param>
-        public ProjectForm()
+        public ProjectForm(string[] args)
         {
             
             InitializeComponent();
-            InitControls();
-
+            IsSolving = false;
+            Args = args;
+        }
+        private void SetUserLevel()
+        {
+            User u = User.CurrentUser;
+            if(u.Level<4)
+            {
+                mi_manangement.Visible = true;
+                if (u.Level < 4)
+                {
+                    mi_management_user.Visible = true;
+                }
+                else
+                    mi_management_user.Visible = false;
+                if (u.Level < 4)
+                {
+                    mi_management_report.Visible = true;
+                }
+                else
+                    mi_management_report.Visible = false;
+                if (u.Level < 4)
+                {
+                    mi_manage_projecttemplete.Visible = true;
+                }
+                else
+                    mi_manage_projecttemplete.Visible = false;
+            }
+            else
+                mi_manangement.Visible = false;
         }
         private void InitControls()
         {
+            CheckForIllegalCrossThreadCalls = false;
+            SetUserLevel();
             pro = ProjectManager.New();
             pro.OwnerId = User.CurrentUser.Id;
             tn_Project = tv_navigation.Nodes[STR_Project];
@@ -95,10 +132,49 @@ namespace PHTC
             mainDisplay1.OnLayerDbClick += new MainDisplay.LayerDbClickHandler(ShowLayer);
             RefreshTreeView();
             db_user.Text = User.CurrentUser.Name;
+            tsl_status.Text = "就绪";
+        }
+        private void CheckUpdate(object o)
+        {
+            string basedir = System.Windows.Forms.Application.StartupPath;
+            AutoUpdater updater = new AutoUpdater(basedir);
+            if(updater.CheckUpdate(null))
+            {
+                UpdateLib.UpdateConfirm uf = new UpdateConfirm();
+                if(uf.ShowDialog()==DialogResult.OK)
+                {
+                    Close();
+                    UpdateApp();
+                }
+            }
         }
         private void ProjectForm_Load(object sender, EventArgs e)
         {
+            
+            InitControls();
             tv_navigation.ExpandAll();
+            if(Args.Length>0)
+                if(File.Exists(Args[0]))
+                {
+                    Project p = Project.FromFile(Args[0]);
+                    if (p == null)
+                    {
+                        MessageBox.Show("该文件格式不正确", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    if (p.OwnerId != User.CurrentUser.Id && !p.Share)
+                    {
+                        MessageBox.Show("该工程文件不为您所有，并且被设置为不共享", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    Pro = p;
+                    Pro.Id = 0;
+                    CurrentFileName = Args[0];
+                    RefreshTreeView();
+                    Modified = false;
+                    ClearChartAndConsole();
+                }
+            //ThreadPool.QueueUserWorkItem(new WaitCallback(CheckUpdate), false);
         }
         /// <summary>
         /// 
@@ -185,7 +261,7 @@ namespace PHTC
             mainDisplay1.Pro = Pro;
             mainDisplay1.Refresh();
             RefreshReportTempleteNode();
-            
+            UpdateDetail();
         }
         private void RefreshReportTempleteNode()
         {
@@ -308,12 +384,137 @@ namespace PHTC
         /// <summary>
         /// 
         /// </summary>
-        private void Solve()
+        /// 
+
+        private string FormatTemperature(double v)
         {
-            TemperatureCalculate tc = new TemperatureCalculate(Pro.HotfaceTemperature,Pro.SizeRorW,Pro.SizeRorW,Pro.SizeLorH ,Pro.ColdfaceBoundary, Pro.LayerList);
-            if (Pro.Mode==CalculationMode.Temperature)
+            return string.Format("{0:0000.000}", v);
+        }
+        private void Log(string information,Color color)
+        {
+            this.Invoke((EventHandler)delegate {
+                rtb_log.SelectionColor = color;
+                rtb_log.AppendText(information);
+                rtb_log.Select(rtb_log.TextLength, 1);
+                rtb_log.ScrollToCaret();
+            });
+        }
+        private void Detail(string information,Color color)
+        {
+            this.Invoke((EventHandler)delegate {
+                rtb_detail.SelectionColor = color;
+                rtb_detail.AppendText(information);
+            });
+        }
+        private void UpdateDetail()
+        {
+            this.Invoke((EventHandler)delegate {
+            rtb_detail.Clear();
+            });
+            string log = "各层温度信息:\r\n";
+            Detail(log, Color.DarkBlue);
+            log = "  层名称\t\t最高温度[℃]\t最低温度[℃]\t热阻[K/W]\r\n";
+            foreach (Layer l in Pro.LayerList)
+            {
+                log += "  " + l.Name + "\t\t" + FormatTemperature(l.HighTemperature - 273.15) + "\t" + FormatTemperature(l.LowTemperature - 273.15) + "\t" + l.HeatResistance.ToString("F3") + "\r\n";
+            }
+            log += "  " + "冷面温度[℃]:" + FormatTemperature(Pro.ColdfaceBoundary.Temperature - 273.15) + "\t\t\t热流量[W]:" + Pro.ColdfaceBoundary.Heatflow.ToString("F3") + "\r\n";
+            Detail(log, Color.Gray);
+            if(Pro.Mode==CalculationMode.Thickness)
+            {
+                Detail("厚度计算信息:\r\n", Color.DarkBlue);
+                if(Pro.LayerList.Count>Pro.TargetLayerIndex)
+                {
+                    log = string.Format("  目标层:{0}\t厚度[mm]:{1}\r\n", Pro.LayerList[Pro.TargetLayerIndex].Name, Pro.LayerList[Pro.TargetLayerIndex].Thickness * 1000.0);
+                    Detail(log, Color.Gray);
+                }
+                    
+            }
+            
+        }
+        private void LogUpdateTemperatureSolver(TemperatureSolverC1 solver)
+        {
+            
+            string log = "  温度计算第"+solver.CurrentStep.ToString()+"步:\r\n";
+            Log(log, Color.DarkBlue);
+            log = "  层名称\t\t最高温度[℃]\t最低温度[℃]\t热阻[K/W]\r\n";
+            foreach (Layer l in solver.CurrentCalculate.LayerList)
+            {
+                log += "  "+l.Name + "\t\t" + FormatTemperature(l.HighTemperature-273.15) + "\t" + FormatTemperature(l.LowTemperature-273.15) + "\t"+l.HeatResistance.ToString("F3")+"\r\n";
+            }
+            log += "  "+ "冷面温度[℃]:" + FormatTemperature(solver.CurrentCalculate.Boundary.Temperature-273.15) + "\t\t\t热流量[W]:" + solver.CurrentCalculate.Boundary.Heatflow.ToString("F3") + "\r\n";
+            Log(log, Color.Gray);
+            
+        }
+        private void LogUpdateThicknessSolver(ThicknessSolver solver)
+        {
+            string log = "  厚度计算第" + solver.ThicknessSolveStep.ToString() + "步:\r\n";
+            Log(log, Color.DarkBlue);
+            log = string.Format("  目标层:{0}\t厚度[mm]:{1}\t残差:{2}\r\n", solver.TemperatureSolver.CurrentCalculate.LayerList[solver.ThicknessCalculate.TargetLayerIndex].Name, solver.TargetLayerThickness * 1000.0, solver.ThicknessSolverResidual);
+            Log(log, Color.Gray);
+        }
+        private void ChartUpdateTemperatureSolver(TemperatureSolverC1 solver)
+        {
+            ct_temperature.Series[0].Points.AddY(solver.CurrentResidual);
+        }
+        private void ChartUpdateThicknessSolver(ThicknessSolver solver)
+        {
+            ct_thickness.Series[0].Points.AddY(solver.ThicknessSolverResidual);
+        }
+        private void OnTemperatureSolverInitlized(TemperatureSolverC1 solver)
+        {
+
+        }
+        private void OnTemperatureSolverUpdated(TemperatureSolverC1 solver)
+        {
+            ChartUpdateTemperatureSolver(solver);
+            LogUpdateTemperatureSolver(solver);
+            mainDisplay1.Refresh();
+            UpdateDetail();
+        }
+        private void OnTemperatureSolverEnded(TemperatureSolverC1 solver)
+        {
+            Log("温度解算器结束\r\n", Color.Red);
+        }
+        private void OnTemperatureSolverStarted(TemperatureSolverC1 solver)
+        {
+            Log("温度解算器开始计算\r\n", Color.Red);
+        }
+        private void OnThicknessSolverStarted(ThicknessSolver solver)
+        {
+            Log("厚度解算器开始计算\r\n", Color.Red);
+        }
+        private void OnThicknessSolverUpdated(ThicknessSolver solver)
+        {
+            ChartUpdateThicknessSolver(solver);
+            mainDisplay1.Refresh();
+            LogUpdateThicknessSolver(solver);
+            UpdateDetail();
+        }
+        private void OnThicknessSolverEnded(ThicknessSolver solver)
+        {
+            Log("厚度解算器结束\r\n", Color.Red);
+        }
+        
+        private void ClearChartAndConsole()
+        {
+            ct_thickness.Series[0].Points.Clear();
+            ct_temperature.Series[0].Points.Clear();
+            rtb_log.Clear();
+        }
+
+        private void SolveProc(object o)
+        {
+            ClearChartAndConsole();
+            TemperatureCalculate tc = new TemperatureCalculate(Pro.HotfaceTemperature, Pro.SizeRorW, Pro.SizeRorW, Pro.SizeLorH, Pro.ColdfaceBoundary, Pro.LayerList);
+            if (Pro.Mode == CalculationMode.Temperature)
             {
                 TemperatureSolverC1 solver = TemperatureSolverFactory.CreateSolver(tc);
+
+                solver.SolveStartEvent += new SolveStartEventHandler(OnTemperatureSolverStarted);
+                solver.SolveEndEvent += new SolveEndEventHandler(OnTemperatureSolverEnded);
+                solver.UpdateTemperatureEndEvent += new UpdateTemperatureEndEventHandler(OnTemperatureSolverUpdated);
+
                 solver.InitalizeTemperature();
                 solver.Solve(Pro.TemperatureSolverControlParameter);
             }
@@ -321,11 +522,59 @@ namespace PHTC
             {
                 ThicknessCalculate thc = new ThicknessCalculate(tc, Pro.TargetLayerIndex, Pro.TargetValue, Pro.TemperatureSolverControlParameter, Pro.ThicknessSolverControlParameter);
                 ThicknessSolver solver = ThicknessSolverFactory.CreateSolver(thc);
+                solver.SolveStartEvent += new ThicknessSolverStartEventHandler(OnThicknessSolverStarted);
+                solver.SolveUpdateEvent += new ThicknessSolverUpdateEventHandler(OnThicknessSolverUpdated);
+                solver.SolveStopEvent += new ThicknessSolverStopEventHandler(OnThicknessSolverEnded);
+                solver.TemperatureSolver.SolveStartEvent += new SolveStartEventHandler(OnTemperatureSolverStarted);
+                solver.TemperatureSolver.UpdateTemperatureEndEvent += new UpdateTemperatureEndEventHandler(OnTemperatureSolverUpdated);
+                solver.TemperatureSolver.SolveEndEvent += new SolveEndEventHandler(OnTemperatureSolverEnded);
+
                 solver.Solve();
             }
+            BehindSolve();
+        }
+        private void Solve()
+        {
+            if (!Pro.CheckValidition())
+            {
+                Log("工程合法性验证失败，错误：\r\n", Color.Gray);
+                Log(Pro.ValidityInformation,Color.Red);
+                tsl_status.Text = "工程合法性验证失败";
+                MessageBox.Show(Pro.ValidityInformation, "工程合法性验证失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            else
+            {
+                tsl_status.Text = "准备计算";
+                Log("工程合法性验证成功，准备计算...\r\n", Color.Gray);
+            }
+            BeforeSolve();
+            ThreadPool.QueueUserWorkItem(new WaitCallback(SolveProc), false);
+        }
+        private void BeforeSolve()
+        {
+            
+            ms_main.Enabled = false;
+            tv_navigation.Enabled = false;
+            ss_bottom.Enabled = false;
+            tsl_status.Text = "正在计算...";
+            IsSolving = true;
+        }
+        private void BehindSolve()
+        {
+            ms_main.Enabled = true;
+            tv_navigation.Enabled = true;
+            ss_bottom.Enabled = true;
             Pro.LastSolveTime = DateTime.Now;
-            RefreshTreeView();
+            RefreshTvAndMd refresh = new RefreshTvAndMd(RefreshTreeView);
+            this.Invoke(refresh);
             Modified = true;
+            tsl_status.Text = "就绪";
+            IsSolving = false;
+        }
+        private void AbortSolve()
+        {
+
         }
         private void Result()
         {
@@ -419,7 +668,7 @@ namespace PHTC
         /// </summary>
         private void LoadMaterial()
         {
-            MaterialManageForm mmf = new MaterialManageForm();
+            MaterialManageForm mmf = new MaterialManageForm(false);
             mmf.LoadEvent += new LoadEventHandler(MaterialLoadEventHandle);
             mmf.Show();
         }
@@ -658,24 +907,20 @@ namespace PHTC
 
         private void mi_File_Save_Click(object sender, EventArgs e)
         {
-            SaveProject();
+            SaveProjectCloud();
         }
 
         private void mi_File_SaveAs_Click(object sender, EventArgs e)
         {
-            SaveProjecteAs();
+            SaveProjecteAsCloud();
         }
 
         private void mi_File_Exit_Click(object sender, EventArgs e)
         {
-            if(Modified)
-                if(MessageBox.Show("当前工程未保存，您要保存当前工程吗？","询问",MessageBoxButtons.YesNo,MessageBoxIcon.Question)==DialogResult.Yes)
-                {
-                    SaveProject();
-                }
+            
             Close();
         }
-        private void SaveProject()
+        private void SaveProjectCloud()
         {
             if (Pro.OwnerId != User.CurrentUser.Id)
             {
@@ -690,11 +935,11 @@ namespace PHTC
                     ProjectManager.Insert(Pro);
                 else
                     ProjectManager.Update(Pro);
-            
             }
-            Modified = false;   
+            Modified = false;
+            CurrentFileName = "";
         }
-        private void SaveProjecteAs()
+        private void SaveProjecteAsCloud()
         {
             ProjectSaveAsForm psaf = new ProjectSaveAsForm();
             psaf.ProjectName = Pro.Name;
@@ -705,11 +950,10 @@ namespace PHTC
                 Pro.Share = psaf.Share;
                 Pro.Id = 0;
                 pro.OwnerId = User.CurrentUser.Id;
-                SaveProject();
+                SaveProjectCloud();
                 RefreshTreeView();
             }
-            
-            
+            CurrentFileName = "";
         }
         private void NewProject()
         {
@@ -720,15 +964,21 @@ namespace PHTC
                     return;
                 else if (dr == DialogResult.Yes)
                 {
-                    SaveProject();
+                    if (CurrentFileName == "")
+                        SaveProjectCloud();
+                    else
+                        SaveProjectLocal();
                 }
             }
             Pro = ProjectManager.New();
             Pro.LastSolveTime =DateTime.MinValue;
             Pro.OwnerId = User.CurrentUser.Id;
-            ShowProjectParameter();
+            //ShowProjectParameter();
             RefreshTreeView();
             Modified = false;
+            ClearChartAndConsole();
+            CurrentFileName = "";
+            tsl_status.Text = "就绪";
         }
         private void LoadProject()
         {
@@ -745,14 +995,116 @@ namespace PHTC
                     return;
                 else if (dr == DialogResult.Yes)
                 {
-                    SaveProject();
+                    if (CurrentFileName == "")
+                        SaveProjectCloud();
+                    else
+                        SaveProjectLocal();
                 }
             }
             Pro = _pro;
             RefreshTreeView();
             Modified = false;
+            ClearChartAndConsole();
+            CurrentFileName = "";
+            tsl_status.Text = "就绪";
         }
-
+        private void SaveProjectLocal()
+        {
+            if(CurrentFileName=="")
+            {
+                SaveProjectAsLocal();
+            }
+            else
+            {
+                Project p = (Project)GlobalTool.Clone(Pro);
+                p.Id = 0;
+                p.OwnerId = User.CurrentUser.Id;
+                bool res=p.ToFile(CurrentFileName);
+                if(!res)
+                {
+                    MessageBox.Show("保存文件失败", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                else
+                {
+                    Pro = p;
+                    RefreshTreeView();
+                    Modified = false;
+                }
+                
+            }
+        }
+        private void SaveProjectAsLocal()
+        {
+            SaveFileDialog sd = new SaveFileDialog();
+            sd.OverwritePrompt = true;
+            sd.AddExtension = true;
+            sd.DefaultExt = "pht";
+            sd.Filter = "PHTC工程文件|*.pht";
+            if (sd.ShowDialog() == DialogResult.Cancel)
+            {
+                return;
+            }
+            Project p = (Project)GlobalTool.Clone(Pro);
+            p.Id = 0;
+            p.OwnerId = User.CurrentUser.Id;
+            bool res = p.ToFile(sd.FileName);
+            if (!res)
+            {
+                MessageBox.Show("保存文件失败", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            else
+            {
+                Pro = p;
+                CurrentFileName = sd.FileName;
+                RefreshTreeView();
+                Modified = false;
+            }
+        }
+        private void OpenProject()
+        {
+            if (Modified)
+            {
+                DialogResult dr = MessageBox.Show("当前工程已经更改，是否更新?", "选择", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                if (dr == DialogResult.Cancel)
+                    return;
+                else if (dr == DialogResult.Yes)
+                {
+                    if (CurrentFileName == "")
+                        SaveProjectCloud();
+                    else
+                        SaveProjectLocal();
+                }
+            }
+            OpenFileDialog fd = new OpenFileDialog();
+            fd.CheckFileExists = true;
+            fd.CheckPathExists = true;
+            fd.Filter = "PHTC工程文件|*.pht";
+            if(fd.ShowDialog()==DialogResult.Cancel)
+            {
+                return;
+            }
+            
+            Project p = Project.FromFile(fd.FileName);
+            if(p==null)
+            {
+                MessageBox.Show("该文件格式不正确", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if(p.OwnerId!=User.CurrentUser.Id&&!p.Share)
+            {
+                MessageBox.Show("该工程文件不为您所有，并且被设置为不共享", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            Pro = p;
+            Pro.Id = 0;
+            CurrentFileName = fd.FileName;
+            RefreshTreeView();
+            Modified = false;
+            ClearChartAndConsole();
+            tsl_status.Text = "就绪";
+        }
         private void mi_report_refresh_Click(object sender, EventArgs e)
         {
             
@@ -832,7 +1184,7 @@ namespace PHTC
                     return;
                 else if (dr == DialogResult.Yes)
                 {
-                    SaveProject();
+                    SaveProjectCloud();
                 }
             }
             LoginForm lf = new LoginForm();
@@ -918,17 +1270,14 @@ namespace PHTC
             int rid = r.Next();
             Material mat = Material.Default;
             mat.Index = rid;
-            Pro.MaterialList.Add(mat);
-            RefreshTreeView();
-            MaterialDetailsForm mdf = new MaterialDetailsForm(Pro.MaterialList[Pro.MaterialList.Count-1], MaterialDetailsForm.ButtonType.Modify);
+            MaterialDetailsForm mdf = new MaterialDetailsForm(mat, MaterialDetailsForm.ButtonType.Modify);
             if (mdf.ShowDialog() == DialogResult.OK)
             {
-                Pro.MaterialList[Pro.MaterialList.Count - 1] = mdf.Material;
+                Pro.MaterialList.Add(mdf.Material);
                 RefreshProLayersMaterials();
                 Modified = true;
                 RefreshTreeView();
             }
-            Modified = true;
         }
 
         private void mi_material_new_Click(object sender, EventArgs e)
@@ -1002,7 +1351,7 @@ namespace PHTC
 
         private void mi_material_managelib_Click(object sender, EventArgs e)
         {
-            MaterialManageForm mmf = new MaterialManageForm();
+            MaterialManageForm mmf = new MaterialManageForm(true);
             mmf.Show();
         }
 
@@ -1096,6 +1445,133 @@ namespace PHTC
         private void mi_result_refreshreporter_Click(object sender, EventArgs e)
         {
             mi_report_refresh_Click(sender, e);
+        }
+        private void UpdateApp()
+        {
+            string temp = Path.GetTempFileName() + ".exe";
+            string basedir = System.Windows.Forms.Application.StartupPath;
+            string app = Path.Combine(basedir, "update.exe");
+            if (File.Exists(app))
+            {
+                File.Copy(app, temp, true);
+                File.Copy(Path.Combine(basedir, "PHTC.UpdateLib.dll"), Path.Combine(Path.GetDirectoryName(temp), "PHTC.UpdateLib.dll"), true);
+            }
+            Process.Start(temp, "\"" + basedir + "\"");
+        }
+        private void mi_help_update_Click(object sender, EventArgs e)
+        {
+            mi_File_Exit_Click(sender, e);
+            UpdateApp();
+        }
+
+        private void OnFormClosing(object sender, FormClosingEventArgs e)
+        {
+            if(IsSolving)
+            {
+                MessageBox.Show("正在计算，不能关闭", "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                e.Cancel = true;
+                return;
+            }
+            if (Modified)
+            {
+                DialogResult dr = MessageBox.Show("当前工程未保存，您要保存当前工程吗？", "询问", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                if (dr == DialogResult.Cancel)
+                    e.Cancel = true;
+                else if(dr==DialogResult.Yes)
+                {
+                    if (CurrentFileName == "")
+                        SaveProjectCloud();
+                    else
+                        SaveProjectLocal();
+                }
+            }
+        }
+
+        private void mi_File_Open_Click(object sender, EventArgs e)
+        {
+            OpenProject();
+        }
+
+        private void mi_File_SaveLocal_Click(object sender, EventArgs e)
+        {
+            SaveProjectLocal();
+        }
+
+        private void mi_File_SaveAsLocal_Click(object sender, EventArgs e)
+        {
+            SaveProjectAsLocal();
+        }
+
+        private void mi_help_about_Click(object sender, EventArgs e)
+        {
+            AboutBox ab = new AboutBox();
+            ab.ShowDialog();
+        }
+
+        private void mi_management_report_Click(object sender, EventArgs e)
+        {
+            ReportTempleteManager rtm = new ReportTempleteManager();
+            rtm.Show();
+        }
+
+        private void mi_management_user_Click(object sender, EventArgs e)
+        {
+            UserManageForm uf = new UserManageForm();
+            uf.Show();
+        }
+
+        private void mi_manage_projecttemplete_Click(object sender, EventArgs e)
+        {
+            ProjectTempleteManageForm ptf = new ProjectTempleteManageForm(this.Pro);
+            ptf.ShowDialog();
+        }
+
+        private void mi_project_templetenew_Click(object sender, EventArgs e)
+        {
+            if (Modified)
+            {
+                DialogResult dr = MessageBox.Show("当前工程已经更改，是否更新?", "选择", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                if (dr == DialogResult.Cancel)
+                    return;
+                else if (dr == DialogResult.Yes)
+                {
+                    if (CurrentFileName == "")
+                        SaveProjectCloud();
+                    else
+                        SaveProjectLocal();
+                }
+            }
+            ProjectTempleteForm ptf = new ProjectTempleteForm();
+            if (ptf.ShowDialog() == DialogResult.OK)
+            {
+                Project p = ptf.Pro;
+                if (p == null)
+                {
+                    MessageBox.Show("模板载入失败，请检查网络并联系管理员", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                p.Share = true;
+                p.OwnerId = User.CurrentUser.Id;
+                Pro = p;
+            }
+            Pro.LastSolveTime = DateTime.MinValue;
+            RefreshTreeView();
+            Modified = false;
+            ClearChartAndConsole();
+            CurrentFileName = "";
+            tsl_status.Text = "就绪";
+        }
+
+        private void mi_help_doc_Click(object sender, EventArgs e)
+        {
+            string helpname = "help.pdf";
+            string helpdoc = Path.Combine(System.AppDomain.CurrentDomain.SetupInformation.ApplicationBase,helpname);
+            if (File.Exists(helpdoc))
+            {
+                System.Diagnostics.Process.Start("Explorer.exe", helpdoc);
+            }
+            else
+                MessageBox.Show("无法找到"+helpname,"错误",MessageBoxButtons.OK,MessageBoxIcon.Warning);
         }
     }
 }

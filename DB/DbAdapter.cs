@@ -158,7 +158,6 @@ namespace PHTC.DB
                 return false;
             }
         }
-        
         public static DataTable Search(string name,string code,string usefor,bool shared)
         {
 
@@ -228,7 +227,6 @@ namespace PHTC.DB
                 return null;
             }
         }
-
         public static List<RefValue> StrToRefvalList(String in_str)
         {
             List<RefValue> values = new List<RefValue>();
@@ -278,7 +276,9 @@ namespace PHTC.DB
             p_name.Value = user.Name;
             MySqlParameter p_department = new MySqlParameter("_department", MySqlDbType.String);
             p_department.Value = user.Department;
-            MySqlParameter[] pars = new MySqlParameter[] { p_login_id, p_login_password, p_name, p_department };
+            MySqlParameter p_level = new MySqlParameter("_level", MySqlDbType.Int32);
+            p_level.Value = user.Level;
+            MySqlParameter[] pars = new MySqlParameter[] { p_login_id, p_login_password, p_name, p_department,p_level };
             return pars;
         }
         private static MySqlParameter[] MakeUpdateParameter(User user)
@@ -293,7 +293,9 @@ namespace PHTC.DB
             p_name.Value = user.Name;
             MySqlParameter p_department = new MySqlParameter("_department", MySqlDbType.String);
             p_department.Value = user.Department;
-            MySqlParameter[] pars = new MySqlParameter[] { p_id,p_login_id, p_login_password, p_name, p_department };
+            MySqlParameter p_level = new MySqlParameter("_level", MySqlDbType.Int32);
+            p_level.Value = user.Level;
+            MySqlParameter[] pars = new MySqlParameter[] { p_id,p_login_id, p_login_password, p_name, p_department, p_level };
             return pars;
         }
         public static User LoadWithId(int _id)
@@ -311,7 +313,10 @@ namespace PHTC.DB
                 string login_password = (string)dr["login_password"];
                 string name = (string)dr["name"];
                 string department = (string)dr["department"];
-                return new User(id, login_id, login_password, name, department);
+                int level = (int)dr["level"];
+                User u= new User(id, login_id, login_password, name, department);
+                u.Level = level;
+                return u;
             }
             catch(Exception e)
             {
@@ -406,11 +411,28 @@ namespace PHTC.DB
                 string login_password = (string)dr["login_password"];
                 string name = (string)dr["name"];
                 string department = (string)dr["department"];
-                return new User(id, login_id, login_password, name, department);
+                int level = (int)dr["level"];
+                User u = new User(id, login_id, login_password, name, department);
+                u.Level = level;
+                return u;
             }
             catch (Exception e)
             {
                 GlobalTool.LogError("DBUserAdapter.LoadWithName", e.Message, true);
+                return null;
+            }
+        }
+        public static DataTable LoadAll()
+        {
+            try
+            {
+                DbManager dm = DbManager.Ins;
+                DataTable dt = dm.ExecuteProcQuery("User_LoadAll",new MySqlParameter[] { });
+                return dt;
+            }
+            catch (Exception e)
+            {
+                GlobalTool.LogError("DBUserAdapter.LoadWithAll", e.Message, true);
                 return null;
             }
         }
@@ -683,6 +705,197 @@ namespace PHTC.DB
                 MySqlParameter[] pars = new MySqlParameter[] { _id };
                 DataTable dt = dm.ExecuteProcQuery("ReportTemplete_LoadRawWithId", pars);
                 return (byte[])dt.Rows[0][0];
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+    }
+    public class DBProjectTempleteAdapter
+    {
+        private static MySqlParameter[] MakeInsertParameter(ProjectTemplete pt)
+        {
+            MySqlParameter _class1 = new MySqlParameter("_class1", MySqlDbType.String);
+            _class1.Value = pt.Class1;
+            MySqlParameter _class2 = new MySqlParameter("_class2", MySqlDbType.String);
+            _class2.Value = pt.Class2;
+            MySqlParameter _class3 = new MySqlParameter("_class3", MySqlDbType.String);
+            _class3.Value = pt.Class3;
+            MySqlParameter _name = new MySqlParameter("_name", MySqlDbType.String);
+            _name.Value = pt.Name;
+            MySqlParameter _description = new MySqlParameter("_description", MySqlDbType.String);
+            _description.Value = pt.Description;
+            MySqlParameter _raw = new MySqlParameter("_raw", MySqlDbType.Blob);
+            _raw.Value = pt.Raw;
+            return new MySqlParameter[] { _class1, _class2, _class3,_name, _description, _raw };
+        }
+        private static MySqlParameter[] MakeUpdateParameter(ProjectTemplete pt)
+        {
+            MySqlParameter _id = new MySqlParameter("_id", MySqlDbType.Int32);
+            _id.Value = pt.Id;
+            MySqlParameter _class1 = new MySqlParameter("_class1", MySqlDbType.String);
+            _class1.Value = pt.Class1;
+            MySqlParameter _class2 = new MySqlParameter("_class2", MySqlDbType.String);
+            _class2.Value = pt.Class2;
+            MySqlParameter _class3 = new MySqlParameter("_class3", MySqlDbType.String);
+            _class3.Value = pt.Class3;
+            MySqlParameter _name = new MySqlParameter("_name", MySqlDbType.String);
+            _name.Value = pt.Name;
+            MySqlParameter _description = new MySqlParameter("_description", MySqlDbType.String);
+            _description.Value = pt.Description;
+            MySqlParameter _raw = new MySqlParameter("_raw", MySqlDbType.Blob);
+            _raw.Value = pt.Raw;
+            return new MySqlParameter[] { _id,_class1, _class2, _class3, _name, _description, _raw };
+        }
+        public static bool Insert(ProjectTemplete pt)
+        {
+            try
+            {
+                DbManager dm = DbManager.Ins;
+                MySqlParameter[] pars = MakeInsertParameter(pt);
+                DataTable dt = dm.ExecuteProcQuery("ProjectTemplete_Insert", pars);
+                pt.Id = (int)dt.Rows[0][0];
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+        public static bool Update(ProjectTemplete pt)
+        {
+            try
+            {
+                DbManager dm = DbManager.Ins;
+                MySqlParameter[] pars = MakeUpdateParameter(pt);
+                dm.ExecuteProcNonQuery("ProjectTemplete_Update", pars);
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+        public static bool DeleteWithId(int id)
+        {
+            try
+            {
+                DbManager dm = DbManager.Ins;
+                MySqlParameter _id = new MySqlParameter("_id", MySqlDbType.Int32);
+                _id.Value = id;
+                MySqlParameter[] pars = new MySqlParameter[] { _id };
+                dm.ExecuteProcNonQuery("ProjectTemplete_DeleteWithId", pars);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        public static List<ProjectTemplete> SearchAllWithClass(string c1,string c2,string c3)
+        {
+            try
+            {
+                MySqlParameter _class1 = new MySqlParameter("_class1", MySqlDbType.String);
+                _class1.Value = c1;
+                MySqlParameter _class2 = new MySqlParameter("_class2", MySqlDbType.String);
+                _class2.Value = c2;
+                MySqlParameter _class3 = new MySqlParameter("_class3", MySqlDbType.String);
+                _class3.Value = c3;
+                DbManager dm = DbManager.Ins;
+                MySqlParameter[] pars = new MySqlParameter[] { _class1,_class2,_class3 };
+                DataTable dt = dm.ExecuteProcQuery("ProjectTemplete_SearchAllWithClass", pars);
+                List<ProjectTemplete> pts = new List<ProjectTemplete>();
+                foreach(DataRow dr in dt.Rows)
+                {
+                    ProjectTemplete pt = new ProjectTemplete();
+                    pt.Id = (int)dr["id"];
+                    pt.Name = (string)dr["name"];
+                    pt.Description = (string)dr["description"];
+                    pts.Add(pt);
+                }
+                return pts;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+        public static List<string> ListClass1()
+        {
+            try
+            {
+                DbManager dm = DbManager.Ins;
+                MySqlParameter[] pars = new MySqlParameter[] { };
+                DataTable dt = dm.ExecuteProcQuery("ProjectTemplete_Class1", pars);
+                List<string> ss = new List<string>();
+                foreach(DataRow dr in dt.Rows)
+                {
+                    ss.Add((string)dr[0]);
+                }
+                return ss;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+        public static List<string> ListClass2(string c1)
+        {
+            try
+            {
+                DbManager dm = DbManager.Ins;
+                MySqlParameter _c1 = new MySqlParameter("_class1",MySqlDbType.String);
+                _c1.Value = c1;
+                MySqlParameter[] pars = new MySqlParameter[] { _c1};
+                DataTable dt = dm.ExecuteProcQuery("ProjectTemplete_Class2", pars);
+                List<string> ss = new List<string>();
+                foreach (DataRow dr in dt.Rows)
+                {
+                    ss.Add((string)dr[0]);
+                }
+                return ss;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+        public static List<string> ListClass3(string c1,string c2)
+        {
+            try
+            {
+                DbManager dm = DbManager.Ins;
+                MySqlParameter _c1 = new MySqlParameter("_class1", MySqlDbType.String);
+                _c1.Value = c1;
+                MySqlParameter _c2 = new MySqlParameter("_class2", MySqlDbType.String);
+                _c2.Value = c2;
+                MySqlParameter[] pars = new MySqlParameter[] { _c1,_c2 };
+                DataTable dt = dm.ExecuteProcQuery("ProjectTemplete_Class3", pars);
+                List<string> ss = new List<string>();
+                foreach (DataRow dr in dt.Rows)
+                {
+                    ss.Add((string)dr[0]);
+                }
+                return ss;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+        public static Project LoadTempleteWithId(int id)
+        {
+            try
+            {
+                DbManager dm = DbManager.Ins;
+                MySqlParameter _id = new MySqlParameter("_id", MySqlDbType.Int32);
+                _id.Value = id;
+                MySqlParameter[] pars = new MySqlParameter[] { _id };
+                DataTable dt=dm.ExecuteProcQuery("ProjectTemplete_LoadRawWithId", pars);
+                byte[] raw=(byte[])dt.Rows[0][0];
+                return Project.Deserialize(raw);
             }
             catch (Exception)
             {
