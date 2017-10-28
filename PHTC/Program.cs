@@ -21,6 +21,7 @@ namespace PHTC
                 MessageBox.Show("无法连接服务器，请确认您的电脑已经连接濮耐股份局域网", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
             bool notrun = false;
             Mutex m=new Mutex(true, "PHTC",out notrun);
             if(!notrun)
@@ -80,5 +81,6 @@ namespace PHTC
             }   
             
         }
+
     }
 }

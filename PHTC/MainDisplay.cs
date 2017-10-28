@@ -436,7 +436,7 @@ namespace PHTC
                     }
                 }
                 Pen pen = new Pen(Color.Yellow, 3);
-                Brush b = new SolidBrush(Color.Blue);
+                Brush b = new SolidBrush(Color.Black);
                 SmoothingMode sm = g.SmoothingMode;
                 g.SmoothingMode = SmoothingMode.AntiAlias;
                 if(ps.Count>2)

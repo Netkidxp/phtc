@@ -17,7 +17,7 @@ namespace PHTC.UpdateLib
     {
         private Config config = null;
         private string rootdir = null;
-        private string lastError = null;
+        private string lastError = "";
         private WebClient webClient = null;
         private string tempBaseDirName = null;
         private string rollbackDir = null;
@@ -47,6 +47,7 @@ namespace PHTC.UpdateLib
         
         public AutoUpdater(string root)
         {
+            lastError = "";
             rootdir = root;
             finished = new ManualResetEvent(false);
             IsFinished = false;
@@ -62,7 +63,7 @@ namespace PHTC.UpdateLib
         {
             if (ErrorEvent != null)
                 ErrorEvent(error);
-            lastError = error;
+            lastError += error+"\r\n";
         }
         private void LogInformation(string information)
         {
@@ -369,7 +370,7 @@ namespace PHTC.UpdateLib
 
             bool silence = (bool)o;
             IsFinished = false;
-            lastError = null;
+            lastError = "";
             finished.Reset();
             config = ReadConfig();
             if (config == null)
@@ -401,7 +402,7 @@ namespace PHTC.UpdateLib
             coverFileList = MakeCoverFileList();
             Version verLocal = new Version(config.LastVer);
             Version verRemote = new Version(updateInformation.Ver);
-            if (needUpdateList.Count == 0&&verLocal>=verRemote)
+            if (verLocal>=verRemote)
             {
                 LogInformation("您的软件是最新版本，不需要更新");
                 Finish();
@@ -441,7 +442,7 @@ namespace PHTC.UpdateLib
         public bool CheckUpdate(object o)
         {
             lastError = null;
-            finished.Reset();
+            //finished.Reset();
             config = ReadConfig();
             if (config == null)
             {
@@ -463,7 +464,7 @@ namespace PHTC.UpdateLib
             coverFileList = MakeCoverFileList();
             Version verLocal = new Version(config.LastVer);
             Version verRemote = new Version(updateInformation.Ver);
-            if (needUpdateList.Count == 0 && verLocal >= verRemote)
+            if (verLocal >=verRemote)
             {
                 LogInformation("您的软件是最新版本，不需要更新");
                 return false;

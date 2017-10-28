@@ -82,7 +82,14 @@ namespace PHTC.UpdateLib
         }
         private void Finished()
         {
-            //Close();
+            if(Updater.LastError.Length!=0)
+            {
+                MessageBox.Show("更新失败，错误信息:\r\n" + Updater.LastError);
+            }
+            else
+            {
+                Close();
+            }
         }
     }
 }

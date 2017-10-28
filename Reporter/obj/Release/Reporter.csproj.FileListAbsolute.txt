@@ -1,4 +1,3 @@
 E:\Git_PHTC\PHTC\bin\Release\PHTC.Reporter.dll
-E:\Git_PHTC\PHTC\bin\Release\PHTC.Reporter.pdb
+E:\Git_PHTC\Reporter\obj\Release\Reporter.csprojResolveAssemblyReference.cache
 E:\Git_PHTC\Reporter\obj\Release\PHTC.Reporter.dll
-E:\Git_PHTC\Reporter\obj\Release\PHTC.Reporter.pdb

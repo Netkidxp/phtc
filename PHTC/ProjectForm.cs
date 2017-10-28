@@ -134,23 +134,19 @@ namespace PHTC
             db_user.Text = User.CurrentUser.Name;
             tsl_status.Text = "就绪";
         }
-        private void CheckUpdate(object o)
+        private bool CheckUpdate()
         {
             string basedir = System.Windows.Forms.Application.StartupPath;
             AutoUpdater updater = new AutoUpdater(basedir);
-            if(updater.CheckUpdate(null))
-            {
-                UpdateLib.UpdateConfirm uf = new UpdateConfirm();
-                if(uf.ShowDialog()==DialogResult.OK)
-                {
-                    Close();
-                    UpdateApp();
-                }
-            }
+            return updater.CheckUpdate(null);
         }
         private void ProjectForm_Load(object sender, EventArgs e)
         {
-            
+            if(CheckUpdate())
+            {
+                Close();
+                UpdateApp();
+            }
             InitControls();
             tv_navigation.ExpandAll();
             if(Args.Length>0)
@@ -1460,8 +1456,17 @@ namespace PHTC
         }
         private void mi_help_update_Click(object sender, EventArgs e)
         {
-            mi_File_Exit_Click(sender, e);
-            UpdateApp();
+            //mi_File_Exit_Click(sender, e);
+            //UpdateApp();
+            if (CheckUpdate())
+            {
+                mi_File_Exit_Click(sender, e);
+                UpdateApp();
+            }
+            else
+            {
+                MessageBox.Show("您的软件是最新版");
+            }
         }
 
         private void OnFormClosing(object sender, FormClosingEventArgs e)

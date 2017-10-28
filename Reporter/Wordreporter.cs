@@ -5,10 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using PHTC.Model;
 using System.IO;
-using Microsoft.Office;
-using Microsoft.Office.Interop;
-using Microsoft.Office.Interop.Word;
-
+using Aspose.Words;
+using System.Drawing;
 namespace PHTC.Reporter
 {
     public class WordReporter:BaseReporter
@@ -60,14 +58,12 @@ namespace PHTC.Reporter
         }
         public override bool Report()
         {
-            ApplicationClass app = null;
             Document doc = null;
             try
             {
-                app = new ApplicationClass();
-                object filename = TempletFilePath;
-                doc=app.Documents.Open(ref filename, ref missing, ref missing, ref missing,ref missing, ref missing, ref missing, ref missing);
-                doc.Activate();
+                doc = new Document(TempletFilePath);
+                if (doc == null)
+                    return false;
                 WriteBookmarkText(doc, MS_ProId, Pro.Id.ToString());
                 WriteBookmarkText(doc, MS_ProName, Pro.Name);
                 WriteBookmarkText(doc, MS_ProTime, Pro.LastSolveTime.ToString());
@@ -106,85 +102,97 @@ namespace PHTC.Reporter
                     WriteImage(doc, LayerPicturePath, MS_ProLayersPicture);
                 }
                 WriteLayersTable(doc, Pro.LayerList, MS_ProLayers);
-                object savechanges = app.Options.BackgroundSave;
-                object savepath = ReportFilePath;
-
-                object format = Microsoft.Office.Interop.Word.WdSaveFormat.wdFormatDocumentDefault;
-                doc.SaveAs2(ref savepath, ref format, ref missing, ref missing, ref missing, ref missing, ref missing, ref missing);
+                doc.Save(ReportFilePath, SaveFormat.Docx);
                 return true;
             }
             catch(Exception e)
             {
                 return false;
             }
-            finally
-            {
-                if (doc != null)
-                    doc.Close();
-                if (app != null)
-                    app.Quit();
-            }
         }
         private void WriteImage(Document doc, string picture, string bookmark)
         {
-            if (doc.Bookmarks.Exists(bookmark))
+            DocumentBuilder db = new DocumentBuilder(doc);
+            Bitmap bmp = new Bitmap(picture);
+            Size size = bmp.Size;
+            PageSetup ps = doc.Sections[0].PageSetup;
+            double width = ps.PageWidth - ps.LeftMargin - ps.RightMargin;
+            double height = size.Height * width / size.Width;
+            bmp.Dispose();
+            if(db.MoveToBookmark(bookmark))
             {
-                Bookmark bm = doc.Bookmarks[bookmark];
-                bm.Range.InlineShapes.AddPicture(picture);
+                db.InsertImage(picture,width,height);
             }
+            
         }
         private void WriteMaterialsTable(Document doc,List<Material> materials, string bookmark)
         {
-            if(doc.Bookmarks.Exists(bookmark))
-            {
-               
-            }
+            
         }
         private void WriteLayersTable(Document doc,List<Layer> layers,string bookmark)
         {
-            if (doc.Bookmarks.Exists(bookmark))
+            DocumentBuilder db = new DocumentBuilder(doc);
+            if (db.MoveToBookmark(bookmark))
             {
-                Bookmark bm = doc.Bookmarks[bookmark];
-                object wdtb = WdDefaultTableBehavior.wdWord9TableBehavior;
-                object wfb = WdAutoFitBehavior.wdAutoFitContent;
-                Table tb = doc.Tables.Add(bm.Range, layers.Count + 1, 7, ref wdtb, ref wfb);
-                Row rt=tb.Rows[1];
-                rt.Cells[1].Range.Text = "编号";
-                rt.Cells[2].Range.Text = "名称";
-                rt.Cells[3].Range.Text = "类型";
-                rt.Cells[4].Range.Text = "材质";
-                rt.Cells[5].Range.Text = "厚度[mm]";
-                rt.Cells[6].Range.Text = "热阻[KW^-1]";
-                rt.Cells[7].Range.Text = "温度范围[℃]";
-                for (int i=0;i<layers.Count; i++)
+                db.StartTable();
+                db.InsertCell();
+                db.Write("编号");
+                db.InsertCell();
+                db.Write("名称");
+                db.InsertCell();
+                db.Write("类型");
+                db.InsertCell();
+                db.Write("材质");
+                db.InsertCell();
+                db.Write("厚度[mm]");
+                db.InsertCell();
+                db.Write("热阻[KW^-1]");
+                db.InsertCell();
+                db.Write("温度范围[℃]");
+                db.EndRow();
+
+                for (int i = 0; i < layers.Count; i++)
                 {
                     Layer l = layers[i];
-                    Row r = tb.Rows[2 + i];
-                    r.Cells[1].Range.Text = i.ToString();
-                    r.Cells[2].Range.Text = l.Name;
-                    r.Cells[3].Range.Text = (l is ResistanceLayer)?"热阻层":"普通层";
-                    if(l is ResistanceLayer)
+                    db.InsertCell();
+                    db.Write(i.ToString());
+                    db.InsertCell();
+                    db.Write(l.Name);
+                    db.InsertCell();
+                    db.Write((l is ResistanceLayer) ? "热阻层" : "普通层");
+                    
+                    if (l is ResistanceLayer)
                     {
-                        r.Cells[4].Range.Text = "-";
-                        r.Cells[5].Range.Text = "-";
-                        r.Cells[6].Range.Text = l.HeatResistance.ToString("F3");
+                        db.InsertCell();
+                        db.Write("-");
+                        db.InsertCell();
+                        db.Write("-");
+                        db.InsertCell();
+                        db.Write(l.HeatResistance.ToString("F3"));
                     }
                     else
                     {
-                        r.Cells[4].Range.Text = l.Material.Name;
-                        r.Cells[5].Range.Text = (l.Thickness*1000.0).ToString("F0");
-                        r.Cells[6].Range.Text = l.HeatResistance.ToString("F3");
+                        db.InsertCell();
+                        db.Write(l.Material.Name);
+                        db.InsertCell();
+                        db.Write((l.Thickness * 1000.0).ToString("F0"));
+                        db.InsertCell();
+                        db.Write(l.HeatResistance.ToString("F3"));
                     }
-                    r.Cells[7].Range.Text = GlobalTool.K2C(l.LowTemperature).ToString("F3") + "-" + GlobalTool.K2C(l.HighTemperature).ToString("F3");
+                    db.InsertCell();
+                    db.Write(GlobalTool.K2C(l.LowTemperature).ToString("F3") + "-" + GlobalTool.K2C(l.HighTemperature).ToString("F3"));
+                    db.EndRow();
                 }
-            }
+
+                db.EndTable();
+            }  
         }
         private void WriteBookmarkText(Document doc, string bookmark,string value)
         {
-            if(doc.Bookmarks.Exists(bookmark))
+            DocumentBuilder db = new DocumentBuilder(doc);
+            if (db.MoveToBookmark(bookmark))
             {
-                Bookmark bm = doc.Bookmarks[bookmark];
-                bm.Range.Text = value;
+                db.Write(value);
             }
         }
 

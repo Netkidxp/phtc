@@ -49,7 +49,10 @@ namespace PHTC
         {
             if (ValidateUser(name, password))
             {
-                return DBUserAdapter.LoadWithName(name);
+                User u= DBUserAdapter.LoadWithName(name);
+                DBUserAdapter.SetLastLoginTimeNow(u.Id);
+                DBUserAdapter.IncLoginCount(u.Id);
+                return u;
             }
             else
                 return null;

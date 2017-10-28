@@ -140,6 +140,7 @@ namespace PHTC
                     cb_TargetThickness.Visible = false;
 
             }
+            Modify = true;
         }
 
         private void bu_ok_Click(object sender, EventArgs e)

@@ -1,8 +1,6 @@
-2017/10/16 16:02:58||source:Datebase Manager||Information:Procedure or function '`ReportTemplete_SearchAllWithCLass`' cannot be found in database '`phtc`'.
+2017/10/24 12:29:03||source:Datebase Manager||Information:Parameter '_id' has already been defined.
 
-2017/10/16 16:04:08||source:Datebase Manager||Information:Procedure or function '`ReportTemplete_SearchAllWithCLass`' cannot be found in database '`phtc`'.
+2017/10/24 12:29:53||source:Datebase Manager||Information:Unknown column 'last_login_time' in 'field list'
 
-2017/10/16 16:05:40||source:Datebase Manager||Information:Procedure or function '`ReportTemplete_SearchAllWithClass`' cannot be found in database '`phtc`'.
-
-2017/10/16 16:46:38||source:Datebase Manager||Information:Procedure or function '`ProjectTemplete_Delete`' cannot be found in database '`phtc`'.
+2017/10/24 12:30:38||source:Datebase Manager||Information:Unknown column 'last_login_time' in 'field list'
 

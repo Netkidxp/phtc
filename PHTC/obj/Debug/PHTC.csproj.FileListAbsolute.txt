@@ -27,14 +27,8 @@ E:\Git_PHTC\PHTC\bin\Debug\PHTC.exe
 E:\Git_PHTC\PHTC\bin\Debug\PHTC.pdb
 E:\Git_PHTC\PHTC\bin\Debug\MySql.Data.dll
 E:\Git_PHTC\PHTC\bin\Debug\MySql.Web.dll
-E:\Git_PHTC\PHTC\bin\Debug\Microsoft.Office.Interop.Word.dll
-E:\Git_PHTC\PHTC\bin\Debug\office.dll
-E:\Git_PHTC\PHTC\bin\Debug\Microsoft.Vbe.Interop.dll
-E:\Git_PHTC\PHTC\bin\Debug\stdole.dll
 E:\Git_PHTC\PHTC\bin\Debug\MySql.Data.xml
 E:\Git_PHTC\PHTC\bin\Debug\MySql.Web.xml
-E:\Git_PHTC\PHTC\bin\Debug\Microsoft.Office.Interop.Word.xml
-E:\Git_PHTC\PHTC\bin\Debug\office.xml
 E:\Git_PHTC\PHTC\obj\Debug\PHTC.csprojResolveAssemblyReference.cache
 E:\Git_PHTC\PHTC\obj\Debug\PHTC.AboutBox.resources
 E:\Git_PHTC\PHTC\obj\Debug\PHTC.AirNaturalConvectionCoefficient.resources
@@ -65,5 +59,8 @@ E:\Git_PHTC\PHTC\obj\Debug\PHTC.exe
 E:\Git_PHTC\PHTC\obj\Debug\PHTC.pdb
 E:\Git_PHTC\PHTC\obj\Debug\PHTC.ProjectTempleteForm.resources
 E:\Git_PHTC\PHTC\obj\Debug\PHTC.ProjectTempleteManageForm.resources
+E:\Git_PHTC\PHTC\bin\Debug\Aspose.Words.dll
 E:\Git_PHTC\PHTC\bin\Debug\PHTC.UpdateLib.pdb
 E:\Git_PHTC\PHTC\bin\Debug\PHTC.Model.pdb
+E:\Git_PHTC\PHTC\bin\Debug\Aspose.Words.xml
+E:\Git_PHTC\PHTC\bin\Debug\PHTC.DB.pdb

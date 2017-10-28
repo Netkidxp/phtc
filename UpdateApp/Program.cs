@@ -9,6 +9,7 @@ using System.Xml;
 using PHTC.UpdateLib;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Diagnostics;
 
 namespace PHTC
 {
@@ -82,6 +83,7 @@ namespace PHTC
                 updater.StartUpdateSilence();
                 updater.Finished.WaitOne();
                 mutex.Close();
+
             }
             else
             {
@@ -93,6 +95,11 @@ namespace PHTC
                 }
                 UpdateProgress up = new UpdateProgress(updater);
                 up.ShowDialog();
+                if(updater.LastError.Length==0)
+                {
+                    string exe = Path.Combine(updatedir, "phtc.exe");
+                    Process.Start(exe);
+                }
             }
 
             m1.ReleaseMutex();

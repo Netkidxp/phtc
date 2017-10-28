@@ -436,6 +436,42 @@ namespace PHTC.DB
                 return null;
             }
         }
+        public static bool SetLastLoginTimeNow(int _id)
+        {
+            try
+            {
+                DbManager dm = DbManager.Ins;
+                MySqlParameter p_id = new MySqlParameter("_id", MySqlDbType.Int32);
+                p_id.Value = _id;
+                MySqlParameter p_time = new MySqlParameter("_time", MySqlDbType.String);
+                p_time.Value = DateTime.Now.ToString();
+                MySqlParameter[] pars = new MySqlParameter[] { p_id,p_time };
+                dm.ExecuteProcNonQuery("User_SetLastLoginTime", pars);
+                return true;
+            }
+            catch (Exception e)
+            {
+                GlobalTool.LogError("DBUserAdapter.SetLastLoginTime", e.Message, true);
+                return false;
+            }
+        }
+        public static bool IncLoginCount(int _id)
+        {
+            try
+            {
+                DbManager dm = DbManager.Ins;
+                MySqlParameter p_id = new MySqlParameter("_id", MySqlDbType.Int32);
+                p_id.Value = _id;
+                MySqlParameter[] pars = new MySqlParameter[] { p_id };
+                dm.ExecuteProcNonQuery("User_IncLoginCount", pars);
+                return true;
+            }
+            catch (Exception e)
+            {
+                GlobalTool.LogError("DBUserAdapter.IncLoginCount", e.Message, true);
+                return false;
+            }
+        }
     }
     public class DBProjectAdapter
     {

@@ -6,4 +6,3 @@ E:\Git_PHTC\UpdateLib\obj\Debug\PHTC.UpdateLib.UpdateProgress.resources
 E:\Git_PHTC\UpdateLib\obj\Debug\UpdateLib.csproj.GenerateResource.Cache
 E:\Git_PHTC\UpdateLib\obj\Debug\PHTC.UpdateLib.dll
 E:\Git_PHTC\UpdateLib\obj\Debug\PHTC.UpdateLib.pdb
-E:\Git_PHTC\UpdateLib\obj\Debug\UpdateLib.csprojResolveAssemblyReference.cache
