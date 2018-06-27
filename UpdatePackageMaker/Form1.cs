@@ -39,6 +39,11 @@ namespace UpdatePackageMaker
             inf.Md5 = Md5.FileMd5(file);
             FileInfo fi = new FileInfo(file);
             inf.Size = fi.Length;
+            inf.Cmds = new List<string>();
+            foreach(Object o in lb_cmds.Items)
+            {
+                inf.Cmds.Add(o.ToString());
+            }
             Serializer.SerializeJson<UpdateInformation>(inf, Path.Combine(dialog.SelectedPath,"update.desc"));
             MessageBox.Show("生成成功，哈哈哈");
         }
@@ -49,7 +54,20 @@ namespace UpdatePackageMaker
             if(dialog.ShowDialog()==DialogResult.OK)
             {
                 tb_dir.Text = dialog.SelectedPath;
+                string phtc = Path.Combine(tb_dir.Text, "phtc.exe");
+                System.Diagnostics.FileVersionInfo info = System.Diagnostics.FileVersionInfo.GetVersionInfo(phtc);
+                tb_ver.Text = info.FileVersion;
             }
+        }
+
+        private void bu_addcmd_Click(object sender, EventArgs e)
+        {
+            lb_cmds.Items.Add(tb_cmd.Text);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            lb_cmds.Items.Clear();
         }
     }
 }

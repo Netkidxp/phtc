@@ -1,2 +1,0 @@
-E:\Git_PHTC\PHTC\bin\Release\PHTC.GlobalTool.dll
-E:\Git_PHTC\GlobalTool\obj\Release\PHTC.GlobalTool.dll

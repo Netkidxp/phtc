@@ -24,6 +24,13 @@ namespace PHTC
                 return null;
             return NetCryptoHelper.DecryptDes(raw, NetCryptoHelper.DesKey, NetCryptoHelper.DesIv);
         }
+        public static string GetConnectStringsLanConfig()
+        {
+            string raw = ReadRegKeyValue("db", "server_lan");
+            if (raw == null)
+                return null;
+            return NetCryptoHelper.DecryptDes(raw, NetCryptoHelper.DesKey, NetCryptoHelper.DesIv);
+        }
         public static string GetErrorLogFileNameConfig()
         {
 
@@ -162,6 +169,11 @@ namespace PHTC
         {
             string ns = NetCryptoHelper.EncryptDes(s, NetCryptoHelper.DesKey, NetCryptoHelper.DesIv);
             WriteRegKeyValue("db", "server", ns);
+        }
+        public static void SetConnectionStringLan(string s)
+        {
+            string ns = NetCryptoHelper.EncryptDes(s, NetCryptoHelper.DesKey, NetCryptoHelper.DesIv);
+            WriteRegKeyValue("db", "server_lan", ns);
         }
     }
 }

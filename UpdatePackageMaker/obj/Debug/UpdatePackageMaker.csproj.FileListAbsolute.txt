@@ -10,3 +10,4 @@ E:\Git_PHTC\UpdatePackageMaker\obj\Debug\UpdatePackageMaker.Form1.resources
 E:\Git_PHTC\UpdatePackageMaker\obj\Debug\UpdatePackageMaker.Properties.Resources.resources
 E:\Git_PHTC\UpdatePackageMaker\obj\Debug\UpdatePackageMaker.csproj.GenerateResource.Cache
 E:\Git_PHTC\UpdatePackageMaker\obj\Debug\UpdatePackageMaker.exe
+E:\Git_PHTC\UpdatePackageMaker\obj\Debug\UpdatePackageMaker.csproj.CoreCompileInputs.cache

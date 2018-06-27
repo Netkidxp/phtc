@@ -100,6 +100,11 @@ namespace PHTC
                     string exe = Path.Combine(updatedir, "phtc.exe");
                     Process.Start(exe);
                 }
+                if(updater.LastError == "Update Disabled")
+                {
+                    string exe = Path.Combine(updatedir, "phtc.exe");
+                    Process.Start(exe + " -nu");
+                }
             }
 
             m1.ReleaseMutex();

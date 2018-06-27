@@ -1,2 +1,0 @@
-E:\Git_PHTC\PHTC\bin\Release\PHTC.DB.dll
-E:\Git_PHTC\DB\obj\Release\PHTC.DB.dll

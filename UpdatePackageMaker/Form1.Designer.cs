@@ -37,6 +37,11 @@
             this.label2 = new System.Windows.Forms.Label();
             this.tb_desc = new System.Windows.Forms.TextBox();
             this.bu_go = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.lb_cmds = new System.Windows.Forms.ListBox();
+            this.tb_cmd = new System.Windows.Forms.TextBox();
+            this.bu_addcmd = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // bu_dir
@@ -94,7 +99,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(42, 170);
+            this.label2.Location = new System.Drawing.Point(42, 336);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(77, 12);
             this.label2.TabIndex = 7;
@@ -102,15 +107,15 @@
             // 
             // tb_desc
             // 
-            this.tb_desc.Location = new System.Drawing.Point(151, 167);
+            this.tb_desc.Location = new System.Drawing.Point(151, 334);
             this.tb_desc.Multiline = true;
             this.tb_desc.Name = "tb_desc";
-            this.tb_desc.Size = new System.Drawing.Size(256, 171);
+            this.tb_desc.Size = new System.Drawing.Size(256, 139);
             this.tb_desc.TabIndex = 6;
             // 
             // bu_go
             // 
-            this.bu_go.Location = new System.Drawing.Point(332, 369);
+            this.bu_go.Location = new System.Drawing.Point(332, 485);
             this.bu_go.Name = "bu_go";
             this.bu_go.Size = new System.Drawing.Size(75, 23);
             this.bu_go.TabIndex = 8;
@@ -118,11 +123,61 @@
             this.bu_go.UseVisualStyleBackColor = true;
             this.bu_go.Click += new System.EventHandler(this.bu_go_Click);
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(42, 156);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(29, 12);
+            this.label3.TabIndex = 9;
+            this.label3.Text = "Cmds";
+            // 
+            // lb_cmds
+            // 
+            this.lb_cmds.FormattingEnabled = true;
+            this.lb_cmds.ItemHeight = 12;
+            this.lb_cmds.Location = new System.Drawing.Point(151, 203);
+            this.lb_cmds.Name = "lb_cmds";
+            this.lb_cmds.Size = new System.Drawing.Size(256, 112);
+            this.lb_cmds.TabIndex = 10;
+            // 
+            // tb_cmd
+            // 
+            this.tb_cmd.Location = new System.Drawing.Point(151, 153);
+            this.tb_cmd.Name = "tb_cmd";
+            this.tb_cmd.Size = new System.Drawing.Size(164, 21);
+            this.tb_cmd.TabIndex = 11;
+            // 
+            // bu_addcmd
+            // 
+            this.bu_addcmd.Location = new System.Drawing.Point(340, 151);
+            this.bu_addcmd.Name = "bu_addcmd";
+            this.bu_addcmd.Size = new System.Drawing.Size(29, 23);
+            this.bu_addcmd.TabIndex = 12;
+            this.bu_addcmd.Text = "+";
+            this.bu_addcmd.UseVisualStyleBackColor = true;
+            this.bu_addcmd.Click += new System.EventHandler(this.bu_addcmd_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(381, 151);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(29, 23);
+            this.button1.TabIndex = 13;
+            this.button1.Text = "c";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(432, 417);
+            this.ClientSize = new System.Drawing.Size(432, 532);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.bu_addcmd);
+            this.Controls.Add(this.tb_cmd);
+            this.Controls.Add(this.lb_cmds);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.bu_go);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.tb_desc);
@@ -150,6 +205,11 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox tb_desc;
         private System.Windows.Forms.Button bu_go;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ListBox lb_cmds;
+        private System.Windows.Forms.TextBox tb_cmd;
+        private System.Windows.Forms.Button bu_addcmd;
+        private System.Windows.Forms.Button button1;
     }
 }
 

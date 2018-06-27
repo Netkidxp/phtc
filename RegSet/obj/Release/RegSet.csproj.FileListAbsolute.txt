@@ -1,6 +1,0 @@
-E:\Git_PHTC\PHTC\bin\Release\RegSet.exe.config
-E:\Git_PHTC\PHTC\bin\Release\RegSet.exe
-E:\Git_PHTC\PHTC\bin\Release\RegSet.pdb
-E:\Git_PHTC\RegSet\obj\Release\RegSet.csprojResolveAssemblyReference.cache
-E:\Git_PHTC\RegSet\obj\Release\RegSet.exe
-E:\Git_PHTC\RegSet\obj\Release\RegSet.pdb

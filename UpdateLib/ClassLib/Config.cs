@@ -13,6 +13,7 @@ namespace PHTC.UpdateLib
         public bool Enable { get; set; }
         public string LastVer { get; set; }
         public string FileListUrl { get; set; }
+        public string FileListUrlLan { get; set; }
         public Config()
         {
 

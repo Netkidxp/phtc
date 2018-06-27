@@ -173,12 +173,12 @@ namespace PHTC
         }
         private bool CheckC1Input()
         {
-            Regex r = new Regex(REGSTR_RealNumber);
-            if (!r.IsMatch(tb_C1Temperature.Text))
+            double t;
+            if (!double.TryParse(tb_C1Temperature.Text, out t))
                 return false;
             if (double.Parse(tb_C1Temperature.Text) < -273.15)
                 return false;
-            if(Mode==CalculationMode.Thickness)
+            if (Mode==CalculationMode.Thickness)
             {
                 Regex r1 = new Regex(REGSTR_PositiveRealNumber);
                 if (!r1.IsMatch(tb_C1Hotflow.Text))
@@ -188,8 +188,8 @@ namespace PHTC
         }
         private bool CheckC2Input()
         {
-            Regex r = new Regex(REGSTR_PositiveRealNumber);
-            if (!r.IsMatch(tb_C2Hotflow.Text))
+            double t;
+            if (!double.TryParse(tb_C2Hotflow.Text, out t))
                 return false;
             if (Mode == CalculationMode.Thickness)
             {
@@ -215,9 +215,7 @@ namespace PHTC
                 return false;
             double cfc = double.Parse(tb_C3ConvectionFilmCoefficient.Text);
             double emt = double.Parse(tb_C3Emissivity.Text);
-            if (cfc < 0 || emt < 0 || (cfc == 0 && emt == 0))
-                return false;
-            if (emt > 1.0)
+            if (emt*emt > 1.0)
                 return false;
             if (Mode == CalculationMode.Thickness)
             {

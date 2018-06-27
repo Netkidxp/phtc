@@ -13,6 +13,10 @@ namespace PHTC
 {
     public partial class MainDisplay : UserControl
     {
+        public enum LANG{
+            ENG = 0,
+            CH = 1
+        }
         int space;
         int xAxisHeight;
         int yAxisWidth;
@@ -20,11 +24,34 @@ namespace PHTC
         int boundaryWidth;
         Color maxColor;
         Color minColor;
+        double maxt;
+        double mint;
         Project pro;
-        const string axisXName = @"层厚度[mm]";
-        const string axisYName = @"温度[℃]";
-        const string szHeatflow = @"热流量:";
-        const string szTitle = @"温度分布示意图";
+        LANG lang;
+        Dictionary<LANG, Dictionary<string, string>> STR;
+        private string Str(string key)
+        {
+            Dictionary<string, string> dic = STR[lang];
+            if (dic == null)
+                return "null";
+            string s = dic[key];
+            if (s == null)
+                return "null";
+            else
+                return s;
+        }
+        public LANG Language
+        {
+            get
+            {
+                return lang;
+            }
+            set
+            {
+                lang = value;
+                Refresh();
+            }
+        }
         public delegate void HotfaceDbClickHandler();
         public delegate void ColdfaceDbClickHandler();
         public delegate void LayerDbClickHandler(int index);
@@ -39,6 +66,25 @@ namespace PHTC
             TitleHeight = 40;
             TickLength = 2;
             RightSpace = 30;
+            STR = new Dictionary<LANG, Dictionary<string, string>>();
+            Dictionary<string, string> Eng = new Dictionary<string, string>();
+            Eng.Add("szAxisXName", "Thickness[mm]");
+            Eng.Add("szAxisYName", "Temperature[℃]");
+            Eng.Add("szHeatflow", "Heatflow:");
+            Eng.Add("szTitle", "Temperature Diagram");
+            Eng.Add("szHotface", "Hotface");
+            Eng.Add("szColdface", "Coldface");
+            STR.Add(LANG.ENG, Eng);
+            Dictionary<string, string> Ch = new Dictionary<string, string>();
+            Ch.Add("szAxisXName", "厚度[mm]");
+            Ch.Add("szAxisYName", "温度[℃]");
+            Ch.Add("szHeatflow", "热流:");
+            Ch.Add("szTitle", "温度示意图");
+            Ch.Add("szHotface", "热面");
+            Ch.Add("szColdface", "冷面");
+            STR.Add(LANG.CH, Ch);
+            lang = LANG.CH;
+
             InitializeComponent();
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw | ControlStyles.AllPaintingInWmPaint, true);
             
@@ -49,7 +95,7 @@ namespace PHTC
             MaxColor = Color.Red;
             MinColor = Color.Blue;
             BoundaryWidth = 20;
-            
+           
         }
         private int XAxisHeight
         {
@@ -93,6 +139,11 @@ namespace PHTC
             set
             {
                 pro = value;
+                if(pro!=null)
+                {
+                    this.mint = Math.Min(GlobalTool.K2C(pro.HotfaceTemperature), GlobalTool.K2C(pro.ColdfaceBoundary.Temperature));
+                    this.maxt = Math.Max(GlobalTool.K2C(pro.HotfaceTemperature), GlobalTool.K2C(pro.ColdfaceBoundary.Temperature));
+                }
                 Refresh();
             }
         }
@@ -321,9 +372,10 @@ namespace PHTC
                 return;
             if (Pro.LayerList.Count == 0)
                 return;
+            string axisYName = Str("szAxisYName");
             float mw = 0;
-            double max = GlobalTool.K2C(Pro.HotfaceTemperature);
-            double min = GlobalTool.K2C(Pro.ColdfaceBoundary.Temperature);
+            double max = this.maxt;
+            double min = this.mint;
             int tickCount = 6;
             double dtemp = (max - min) / tickCount;
             int dheight = RYAxis.Height / tickCount;
@@ -362,6 +414,8 @@ namespace PHTC
                 return;
             if (Pro.LayerList.Count == 0)
                 return;
+            string axisXName = Str("szAxisXName");
+            string szHeatflow = Str("szHeatflow");
             try
             {
                 Pen p = new Pen(Color.Black, 2);
@@ -424,13 +478,14 @@ namespace PHTC
                 {
                     Rectangle r = RLayers[i];
                     Layer l = Pro.LayerList[i];
-                    double py = RGeo.Bottom - (l.HighTemperature - Pro.ColdfaceBoundary.Temperature) / (Pro.HotfaceTemperature - Pro.ColdfaceBoundary.Temperature) * RGeo.Height;
+                    double py = RGeo.Bottom - (l.HighTemperature - this.mint-273.15) / (this.maxt -this.mint) * RGeo.Height;
                     Point p = new Point(r.Left, (int)py);
                     ps.Add(p);
                     ss.Add(GlobalTool.K2C(l.HighTemperature).ToString("f0"));
                     if (i == RLayers.Count - 1)
                     {
-                        p = new Point(r.Right, r.Bottom);
+                        py = RGeo.Bottom - (l.LowTemperature - this.mint - 273.15) / (this.maxt - this.mint) * RGeo.Height;
+                        p = new Point(r.Right, (int)py);
                         ps.Add(p);
                         ss.Add(GlobalTool.K2C(l.LowTemperature).ToString("f0"));
                     }
@@ -439,7 +494,7 @@ namespace PHTC
                 Brush b = new SolidBrush(Color.Black);
                 SmoothingMode sm = g.SmoothingMode;
                 g.SmoothingMode = SmoothingMode.AntiAlias;
-                if(ps.Count>2)
+                if(ps.Count>=2)
                 {
                     g.DrawLines(pen, ps.ToArray());
                     for(int i=0;i<ps.Count;i++)
@@ -538,7 +593,7 @@ namespace PHTC
         {
             if (Pro == null)
                 return;
-            DrawRect(g, RHotFace, COT(Pro.HotfaceTemperature), COT(Pro.HotfaceTemperature),"热面");
+            DrawRect(g, RHotFace, COT(Pro.HotfaceTemperature), COT(Pro.HotfaceTemperature),Str("szHotface"));
             for(int i=0;i<Pro.LayerList.Count;i++)
             {
                 Layer l = Pro.LayerList[i];
@@ -553,7 +608,7 @@ namespace PHTC
             }
             else
                 c1 = c2 = COT(Pro.ColdfaceBoundary.Temperature);
-            DrawRect(g, RColdFace, c1, c2, "冷面");
+            DrawRect(g, RColdFace, c1, c2, Str("szColdface"));
 
                 
         }
@@ -584,8 +639,8 @@ namespace PHTC
         {
             int maxc = MaxColor.ToArgb();
             int minc = MinColor.ToArgb();
-            double maxt = Pro.HotfaceTemperature;
-            double mint = Pro.ColdfaceBoundary.Temperature;
+            double maxt = this.maxt + 273.15;
+            double mint = this.mint + 273.15;
             if(Pro.ColdfaceBoundary is Class3Boundary)
             {
                 mint = (Pro.ColdfaceBoundary as Class3Boundary).AmbientTemperature;
@@ -629,6 +684,7 @@ namespace PHTC
         }
         private void DrawTitile(Graphics g)
         {
+            string szTitle = Str("szTitle");
             SizeF sf = g.MeasureString(szTitle, TitleFont);
             RectangleF r = new RectangleF(RTitle.Left + (RTitle.Width - sf.Width) / 2, RTitle.Top + (RTitle.Height - sf.Height) / 2, sf.Width, sf.Height);
             Brush b = new SolidBrush(Color.Black);

@@ -59,8 +59,4 @@ E:\Git_PHTC\PHTC\obj\Debug\PHTC.exe
 E:\Git_PHTC\PHTC\obj\Debug\PHTC.pdb
 E:\Git_PHTC\PHTC\obj\Debug\PHTC.ProjectTempleteForm.resources
 E:\Git_PHTC\PHTC\obj\Debug\PHTC.ProjectTempleteManageForm.resources
-E:\Git_PHTC\PHTC\bin\Debug\Aspose.Words.dll
-E:\Git_PHTC\PHTC\bin\Debug\PHTC.UpdateLib.pdb
-E:\Git_PHTC\PHTC\bin\Debug\PHTC.Model.pdb
-E:\Git_PHTC\PHTC\bin\Debug\Aspose.Words.xml
-E:\Git_PHTC\PHTC\bin\Debug\PHTC.DB.pdb
+E:\Git_PHTC\PHTC\obj\Debug\PHTC.csproj.CoreCompileInputs.cache

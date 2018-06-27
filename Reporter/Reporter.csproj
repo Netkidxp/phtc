@@ -13,8 +13,8 @@
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>false</DebugSymbols>
-    <DebugType>none</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\PHTC\bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -30,8 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Aspose.Words">
-      <HintPath>C:\Users\Hua Tangqiu\Desktop\ASPOSEdll\Aspose.Words.dll</HintPath>
+    <Reference Include="Aspose.Words, Version=10.5.0.0, Culture=neutral, PublicKeyToken=fa9a48344f15a022, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Git_PHTC_Meihua\PHTC\bin\Release\Aspose.Words.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

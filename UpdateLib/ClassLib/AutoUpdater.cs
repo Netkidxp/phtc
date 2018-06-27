@@ -9,7 +9,7 @@ using System.Windows.Forms;
 using System.Net;
 using System.ComponentModel;
 using System.IO.Compression;
-
+using System.Diagnostics;
 namespace PHTC.UpdateLib
 {
     
@@ -121,7 +121,16 @@ namespace PHTC.UpdateLib
         public string DownloadUpdateInformationFile()
         {
             string tempname = Path.GetTempFileName();
+            /*
             bool res = DownLoader.DownloadFile(tempname, config.FileListUrl);
+            if (!res)
+            {
+                //LogError("下载更新配置文件失败，请检查网络连接");
+                //return null;
+                res = DownLoader.DownloadFile(tempname, config.FileListUrlLan);
+
+            }*/
+            bool res = DownLoader.DownloadFile(tempname, config.FileListUrlLan);
             if (!res)
             {
                 LogError("下载更新配置文件失败，请检查网络连接");
@@ -364,7 +373,14 @@ namespace PHTC.UpdateLib
             }
             return true;
         }
-        
+        private bool ProcessCmds(List<string> cmds)
+        {
+            foreach(string cmd in cmds)
+            {
+                Process.Start(Path.Combine(rootdir,cmd));
+            }
+            return true;
+        }
         public void UpdateProc(object o)
         {
 
@@ -381,6 +397,7 @@ namespace PHTC.UpdateLib
                
             if (!config.Enable)
             {
+                LogError("Update Disabled");
                 Finish();
                 return;
             }
@@ -434,6 +451,7 @@ namespace PHTC.UpdateLib
             }
             else
             {
+                ProcessCmds(updateInformation.Cmds);
                 config.LastVer = updateInformation.Ver;
                 WriteConfig(config);
             }
@@ -448,6 +466,8 @@ namespace PHTC.UpdateLib
             {
                 return false; ;
             }
+            if (config.Enable == false)
+                return false;
             string infpath = DownloadUpdateInformationFile();
             if (infpath == null)
             {

@@ -210,11 +210,12 @@ namespace PHTC.Model
         {
             validityInformation = "";
             bool res = true;
+            /*
             if (FlowDirection <= 0)
             {
                 validityInformation += "热流方向为负\r\n";
                 res = false;
-            }
+            }*/
             if(GeomLayerCount==0)
             {
                 validityInformation += "实体层数量为0\r\n";

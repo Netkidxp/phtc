@@ -16,5 +16,6 @@ namespace PHTC.UpdateLib
         public string Url { get; set; }
         public long Size { get; set; }
         public string Md5 { get; set; }
+        public List<string> Cmds { get; set; }
     }
 }

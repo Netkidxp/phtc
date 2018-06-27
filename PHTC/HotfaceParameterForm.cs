@@ -113,7 +113,7 @@ namespace PHTC
             double v;
             if (!double.TryParse(tb_Temperature.Text, out v))
                 return false;
-            if (double.Parse(tb_Temperature.Text) < 273.15)
+            if (double.Parse(tb_Temperature.Text) < 0)
                 return false;
             if (!double.TryParse(tb_RorW.Text, out v))
                 return false;

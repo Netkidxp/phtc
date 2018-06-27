@@ -4,3 +4,4 @@ E:\works\VS\Therm\PHTC\GlobalTool\obj\Debug\PHTC.GlobalTool.dll
 E:\works\VS\Therm\PHTC\GlobalTool\obj\Debug\PHTC.GlobalTool.pdb
 E:\Git_PHTC\PHTC\bin\Debug\PHTC.GlobalTool.dll
 E:\Git_PHTC\GlobalTool\obj\Debug\PHTC.GlobalTool.dll
+E:\Git_PHTC\GlobalTool\obj\Debug\GlobalTool.csproj.CoreCompileInputs.cache

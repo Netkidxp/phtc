@@ -140,36 +140,58 @@ namespace PHTC
             AutoUpdater updater = new AutoUpdater(basedir);
             return updater.CheckUpdate(null);
         }
+        private string LookupFileFromArgs()
+        {
+            foreach(string arg in Args)
+            {
+                if (arg[0] != '-')
+                    return arg;
+            }
+            return "";
+        }
+        private bool LookupUpdateFromArgs()
+        {
+            foreach (string arg in Args)
+            {
+                if (String.Equals(arg,"-nu",StringComparison.OrdinalIgnoreCase))
+                    return false;
+            }
+            return true;
+        }
         private void ProjectForm_Load(object sender, EventArgs e)
         {
-            if(CheckUpdate())
+            if(LookupUpdateFromArgs())
             {
-                Close();
-                UpdateApp();
+                if (CheckUpdate())
+                {
+                    Close();
+                    UpdateApp();
+                }
             }
             InitControls();
             tv_navigation.ExpandAll();
-            if(Args.Length>0)
-                if(File.Exists(Args[0]))
+            string file = LookupFileFromArgs();
+            if (File.Exists(file))
+            {
+                Project p = Project.FromFile(Args[0]);
+                if (p == null)
                 {
-                    Project p = Project.FromFile(Args[0]);
-                    if (p == null)
-                    {
-                        MessageBox.Show("该文件格式不正确", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-                    if (p.OwnerId != User.CurrentUser.Id && !p.Share)
-                    {
-                        MessageBox.Show("该工程文件不为您所有，并且被设置为不共享", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-                    Pro = p;
-                    Pro.Id = 0;
-                    CurrentFileName = Args[0];
-                    RefreshTreeView();
-                    Modified = false;
-                    ClearChartAndConsole();
+                    MessageBox.Show("该文件格式不正确", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
                 }
+                if (p.OwnerId != User.CurrentUser.Id && !p.Share)
+                {
+                    MessageBox.Show("该工程文件不为您所有，并且被设置为不共享", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                Pro = p;
+                Pro.Id = 0;
+                CurrentFileName = Args[0];
+                RefreshTreeView();
+                Modified = false;
+                ClearChartAndConsole();
+            }
+            
             //ThreadPool.QueueUserWorkItem(new WaitCallback(CheckUpdate), false);
         }
         /// <summary>
@@ -397,36 +419,94 @@ namespace PHTC
         }
         private void Detail(string information,Color color)
         {
-            this.Invoke((EventHandler)delegate {
-                rtb_detail.SelectionColor = color;
-                rtb_detail.AppendText(information);
-            });
         }
         private void UpdateDetail()
         {
+            if (Pro == null)
+                return;
             this.Invoke((EventHandler)delegate {
-            rtb_detail.Clear();
-            });
-            string log = "各层温度信息:\r\n";
-            Detail(log, Color.DarkBlue);
-            log = "  层名称\t\t最高温度[℃]\t最低温度[℃]\t热阻[K/W]\r\n";
-            foreach (Layer l in Pro.LayerList)
-            {
-                log += "  " + l.Name + "\t\t" + FormatTemperature(l.HighTemperature - 273.15) + "\t" + FormatTemperature(l.LowTemperature - 273.15) + "\t" + l.HeatResistance.ToString("F3") + "\r\n";
-            }
-            log += "  " + "冷面温度[℃]:" + FormatTemperature(Pro.ColdfaceBoundary.Temperature - 273.15) + "\t\t\t热流量[W]:" + Pro.ColdfaceBoundary.Heatflow.ToString("F3") + "\r\n";
-            Detail(log, Color.Gray);
-            if(Pro.Mode==CalculationMode.Thickness)
-            {
-                Detail("厚度计算信息:\r\n", Color.DarkBlue);
-                if(Pro.LayerList.Count>Pro.TargetLayerIndex)
+                dt_tb_name.Text = Pro.Name;
+                dt_tb_owner.Text = DBUserAdapter.LoadWithId(Pro.OwnerId).Name;
+                dt_tb_mode.Text = Pro.Mode == CalculationMode.Temperature ? "温度" : "厚度";
+                dt_tb_type.Text = Pro.Schema == GeometrySchema.Plate ? "平板" : "圆筒";
+                dt_tb_remark.Text = Pro.Remark;
+                dgv_inf.Columns.Clear();
+                dgv_inf.Columns.Add("name", "名称");
+                dgv_inf.Columns.Add("type", "类型");
+                dgv_inf.Columns.Add("material", "材料");
+                dgv_inf.Columns.Add("thickness", "厚度[mm]");
+                dgv_inf.Columns.Add("hightemp", "高温[℃]");
+                dgv_inf.Columns.Add("lowtemp", "低温[℃]");
+                dgv_inf.Columns.Add("resi", "热阻[K/W]");
+                for(int j=0;j<7;j++)
                 {
-                    log = string.Format("  目标层:{0}\t厚度[mm]:{1}\r\n", Pro.LayerList[Pro.TargetLayerIndex].Name, Pro.LayerList[Pro.TargetLayerIndex].Thickness * 1000.0);
-                    Detail(log, Color.Gray);
+                    dgv_inf.Columns[j].SortMode= DataGridViewColumnSortMode.NotSortable;
+                }
+                int i=dgv_inf.Rows.Add();
+                dgv_inf.Rows[i].Cells[0].Value = "热面";
+                dgv_inf.Rows[i].Cells[1].Value = "温度";
+                dgv_inf.Rows[i].Cells[4].Value = dgv_inf.Rows[i].Cells[5].Value = (Pro.HotfaceTemperature - 273.15).ToString("F3");
+
+                if (Pro.LayerList.Count != 0)
+                {
+                    foreach(Layer l in Pro.LayerList)
+                    {
+                        i = dgv_inf.Rows.Add();
+                        if(l is ResistanceLayer)
+                        {
+                            dgv_inf.Rows[i].Cells[0].Value = l.Name;
+                            dgv_inf.Rows[i].Cells[1].Value = "热阻";
+                            //dgv_inf.Rows[i].Cells[2].Value = l.Material.Name;
+                            //dgv_inf.Rows[i].Cells[3].Value = (l.Thickness * 1000).ToString("F0");
+                            dgv_inf.Rows[i].Cells[4].Value = (l.HighTemperature - 273.15).ToString("F3");
+                            dgv_inf.Rows[i].Cells[5].Value = (l.LowTemperature - 273.15).ToString("F3");
+                            dgv_inf.Rows[i].Cells[6].Value = l.HeatResistance.ToString("F3");
+                        }
+                        else
+                        {
+                            dgv_inf.Rows[i].Cells[0].Value = l.Name;
+                            dgv_inf.Rows[i].Cells[1].Value = "普通层";
+                            dgv_inf.Rows[i].Cells[2].Value = l.Material.Name;
+                            dgv_inf.Rows[i].Cells[3].Value = (l.Thickness * 1000).ToString("F0");
+                            dgv_inf.Rows[i].Cells[4].Value = (l.HighTemperature - 273.15).ToString("F3");
+                            dgv_inf.Rows[i].Cells[5].Value = (l.LowTemperature - 273.15).ToString("F3");
+                            dgv_inf.Rows[i].Cells[6].Value = l.HeatResistance.ToString("F3");
+                        }
+                        
+                    }
+                    dt_tb_heatflow.Text = Pro.ColdfaceBoundary.Heatflow.ToString("F3");
+                    
+                }
+                else
+                {
+                    dt_tb_heatflow.Text = "";
+                }
+                if(Pro.LayerList.Count != 0&&Pro.Mode == CalculationMode.Thickness)
+                {
+                    dt_tb_targetlayer.Text = Pro.LayerList[Pro.TargetLayerIndex].Name;
+                    dt_tb_targetthickness.Text = (Pro.LayerList[Pro.TargetLayerIndex].Thickness * 1000).ToString("F3");
+                }
+                else
+                {
+                    dt_tb_targetlayer.Text = "";
+                    dt_tb_targetthickness.Text = "";
+                }
+                i = dgv_inf.Rows.Add();
+                dgv_inf.Rows[i].Cells[0].Value = "冷面";
+                if (Pro.ColdfaceBoundary is Class3Boundary)
+                    dgv_inf.Rows[i].Cells[1].Value = "对流&辐射";
+                else if(Pro.ColdfaceBoundary is Class2Boundary)
+                    dgv_inf.Rows[i].Cells[1].Value = "热流量";
+                else
+                    dgv_inf.Rows[i].Cells[1].Value = "温度";
+                dgv_inf.Rows[i].Cells[4].Value = dgv_inf.Rows[i].Cells[5].Value = (Pro.ColdfaceBoundary.Temperature-273.15).ToString("F3");
+                if (Pro.ColdfaceBoundary is Class3Boundary)
+                {
+                    dgv_inf.Rows[i].Cells[5].Value = (((Class3Boundary)Pro.ColdfaceBoundary).AmbientTemperature - 273.15).ToString("F3");
+                    dgv_inf.Rows[i].Cells[6].Value = ((Class3Boundary)Pro.ColdfaceBoundary).CombinedHeatResistance.ToString("F3");
                 }
                     
-            }
-            
+            });
         }
         private void LogUpdateTemperatureSolver(TemperatureSolverC1 solver)
         {
@@ -934,6 +1014,7 @@ namespace PHTC
             }
             Modified = false;
             CurrentFileName = "";
+            RefreshTreeView();
         }
         private void SaveProjecteAsCloud()
         {
@@ -984,6 +1065,11 @@ namespace PHTC
         }
         private void OnLoadProject(Project _pro)
         {
+            if(_pro.OwnerId!=User.CurrentUser.Id&&!_pro.Share)
+            {
+                MessageBox.Show("该工程文件不为您所有，并且被设置为不共享", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             if (Modified)
             {
                 DialogResult dr = MessageBox.Show("当前工程已经更改，是否更新?", "选择", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
@@ -1107,15 +1193,19 @@ namespace PHTC
             RefreshReportTempleteNode();
 
         }
-        private string WriteDpImage()
+        private string WriteDpImage(bool eng)
         {
             try
             {
                 Random r = new Random();
                 string path = TempPath + "png";
+                if (eng)
+                    mainDisplay1.Language = MainDisplay.LANG.ENG;
                 Bitmap bp = new Bitmap(mainDisplay1.Bounds.Width, mainDisplay1.Bounds.Height);
                 mainDisplay1.DrawToBitmap(bp, mainDisplay1.Bounds);
                 bp.Save(path);
+                if (eng)
+                    mainDisplay1.Language = MainDisplay.LANG.CH;
                 return path;
             }
             catch(Exception)
@@ -1133,13 +1223,15 @@ namespace PHTC
                 return;
             }
             string reportPath = TempPath + "docx";
-            string imgPath = WriteDpImage();
+            string imgPath = WriteDpImage(false);
+            string chImgPath = WriteDpImage(true);
+            string[] img = new string[]{ chImgPath, imgPath};
             if (imgPath == null)
             {
                 MessageBox.Show("写入图片失败", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            WordReporter wp = new WordReporter(Pro, templetePath, reportPath, imgPath);
+            WordReporter wp = new WordReporter(Pro, templetePath, reportPath, img);
             wp.Report();
             System.Diagnostics.Process.Start("Explorer.exe", reportPath);
         }

@@ -46,7 +46,7 @@ namespace PHTC.Reporter
         }
         public string TempletFilePath { get; set; }
         public string ReportFilePath { get; set; }
-        public string LayerPicturePath { get; set; }
+        public string[] LayerPicturePath { get; set; }
 
         public BaseReporter(Project _pro)
         {

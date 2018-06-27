@@ -18,7 +18,7 @@ namespace PHTC
         public ProjectLoadForm()
         {
             InitializeComponent();
-            dtp_end.Value = DateTime.Now;
+            dtp_end.Value = DateTime.Now.AddDays(1);
             dtp_start.Value = DateTime.Now.AddMonths(-1);
             dgv_projects.AutoGenerateColumns = false;
             RefreshData();
@@ -50,17 +50,20 @@ namespace PHTC
             }
             DataView dv = new DataView(dt);
             string filter = "";
-            DateTime dstart= new DateTime(dtp_start.Value.Year, dtp_start.Value.Month, dtp_start.Value.Day, 0, 0, 0);
-            DateTime dend = new DateTime(dtp_end.Value.Year, dtp_end.Value.Month, dtp_end.Value.Day+1, 0, 0, 0);
+            //DateTime dstart= new DateTime(dtp_start.Value.Year, dtp_start.Value.Month, dtp_start.Value.Day, 0, 0, 0);
+            //DateTime dend = dstart.AddMonths(1);
+            DateTime dstart = dtp_start.Value.Date;
+            DateTime dend = dtp_end.Value.Date;
             double start = GlobalTool.ConvertDateTimeInt(dstart);
             double end= GlobalTool.ConvertDateTimeInt(dend);
             filter = "time>=" + start.ToString() + " and time<=" + end.ToString();
-            if (cb_self.Checked)
-                filter += " and 所有者=\'" + User.CurrentUser.Name+"\'";
-            if(cb_share.Checked)
+            if (cb_share.Checked)
             {
                 filter += " and 共享=1";
             }
+            if (cb_self.Checked)
+                filter += " or 所有者=\'" + User.CurrentUser.Name+"\'";
+            
             dv.RowFilter = filter;
             dgv_projects.DataSource = dv;
             dgv_projects.Columns.Clear();

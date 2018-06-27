@@ -30,41 +30,43 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProjectForm));
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("节点3");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("节点4");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("材料参数", 9, 9, new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2});
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("热面参数", 25, 25);
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("第一层", 28, 28);
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("第二层", 28, 28);
-            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("层列表", 27, 27, new System.Windows.Forms.TreeNode[] {
-            treeNode5,
-            treeNode6});
-            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("冷面边界", 14, 14);
-            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("计算模型", 0, 0, new System.Windows.Forms.TreeNode[] {
-            treeNode4,
-            treeNode7,
-            treeNode8});
-            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("温度解算收敛准则", 31, 31);
-            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("层微分", 13, 13);
-            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("解算参数", 12, 12, new System.Windows.Forms.TreeNode[] {
-            treeNode10,
-            treeNode11});
-            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("计算", 24, 24);
-            System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("Word报告", 35, 35);
-            System.Windows.Forms.TreeNode treeNode15 = new System.Windows.Forms.TreeNode("结果", 1, 1, new System.Windows.Forms.TreeNode[] {
-            treeNode14});
-            System.Windows.Forms.TreeNode treeNode16 = new System.Windows.Forms.TreeNode("新建计算", 7, 7, new System.Windows.Forms.TreeNode[] {
-            treeNode3,
-            treeNode9,
-            treeNode12,
-            treeNode13,
-            treeNode15});
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.TreeNode treeNode17 = new System.Windows.Forms.TreeNode("节点3");
+            System.Windows.Forms.TreeNode treeNode18 = new System.Windows.Forms.TreeNode("节点4");
+            System.Windows.Forms.TreeNode treeNode19 = new System.Windows.Forms.TreeNode("材料参数", 9, 9, new System.Windows.Forms.TreeNode[] {
+            treeNode17,
+            treeNode18});
+            System.Windows.Forms.TreeNode treeNode20 = new System.Windows.Forms.TreeNode("热面参数", 25, 25);
+            System.Windows.Forms.TreeNode treeNode21 = new System.Windows.Forms.TreeNode("第一层", 28, 28);
+            System.Windows.Forms.TreeNode treeNode22 = new System.Windows.Forms.TreeNode("第二层", 28, 28);
+            System.Windows.Forms.TreeNode treeNode23 = new System.Windows.Forms.TreeNode("层列表", 27, 27, new System.Windows.Forms.TreeNode[] {
+            treeNode21,
+            treeNode22});
+            System.Windows.Forms.TreeNode treeNode24 = new System.Windows.Forms.TreeNode("冷面边界", 14, 14);
+            System.Windows.Forms.TreeNode treeNode25 = new System.Windows.Forms.TreeNode("计算模型", 0, 0, new System.Windows.Forms.TreeNode[] {
+            treeNode20,
+            treeNode23,
+            treeNode24});
+            System.Windows.Forms.TreeNode treeNode26 = new System.Windows.Forms.TreeNode("温度解算收敛准则", 31, 31);
+            System.Windows.Forms.TreeNode treeNode27 = new System.Windows.Forms.TreeNode("层微分", 13, 13);
+            System.Windows.Forms.TreeNode treeNode28 = new System.Windows.Forms.TreeNode("解算参数", 12, 12, new System.Windows.Forms.TreeNode[] {
+            treeNode26,
+            treeNode27});
+            System.Windows.Forms.TreeNode treeNode29 = new System.Windows.Forms.TreeNode("计算", 24, 24);
+            System.Windows.Forms.TreeNode treeNode30 = new System.Windows.Forms.TreeNode("Word报告", 35, 35);
+            System.Windows.Forms.TreeNode treeNode31 = new System.Windows.Forms.TreeNode("结果", 1, 1, new System.Windows.Forms.TreeNode[] {
+            treeNode30});
+            System.Windows.Forms.TreeNode treeNode32 = new System.Windows.Forms.TreeNode("新建计算", 7, 7, new System.Windows.Forms.TreeNode[] {
+            treeNode19,
+            treeNode25,
+            treeNode28,
+            treeNode29,
+            treeNode31});
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.cms_N_Material = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mi_Material_Load = new System.Windows.Forms.ToolStripMenuItem();
             this.cmi_material_new = new System.Windows.Forms.ToolStripMenuItem();
@@ -78,8 +80,25 @@
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.mainDisplay1 = new PHTC.MainDisplay();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tp_detail = new System.Windows.Forms.TabPage();
-            this.rtb_detail = new System.Windows.Forms.RichTextBox();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.dt_tb_targetthickness = new System.Windows.Forms.TextBox();
+            this.dt_tb_targetlayer = new System.Windows.Forms.TextBox();
+            this.dt_tb_heatflow = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.dgv_inf = new System.Windows.Forms.DataGridView();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.dt_tb_type = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.dt_tb_remark = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.dt_tb_mode = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.dt_tb_owner = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.dt_tb_name = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.tp_moniter = new System.Windows.Forms.TabPage();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.ct_temperature = new System.Windows.Forms.DataVisualization.Charting.Chart();
@@ -175,7 +194,9 @@
             this.splitContainer3.Panel2.SuspendLayout();
             this.splitContainer3.SuspendLayout();
             this.tabControl1.SuspendLayout();
-            this.tp_detail.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_inf)).BeginInit();
+            this.panel1.SuspendLayout();
             this.tp_moniter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
@@ -311,72 +332,72 @@
             this.tv_navigation.ItemHeight = 22;
             this.tv_navigation.Location = new System.Drawing.Point(0, 0);
             this.tv_navigation.Name = "tv_navigation";
-            treeNode1.Name = "N_MaterialDet";
-            treeNode1.Text = "节点3";
-            treeNode2.Name = "节点4";
-            treeNode2.Text = "节点4";
-            treeNode3.ContextMenuStrip = this.cms_N_Material;
-            treeNode3.ImageIndex = 9;
-            treeNode3.Name = "N_Material";
-            treeNode3.SelectedImageIndex = 9;
-            treeNode3.Text = "材料参数";
-            treeNode4.ImageIndex = 25;
-            treeNode4.Name = "N_HotfaceParameter";
-            treeNode4.SelectedImageIndex = 25;
-            treeNode4.Text = "热面参数";
-            treeNode5.ImageIndex = 28;
-            treeNode5.Name = "节点5";
-            treeNode5.SelectedImageIndex = 28;
-            treeNode5.Text = "第一层";
-            treeNode6.ImageIndex = 28;
-            treeNode6.Name = "节点21";
-            treeNode6.SelectedImageIndex = 28;
-            treeNode6.Text = "第二层";
-            treeNode7.ContextMenuStrip = this.cms_N_Layer;
-            treeNode7.ImageIndex = 27;
-            treeNode7.Name = "N_Layer";
-            treeNode7.SelectedImageIndex = 27;
-            treeNode7.Text = "层列表";
-            treeNode8.ImageIndex = 14;
-            treeNode8.Name = "N_ColdfaceBoundary";
-            treeNode8.SelectedImageIndex = 14;
-            treeNode8.Text = "冷面边界";
-            treeNode9.ImageIndex = 0;
-            treeNode9.Name = "N_CalculateModel";
-            treeNode9.SelectedImageIndex = 0;
-            treeNode9.Text = "计算模型";
-            treeNode10.ImageIndex = 31;
-            treeNode10.Name = "N_TemperatureCriterion";
-            treeNode10.SelectedImageIndex = 31;
-            treeNode10.Text = "温度解算收敛准则";
-            treeNode11.ImageIndex = 13;
-            treeNode11.Name = "N_LayerDifferential";
-            treeNode11.SelectedImageIndex = 13;
-            treeNode11.Text = "层微分";
-            treeNode12.Checked = true;
-            treeNode12.ImageIndex = 12;
-            treeNode12.Name = "N_SolveParameter";
-            treeNode12.SelectedImageIndex = 12;
-            treeNode12.Text = "解算参数";
-            treeNode13.ImageIndex = 24;
-            treeNode13.Name = "N_Solve";
-            treeNode13.SelectedImageIndex = 24;
-            treeNode13.Text = "计算";
-            treeNode14.ContextMenuStrip = this.cms_N_ReportWordOrHtml;
-            treeNode14.ImageIndex = 35;
-            treeNode14.Name = "N_ReportWord";
-            treeNode14.SelectedImageIndex = 35;
-            treeNode14.Text = "Word报告";
-            treeNode15.ImageIndex = 1;
-            treeNode15.Name = "N_Result";
-            treeNode15.SelectedImageIndex = 1;
-            treeNode15.Text = "结果";
-            treeNode16.ImageIndex = 7;
-            treeNode16.Name = "N_Project";
-            treeNode16.SelectedImageIndex = 7;
-            treeNode16.Text = "新建计算";
+            treeNode17.Name = "N_MaterialDet";
+            treeNode17.Text = "节点3";
+            treeNode18.Name = "节点4";
+            treeNode18.Text = "节点4";
+            treeNode19.ContextMenuStrip = this.cms_N_Material;
+            treeNode19.ImageIndex = 9;
+            treeNode19.Name = "N_Material";
+            treeNode19.SelectedImageIndex = 9;
+            treeNode19.Text = "材料参数";
+            treeNode20.ImageIndex = 25;
+            treeNode20.Name = "N_HotfaceParameter";
+            treeNode20.SelectedImageIndex = 25;
+            treeNode20.Text = "热面参数";
+            treeNode21.ImageIndex = 28;
+            treeNode21.Name = "节点5";
+            treeNode21.SelectedImageIndex = 28;
+            treeNode21.Text = "第一层";
+            treeNode22.ImageIndex = 28;
+            treeNode22.Name = "节点21";
+            treeNode22.SelectedImageIndex = 28;
+            treeNode22.Text = "第二层";
+            treeNode23.ContextMenuStrip = this.cms_N_Layer;
+            treeNode23.ImageIndex = 27;
+            treeNode23.Name = "N_Layer";
+            treeNode23.SelectedImageIndex = 27;
+            treeNode23.Text = "层列表";
+            treeNode24.ImageIndex = 14;
+            treeNode24.Name = "N_ColdfaceBoundary";
+            treeNode24.SelectedImageIndex = 14;
+            treeNode24.Text = "冷面边界";
+            treeNode25.ImageIndex = 0;
+            treeNode25.Name = "N_CalculateModel";
+            treeNode25.SelectedImageIndex = 0;
+            treeNode25.Text = "计算模型";
+            treeNode26.ImageIndex = 31;
+            treeNode26.Name = "N_TemperatureCriterion";
+            treeNode26.SelectedImageIndex = 31;
+            treeNode26.Text = "温度解算收敛准则";
+            treeNode27.ImageIndex = 13;
+            treeNode27.Name = "N_LayerDifferential";
+            treeNode27.SelectedImageIndex = 13;
+            treeNode27.Text = "层微分";
+            treeNode28.Checked = true;
+            treeNode28.ImageIndex = 12;
+            treeNode28.Name = "N_SolveParameter";
+            treeNode28.SelectedImageIndex = 12;
+            treeNode28.Text = "解算参数";
+            treeNode29.ImageIndex = 24;
+            treeNode29.Name = "N_Solve";
+            treeNode29.SelectedImageIndex = 24;
+            treeNode29.Text = "计算";
+            treeNode30.ContextMenuStrip = this.cms_N_ReportWordOrHtml;
+            treeNode30.ImageIndex = 35;
+            treeNode30.Name = "N_ReportWord";
+            treeNode30.SelectedImageIndex = 35;
+            treeNode30.Text = "Word报告";
+            treeNode31.ImageIndex = 1;
+            treeNode31.Name = "N_Result";
+            treeNode31.SelectedImageIndex = 1;
+            treeNode31.Text = "结果";
+            treeNode32.ImageIndex = 7;
+            treeNode32.Name = "N_Project";
+            treeNode32.SelectedImageIndex = 7;
+            treeNode32.Text = "新建计算";
             this.tv_navigation.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode16});
+            treeNode32});
             this.tv_navigation.SelectedImageIndex = 0;
             this.tv_navigation.Size = new System.Drawing.Size(287, 658);
             this.tv_navigation.TabIndex = 1;
@@ -410,6 +431,7 @@
             this.mainDisplay1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.mainDisplay1.BoundaryWidth = 20;
             this.mainDisplay1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mainDisplay1.Language = PHTC.MainDisplay.LANG.CH;
             this.mainDisplay1.Location = new System.Drawing.Point(0, 0);
             this.mainDisplay1.Margin = new System.Windows.Forms.Padding(4);
             this.mainDisplay1.MaxColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
@@ -427,7 +449,7 @@
             // tabControl1
             // 
             this.tabControl1.Alignment = System.Windows.Forms.TabAlignment.Right;
-            this.tabControl1.Controls.Add(this.tp_detail);
+            this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tp_moniter);
             this.tabControl1.Controls.Add(this.tp_console);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -439,28 +461,234 @@
             this.tabControl1.Size = new System.Drawing.Size(763, 354);
             this.tabControl1.TabIndex = 0;
             // 
-            // tp_detail
+            // tabPage1
             // 
-            this.tp_detail.Controls.Add(this.rtb_detail);
-            this.tp_detail.Location = new System.Drawing.Point(4, 4);
-            this.tp_detail.Name = "tp_detail";
-            this.tp_detail.Padding = new System.Windows.Forms.Padding(3);
-            this.tp_detail.Size = new System.Drawing.Size(737, 346);
-            this.tp_detail.TabIndex = 0;
-            this.tp_detail.Text = "详情";
-            this.tp_detail.UseVisualStyleBackColor = true;
+            this.tabPage1.BackColor = System.Drawing.Color.Transparent;
+            this.tabPage1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tabPage1.Controls.Add(this.dt_tb_targetthickness);
+            this.tabPage1.Controls.Add(this.dt_tb_targetlayer);
+            this.tabPage1.Controls.Add(this.dt_tb_heatflow);
+            this.tabPage1.Controls.Add(this.label8);
+            this.tabPage1.Controls.Add(this.label5);
+            this.tabPage1.Controls.Add(this.label7);
+            this.tabPage1.Controls.Add(this.dgv_inf);
+            this.tabPage1.Controls.Add(this.panel1);
+            this.tabPage1.Location = new System.Drawing.Point(4, 4);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(737, 346);
+            this.tabPage1.TabIndex = 3;
+            this.tabPage1.Text = "详情";
             // 
-            // rtb_detail
+            // dt_tb_targetthickness
             // 
-            this.rtb_detail.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtb_detail.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rtb_detail.Location = new System.Drawing.Point(3, 3);
-            this.rtb_detail.Name = "rtb_detail";
-            this.rtb_detail.ReadOnly = true;
-            this.rtb_detail.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
-            this.rtb_detail.Size = new System.Drawing.Size(731, 340);
-            this.rtb_detail.TabIndex = 0;
-            this.rtb_detail.Text = "";
+            this.dt_tb_targetthickness.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.dt_tb_targetthickness.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.dt_tb_targetthickness.Location = new System.Drawing.Point(589, 318);
+            this.dt_tb_targetthickness.Name = "dt_tb_targetthickness";
+            this.dt_tb_targetthickness.ReadOnly = true;
+            this.dt_tb_targetthickness.Size = new System.Drawing.Size(139, 21);
+            this.dt_tb_targetthickness.TabIndex = 9;
+            // 
+            // dt_tb_targetlayer
+            // 
+            this.dt_tb_targetlayer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.dt_tb_targetlayer.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.dt_tb_targetlayer.Location = new System.Drawing.Point(340, 318);
+            this.dt_tb_targetlayer.Name = "dt_tb_targetlayer";
+            this.dt_tb_targetlayer.ReadOnly = true;
+            this.dt_tb_targetlayer.Size = new System.Drawing.Size(139, 21);
+            this.dt_tb_targetlayer.TabIndex = 7;
+            // 
+            // dt_tb_heatflow
+            // 
+            this.dt_tb_heatflow.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.dt_tb_heatflow.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.dt_tb_heatflow.Location = new System.Drawing.Point(73, 318);
+            this.dt_tb_heatflow.Name = "dt_tb_heatflow";
+            this.dt_tb_heatflow.ReadOnly = true;
+            this.dt_tb_heatflow.Size = new System.Drawing.Size(139, 21);
+            this.dt_tb_heatflow.TabIndex = 5;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(497, 321);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(89, 12);
+            this.label8.TabIndex = 8;
+            this.label8.Text = "目标层厚度[mm]";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label5.Location = new System.Drawing.Point(295, 321);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(41, 12);
+            this.label5.TabIndex = 6;
+            this.label5.Text = "目标层";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(8, 321);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(59, 12);
+            this.label7.TabIndex = 4;
+            this.label7.Text = "热流量[W]";
+            // 
+            // dgv_inf
+            // 
+            this.dgv_inf.AllowUserToAddRows = false;
+            this.dgv_inf.AllowUserToDeleteRows = false;
+            this.dgv_inf.AllowUserToResizeRows = false;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgv_inf.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            this.dgv_inf.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgv_inf.DefaultCellStyle = dataGridViewCellStyle4;
+            this.dgv_inf.Location = new System.Drawing.Point(0, 121);
+            this.dgv_inf.Name = "dgv_inf";
+            this.dgv_inf.ReadOnly = true;
+            this.dgv_inf.RowHeadersVisible = false;
+            this.dgv_inf.RowTemplate.Height = 23;
+            this.dgv_inf.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.dgv_inf.ShowCellErrors = false;
+            this.dgv_inf.ShowCellToolTips = false;
+            this.dgv_inf.ShowEditingIcon = false;
+            this.dgv_inf.ShowRowErrors = false;
+            this.dgv_inf.Size = new System.Drawing.Size(729, 186);
+            this.dgv_inf.TabIndex = 1;
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.Transparent;
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.dt_tb_type);
+            this.panel1.Controls.Add(this.label3);
+            this.panel1.Controls.Add(this.dt_tb_remark);
+            this.panel1.Controls.Add(this.label6);
+            this.panel1.Controls.Add(this.dt_tb_mode);
+            this.panel1.Controls.Add(this.label4);
+            this.panel1.Controls.Add(this.dt_tb_owner);
+            this.panel1.Controls.Add(this.label2);
+            this.panel1.Controls.Add(this.dt_tb_name);
+            this.panel1.Controls.Add(this.label1);
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(737, 115);
+            this.panel1.TabIndex = 0;
+            // 
+            // dt_tb_type
+            // 
+            this.dt_tb_type.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.dt_tb_type.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.dt_tb_type.Location = new System.Drawing.Point(440, 33);
+            this.dt_tb_type.Name = "dt_tb_type";
+            this.dt_tb_type.ReadOnly = true;
+            this.dt_tb_type.Size = new System.Drawing.Size(288, 21);
+            this.dt_tb_type.TabIndex = 7;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(384, 35);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(53, 12);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "几何类型";
+            // 
+            // dt_tb_remark
+            // 
+            this.dt_tb_remark.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.dt_tb_remark.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.dt_tb_remark.Location = new System.Drawing.Point(67, 62);
+            this.dt_tb_remark.Multiline = true;
+            this.dt_tb_remark.Name = "dt_tb_remark";
+            this.dt_tb_remark.ReadOnly = true;
+            this.dt_tb_remark.Size = new System.Drawing.Size(661, 45);
+            this.dt_tb_remark.TabIndex = 5;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(7, 62);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(53, 12);
+            this.label6.TabIndex = 4;
+            this.label6.Text = "工程介绍";
+            // 
+            // dt_tb_mode
+            // 
+            this.dt_tb_mode.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.dt_tb_mode.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.dt_tb_mode.Location = new System.Drawing.Point(67, 33);
+            this.dt_tb_mode.Name = "dt_tb_mode";
+            this.dt_tb_mode.ReadOnly = true;
+            this.dt_tb_mode.Size = new System.Drawing.Size(289, 21);
+            this.dt_tb_mode.TabIndex = 5;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(7, 35);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(53, 12);
+            this.label4.TabIndex = 4;
+            this.label4.Text = "计算模式";
+            // 
+            // dt_tb_owner
+            // 
+            this.dt_tb_owner.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.dt_tb_owner.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.dt_tb_owner.Location = new System.Drawing.Point(440, 6);
+            this.dt_tb_owner.Name = "dt_tb_owner";
+            this.dt_tb_owner.ReadOnly = true;
+            this.dt_tb_owner.Size = new System.Drawing.Size(288, 21);
+            this.dt_tb_owner.TabIndex = 3;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(384, 8);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(41, 12);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "建立人";
+            // 
+            // dt_tb_name
+            // 
+            this.dt_tb_name.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.dt_tb_name.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.dt_tb_name.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.dt_tb_name.Location = new System.Drawing.Point(67, 6);
+            this.dt_tb_name.Name = "dt_tb_name";
+            this.dt_tb_name.ReadOnly = true;
+            this.dt_tb_name.Size = new System.Drawing.Size(289, 21);
+            this.dt_tb_name.TabIndex = 1;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label1.Location = new System.Drawing.Point(7, 8);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(53, 12);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "工程名称";
             // 
             // tp_moniter
             // 
@@ -494,46 +722,46 @@
             // 
             // ct_temperature
             // 
-            chartArea1.AxisX.MajorGrid.Enabled = false;
-            chartArea1.AxisX.Title = "步数";
-            chartArea1.AxisX2.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.False;
-            chartArea1.AxisY.MajorGrid.Enabled = false;
-            chartArea1.AxisY.Title = "温度计算残差";
-            chartArea1.AxisY2.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.False;
-            chartArea1.Name = "ChartArea1";
-            this.ct_temperature.ChartAreas.Add(chartArea1);
+            chartArea3.AxisX.MajorGrid.Enabled = false;
+            chartArea3.AxisX.Title = "步数";
+            chartArea3.AxisX2.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.False;
+            chartArea3.AxisY.MajorGrid.Enabled = false;
+            chartArea3.AxisY.Title = "温度计算残差";
+            chartArea3.AxisY2.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.False;
+            chartArea3.Name = "ChartArea1";
+            this.ct_temperature.ChartAreas.Add(chartArea3);
             this.ct_temperature.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ct_temperature.Location = new System.Drawing.Point(0, 0);
             this.ct_temperature.Name = "ct_temperature";
-            series1.BorderColor = System.Drawing.Color.Maroon;
-            series1.BorderWidth = 2;
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series1.Name = "Series1";
-            this.ct_temperature.Series.Add(series1);
+            series3.BorderColor = System.Drawing.Color.Maroon;
+            series3.BorderWidth = 2;
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series3.Name = "Series1";
+            this.ct_temperature.Series.Add(series3);
             this.ct_temperature.Size = new System.Drawing.Size(731, 200);
             this.ct_temperature.TabIndex = 0;
             this.ct_temperature.Text = "chart1";
             // 
             // ct_thickness
             // 
-            chartArea2.AxisX.MajorGrid.Enabled = false;
-            chartArea2.AxisX.Title = "步数";
-            chartArea2.AxisX2.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.False;
-            chartArea2.AxisY.MajorGrid.Enabled = false;
-            chartArea2.AxisY.Title = "厚度计算残差";
-            chartArea2.AxisY2.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.False;
-            chartArea2.Name = "ChartArea1";
-            this.ct_thickness.ChartAreas.Add(chartArea2);
+            chartArea4.AxisX.MajorGrid.Enabled = false;
+            chartArea4.AxisX.Title = "步数";
+            chartArea4.AxisX2.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.False;
+            chartArea4.AxisY.MajorGrid.Enabled = false;
+            chartArea4.AxisY.Title = "厚度计算残差";
+            chartArea4.AxisY2.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.False;
+            chartArea4.Name = "ChartArea1";
+            this.ct_thickness.ChartAreas.Add(chartArea4);
             this.ct_thickness.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ct_thickness.Location = new System.Drawing.Point(0, 0);
             this.ct_thickness.Name = "ct_thickness";
-            series2.BorderColor = System.Drawing.Color.Maroon;
-            series2.BorderWidth = 2;
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series2.Name = "Series1";
-            this.ct_thickness.Series.Add(series2);
+            series4.BorderColor = System.Drawing.Color.Maroon;
+            series4.BorderWidth = 2;
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series4.Name = "Series1";
+            this.ct_thickness.Series.Add(series4);
             this.ct_thickness.Size = new System.Drawing.Size(731, 136);
             this.ct_thickness.TabIndex = 1;
             this.ct_thickness.Text = "chart1";
@@ -731,7 +959,7 @@
             // 
             this.mi_user_loginoff.Name = "mi_user_loginoff";
             this.mi_user_loginoff.Size = new System.Drawing.Size(149, 22);
-            this.mi_user_loginoff.Text = "注销(&L)";
+            this.mi_user_loginoff.Text = "切换用户(&L)";
             this.mi_user_loginoff.Click += new System.EventHandler(this.mi_user_loginoff_Click);
             // 
             // mi_user_changepassword
@@ -1086,26 +1314,26 @@
             // mi_help_doc
             // 
             this.mi_help_doc.Name = "mi_help_doc";
-            this.mi_help_doc.Size = new System.Drawing.Size(152, 22);
+            this.mi_help_doc.Size = new System.Drawing.Size(150, 22);
             this.mi_help_doc.Text = "帮助文档...(&D)";
             this.mi_help_doc.Click += new System.EventHandler(this.mi_help_doc_Click);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(147, 6);
             // 
             // mi_help_update
             // 
             this.mi_help_update.Name = "mi_help_update";
-            this.mi_help_update.Size = new System.Drawing.Size(152, 22);
+            this.mi_help_update.Size = new System.Drawing.Size(150, 22);
             this.mi_help_update.Text = "检查更新...(&U)";
             this.mi_help_update.Click += new System.EventHandler(this.mi_help_update_Click);
             // 
             // mi_help_about
             // 
             this.mi_help_about.Name = "mi_help_about";
-            this.mi_help_about.Size = new System.Drawing.Size(152, 22);
+            this.mi_help_about.Size = new System.Drawing.Size(150, 22);
             this.mi_help_about.Text = "关于...(&A)";
             this.mi_help_about.Click += new System.EventHandler(this.mi_help_about_Click);
             // 
@@ -1170,7 +1398,7 @@
             // 
             this.mi_logoff.Name = "mi_logoff";
             this.mi_logoff.Size = new System.Drawing.Size(124, 22);
-            this.mi_logoff.Text = "注销";
+            this.mi_logoff.Text = "切换用户";
             this.mi_logoff.Click += new System.EventHandler(this.mi_logoff_Click);
             // 
             // mi_changepassword
@@ -1237,7 +1465,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
             this.splitContainer3.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
-            this.tp_detail.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_inf)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.tp_moniter.ResumeLayout(false);
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
@@ -1335,15 +1567,6 @@
         private System.Windows.Forms.ToolStripMenuItem mi_help_update;
         private System.Windows.Forms.SplitContainer splitContainer3;
         private MainDisplay mainDisplay1;
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tp_detail;
-        private System.Windows.Forms.TabPage tp_moniter;
-        private System.Windows.Forms.TabPage tp_console;
-        private System.Windows.Forms.SplitContainer splitContainer2;
-        private System.Windows.Forms.DataVisualization.Charting.Chart ct_temperature;
-        private System.Windows.Forms.DataVisualization.Charting.Chart ct_thickness;
-        private System.Windows.Forms.RichTextBox rtb_log;
-        private System.Windows.Forms.RichTextBox rtb_detail;
         private System.Windows.Forms.ToolStripMenuItem mi_File_Open;
         private System.Windows.Forms.ToolStripMenuItem mi_File_SaveLocal;
         private System.Windows.Forms.ToolStripMenuItem mi_File_SaveAsLocal;
@@ -1357,5 +1580,31 @@
         private System.Windows.Forms.ToolStripMenuItem mi_manage_projecttemplete;
         private System.Windows.Forms.ToolStripMenuItem mi_project_templetenew;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tp_moniter;
+        private System.Windows.Forms.SplitContainer splitContainer2;
+        private System.Windows.Forms.DataVisualization.Charting.Chart ct_temperature;
+        private System.Windows.Forms.DataVisualization.Charting.Chart ct_thickness;
+        private System.Windows.Forms.TabPage tp_console;
+        private System.Windows.Forms.RichTextBox rtb_log;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TextBox dt_tb_targetthickness;
+        private System.Windows.Forms.TextBox dt_tb_targetlayer;
+        private System.Windows.Forms.TextBox dt_tb_heatflow;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.DataGridView dgv_inf;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.TextBox dt_tb_type;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox dt_tb_remark;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox dt_tb_mode;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox dt_tb_owner;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox dt_tb_name;
+        private System.Windows.Forms.Label label1;
     }
 }

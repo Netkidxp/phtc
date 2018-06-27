@@ -11,14 +11,30 @@ namespace PHTC.DB
     public class DbManager
     {
         //连接用的字符串  
-        //private string connStr;
+        private string connStr; 
         public string ConnStr
         {
-            get { return GlobalTool.GetConnectStringsConfig(); }
+            get { return connStr; }
             //set { this.connStr = value; }
         }
-
-        private DbManager() { }
+        private DbManager() {
+            /*
+            string s1 = GlobalTool.GetConnectStringsConfig();
+            string s2 = GlobalTool.GetConnectStringsLanConfig();
+            MySqlConnection con = new MySqlConnection(s1);
+            try
+            {
+                con.Open();
+                connStr = s1;
+                con.Close();
+            }
+            catch(Exception)
+            {
+                connStr = s2;
+            }
+            */
+            connStr = GlobalTool.GetConnectStringsLanConfig();
+        }
 
         //DbManager单实例  
         private volatile static DbManager _instance = null;
